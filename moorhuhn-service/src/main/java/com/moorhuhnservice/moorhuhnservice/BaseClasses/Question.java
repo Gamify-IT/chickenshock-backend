@@ -8,7 +8,7 @@ public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Long id;
+    private long id;
     @Column(nullable = false)
     private String level;
     @Column(nullable = false)
