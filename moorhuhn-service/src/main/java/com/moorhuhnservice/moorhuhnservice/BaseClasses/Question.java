@@ -24,7 +24,7 @@ public class Question {
     @Column(nullable = false)
     private String wrongAnswerFour;
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
