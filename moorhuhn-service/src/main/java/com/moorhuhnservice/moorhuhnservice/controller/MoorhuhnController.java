@@ -13,13 +13,13 @@ public class MoorhuhnController {
     @Autowired
     QuestionRepository questionRepository;
 
-    @PostMapping("/saveAllQuestions")
+    @PostMapping("/save-all-questions")
     public List<Question> saveAllQuestions(@RequestBody List<Question> questions) {
         System.out.println("try to save all "+questions.size()+" questions: ");
         return questions;
     }
 
-    @PostMapping("/saveFirstTestQuestion")
+    @PostMapping("/save-first-test-question")
     public Question saveFirstTestQuestion() {
         System.out.println("try to save a static question");
         Question questionTest = new Question("xyz", "Frage1","AntwortRichtig","AntwortFalsch1","AntwortFalsch2","AntwortFalsch3","AntwortFalsch4");
@@ -27,7 +27,7 @@ public class MoorhuhnController {
         return questionTest;
     }
 
-    @PostMapping("/saveSecondTestQuestion")
+    @PostMapping("/save-second-sest-question")
     public Question saveSecondTestQuestion() {
         System.out.println("try to save a static question");
         Question questionTest = new Question("xyz", "Frage2","AntwortRichtig","AntwortFalsch1","AntwortFalsch2","AntwortFalsch3","AntwortFalsch4");
@@ -35,7 +35,7 @@ public class MoorhuhnController {
         return questionTest;
     }
 
-    @GetMapping("/getAllQuestions")
+    @GetMapping("/get-all-questions")
     public List<Question> getAllQuestions() {
         System.out.println("try to get all questions");
         return (List<Question>) questionRepository.findAll();
