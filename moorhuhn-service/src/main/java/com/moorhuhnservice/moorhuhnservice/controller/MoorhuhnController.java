@@ -1,5 +1,10 @@
 package com.moorhuhnservice.moorhuhnservice.controller;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.moorhuhnservice.moorhuhnservice.BaseClasses.Question;
 import com.moorhuhnservice.moorhuhnservice.repositories.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,9 +40,19 @@ public class MoorhuhnController {
         return questionTest;
     }
 
-    @GetMapping("/get-all-questions")
-    public List<Question> getAllQuestions() {
-        System.out.println("try to get all questions");
-        return (List<Question>) questionRepository.findAll();
+    @GetMapping("/get-all-questions/{configuration}")
+    public List<Question> getAllQuestions(@CookieValue("token") String tokenCookie, @PathVariable String configuration) {
+        System.out.println("try to get all questions for configuration: " +configuration);
+        try {
+            Algorithm algorithm = Algorithm.HMAC256("test"); //use more secure key
+            JWTVerifier verifier = JWT.require(algorithm)
+                    .build(); //Reusable verifier instance
+            DecodedJWT jwt = verifier.verify(tokenCookie);
+            System.out.println("verification successfull! id was: " + jwt.getClaim("id"));
+
+        } catch (JWTVerificationException exception){
+            System.out.println("verification not successfull: " + exception);
+        }
+        return questionRepository.findAll();
     }
 }
