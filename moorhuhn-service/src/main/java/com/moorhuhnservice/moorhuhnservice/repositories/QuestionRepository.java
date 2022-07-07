@@ -9,6 +9,4 @@ import java.util.List;
 @Repository
 public interface QuestionRepository extends JpaRepository<Question, Long>{
     List<Question> findAllByConfiguration(String configuration);
-    Question deleteByQuestion(String question);
-    Question findByQuestion(String question);
 }

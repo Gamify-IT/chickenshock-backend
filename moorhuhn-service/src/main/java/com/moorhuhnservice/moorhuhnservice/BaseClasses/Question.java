@@ -6,7 +6,7 @@ import javax.persistence.*;
 @Table(name = "questions")
 public class Question {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     @Column(name = "id", nullable = false)
     private long id;
     @Column(nullable = false)
@@ -24,14 +24,6 @@ public class Question {
     @Column(nullable = false)
     private String wrongAnswerFour;
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public Question(String configuration, String question, String rightAnswer, String wrongAnswerOne, String wrongAnswerTwo, String wrongAnswerThree, String wrongAnswerFour) {
         this.configuration = configuration;
         this.question = question;
@@ -44,6 +36,22 @@ public class Question {
 
     public Question() {
 
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getConfiguration() {
+        return configuration;
+    }
+
+    public void setConfiguration(String configuration) {
+        this.configuration = configuration;
     }
 
     public String getQuestion() {

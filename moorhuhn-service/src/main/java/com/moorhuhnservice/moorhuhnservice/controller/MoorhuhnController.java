@@ -8,9 +8,13 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.moorhuhnservice.moorhuhnservice.BaseClasses.Question;
 import com.moorhuhnservice.moorhuhnservice.repositories.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class MoorhuhnController {
@@ -21,7 +25,11 @@ public class MoorhuhnController {
     @PostMapping("/save-all-questions")
     public List<Question> saveAllQuestions(@RequestBody List<Question> questions) {
         System.out.println("try to save all "+questions.size()+" questions: ");
-        return questionRepository.saveAll(questions);
+        List<Question> addedQuestions = new ArrayList<>();
+        for (Question question:questions) {
+            addedQuestions.add(questionRepository.save(new Question(question.getConfiguration(),question.getQuestion(),question.getRightAnswer(),question.getWrongAnswerOne(),question.getWrongAnswerTwo(),question.getWrongAnswerThree(),question.getWrongAnswerFour())));
+        }
+        return addedQuestions;
     }
 
     @PostMapping("/save-first-test-question")
@@ -32,22 +40,32 @@ public class MoorhuhnController {
         return questionTest;
     }
 
-    @DeleteMapping("delete-question-element-with-question/{question}")
-    public Question deleteQuestionByQuestion(@PathVariable String question){
-        return questionRepository.deleteByQuestion(question);
+    @DeleteMapping("/delete-question-element-by-id/{id}")
+    public Question deleteQuestionByQuestion(@PathVariable long id){
+        Optional<Question> questionToDelete = questionRepository.findById(id);
+        if(questionToDelete.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "There is no question with id"+ id);
+        }else{
+            questionRepository.deleteById(id);
+            return questionToDelete.get();
+        }
     }
 
-    @PutMapping("put-question-element-with-question/{question}")
-    public Question updateQuestionByQuestion(@RequestBody Question questionElement, @PathVariable String question){
-        Question questionToUpdate = questionRepository.findByQuestion(question);
-        questionToUpdate.setQuestion(questionElement.getQuestion());
-        questionToUpdate.setRightAnswer(questionElement.getRightAnswer());
-        questionToUpdate.setWrongAnswerOne(questionElement.getWrongAnswerOne());
-        questionToUpdate.setWrongAnswerTwo(questionElement.getWrongAnswerTwo());
-        questionToUpdate.setWrongAnswerTwo(questionElement.getWrongAnswerTwo());
-        questionToUpdate.setWrongAnswerThree(questionElement.getWrongAnswerThree());
-        questionToUpdate.setWrongAnswerFour(questionElement.getWrongAnswerFour());
-        return questionRepository.save(questionToUpdate);
+    @PutMapping("/put-question-element-by-id/{id}")
+    public Question updateQuestionByQuestion(@RequestBody Question questionElement, @PathVariable long id){
+        Optional<Question> questionToUpdate = questionRepository.findById(id);
+        if(questionToUpdate.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "There is no question with id"+ id);
+        }else{
+            questionToUpdate.get().setQuestion(questionElement.getQuestion());
+            questionToUpdate.get().setRightAnswer(questionElement.getRightAnswer());
+            questionToUpdate.get().setWrongAnswerOne(questionElement.getWrongAnswerOne());
+            questionToUpdate.get().setWrongAnswerTwo(questionElement.getWrongAnswerTwo());
+            questionToUpdate.get().setWrongAnswerTwo(questionElement.getWrongAnswerTwo());
+            questionToUpdate.get().setWrongAnswerThree(questionElement.getWrongAnswerThree());
+            questionToUpdate.get().setWrongAnswerFour(questionElement.getWrongAnswerFour());
+            return questionRepository.save(questionToUpdate.get());
+        }
     }
 
     @GetMapping("/get-all-questions/{configuration}")
@@ -65,4 +83,5 @@ public class MoorhuhnController {
         }
         return questionRepository.findAllByConfiguration(configuration);
     }
+
 }
