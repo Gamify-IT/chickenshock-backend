@@ -1,0 +1,34 @@
+version: "3.7"
+
+services:
+
+  #databases
+  moorhuhn-db:
+    container_name: moorhuhn-db
+    image: postgres:14-alpine
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./.volumes/moorhuhn-db:/var/lib/postgresql/data
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=asdf
+
+  #frontends
+  moorhuhn-frontend:
+    container_name: moorhuhn-frontend
+    image: ghcr.io/gamify-it/moorhuhn:feature-add-correct-communication-and-verification
+    restart: always
+    expose:
+      - "80"
+
+  # reverse-proxy
+  reverse-proxy:
+    container_name: reverse-proxy
+    image: nginx
+    restart: always
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+    ports:
+      - "80:80"

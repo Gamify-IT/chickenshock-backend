@@ -1,11 +1,20 @@
 package com.moorhuhnservice.moorhuhnservice.controller;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.moorhuhnservice.moorhuhnservice.BaseClasses.Question;
 import com.moorhuhnservice.moorhuhnservice.repositories.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class MoorhuhnController {
@@ -16,7 +25,11 @@ public class MoorhuhnController {
     @PostMapping("/save-all-questions")
     public List<Question> saveAllQuestions(@RequestBody List<Question> questions) {
         System.out.println("try to save all "+questions.size()+" questions: ");
-        return questions;
+        List<Question> addedQuestions = new ArrayList<>();
+        for (Question question:questions) {
+            addedQuestions.add(questionRepository.save(new Question(question.getConfiguration(),question.getQuestion(),question.getRightAnswer(),question.getWrongAnswerOne(),question.getWrongAnswerTwo(),question.getWrongAnswerThree(),question.getWrongAnswerFour())));
+        }
+        return addedQuestions;
     }
 
     @PostMapping("/save-first-test-question")
@@ -27,17 +40,48 @@ public class MoorhuhnController {
         return questionTest;
     }
 
-    @PostMapping("/save-second-sest-question")
-    public Question saveSecondTestQuestion() {
-        System.out.println("try to save a static question");
-        Question questionTest = new Question("xyz", "Frage2","AntwortRichtig","AntwortFalsch1","AntwortFalsch2","AntwortFalsch3","AntwortFalsch4");
-        questionRepository.save(questionTest);
-        return questionTest;
+    @DeleteMapping("/delete-question-element-by-id/{id}")
+    public Question deleteQuestionByQuestion(@PathVariable long id){
+        Optional<Question> questionToDelete = questionRepository.findById(id);
+        if(questionToDelete.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "There is no question with id"+ id);
+        }else{
+            questionRepository.deleteById(id);
+            return questionToDelete.get();
+        }
     }
 
-    @GetMapping("/get-all-questions")
-    public List<Question> getAllQuestions() {
-        System.out.println("try to get all questions");
-        return (List<Question>) questionRepository.findAll();
+    @PutMapping("/put-question-element-by-id/{id}")
+    public Question updateQuestionByQuestion(@RequestBody Question questionElement, @PathVariable long id){
+        Optional<Question> questionToUpdate = questionRepository.findById(id);
+        if(questionToUpdate.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "There is no question with id"+ id);
+        }else{
+            questionToUpdate.get().setQuestion(questionElement.getQuestion());
+            questionToUpdate.get().setRightAnswer(questionElement.getRightAnswer());
+            questionToUpdate.get().setWrongAnswerOne(questionElement.getWrongAnswerOne());
+            questionToUpdate.get().setWrongAnswerTwo(questionElement.getWrongAnswerTwo());
+            questionToUpdate.get().setWrongAnswerTwo(questionElement.getWrongAnswerTwo());
+            questionToUpdate.get().setWrongAnswerThree(questionElement.getWrongAnswerThree());
+            questionToUpdate.get().setWrongAnswerFour(questionElement.getWrongAnswerFour());
+            return questionRepository.save(questionToUpdate.get());
+        }
     }
+
+    @GetMapping("/get-all-questions/{configuration}")
+    public List<Question> getAllQuestions(@CookieValue("token") String tokenCookie, @PathVariable String configuration) {
+        System.out.println("try to get all questions for configuration: " +configuration);
+        try {
+            Algorithm algorithm = Algorithm.HMAC256("test"); //use more secure key
+            JWTVerifier verifier = JWT.require(algorithm)
+                    .build(); //Reusable verifier instance
+            DecodedJWT jwt = verifier.verify(tokenCookie);
+            System.out.println("verification successfully! id was: " + jwt.getClaim("id"));
+
+        } catch (JWTVerificationException exception){
+            System.out.println("verification not successfully: " + exception);
+        }
+        return questionRepository.findAllByConfiguration(configuration);
+    }
+
 }
