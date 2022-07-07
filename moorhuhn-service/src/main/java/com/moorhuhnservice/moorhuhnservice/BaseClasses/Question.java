@@ -10,7 +10,7 @@ public class Question {
     @Column(name = "id", nullable = false)
     private long id;
     @Column(nullable = false)
-    private String level;
+    private String configuration;
     @Column(nullable = false)
     private String question;
     @Column(nullable = false)
@@ -32,8 +32,8 @@ public class Question {
         this.id = id;
     }
 
-    public Question(String level, String question, String rightAnswer, String wrongAnswerOne, String wrongAnswerTwo, String wrongAnswerThree, String wrongAnswerFour) {
-        this.level = level;
+    public Question(String configuration, String question, String rightAnswer, String wrongAnswerOne, String wrongAnswerTwo, String wrongAnswerThree, String wrongAnswerFour) {
+        this.configuration = configuration;
         this.question = question;
         this.rightAnswer = rightAnswer;
         this.wrongAnswerOne = wrongAnswerOne;

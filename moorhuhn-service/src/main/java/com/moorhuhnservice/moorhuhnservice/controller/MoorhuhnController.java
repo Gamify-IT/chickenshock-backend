@@ -21,7 +21,7 @@ public class MoorhuhnController {
     @PostMapping("/save-all-questions")
     public List<Question> saveAllQuestions(@RequestBody List<Question> questions) {
         System.out.println("try to save all "+questions.size()+" questions: ");
-        return questions;
+        return questionRepository.saveAll(questions);
     }
 
     @PostMapping("/save-first-test-question")
@@ -32,12 +32,22 @@ public class MoorhuhnController {
         return questionTest;
     }
 
-    @PostMapping("/save-second-sest-question")
-    public Question saveSecondTestQuestion() {
-        System.out.println("try to save a static question");
-        Question questionTest = new Question("xyz", "Frage2","AntwortRichtig","AntwortFalsch1","AntwortFalsch2","AntwortFalsch3","AntwortFalsch4");
-        questionRepository.save(questionTest);
-        return questionTest;
+    @DeleteMapping("delete-question-element-with-question/{question}")
+    public Question deleteQuestionByQuestion(@PathVariable String question){
+        return questionRepository.deleteByQuestion(question);
+    }
+
+    @PutMapping("put-question-element-with-question/{question}")
+    public Question updateQuestionByQuestion(@RequestBody Question questionElement, @PathVariable String question){
+        Question questionToUpdate = questionRepository.findByQuestion(question);
+        questionToUpdate.setQuestion(questionElement.getQuestion());
+        questionToUpdate.setRightAnswer(questionElement.getRightAnswer());
+        questionToUpdate.setWrongAnswerOne(questionElement.getWrongAnswerOne());
+        questionToUpdate.setWrongAnswerTwo(questionElement.getWrongAnswerTwo());
+        questionToUpdate.setWrongAnswerTwo(questionElement.getWrongAnswerTwo());
+        questionToUpdate.setWrongAnswerThree(questionElement.getWrongAnswerThree());
+        questionToUpdate.setWrongAnswerFour(questionElement.getWrongAnswerFour());
+        return questionRepository.save(questionToUpdate);
     }
 
     @GetMapping("/get-all-questions/{configuration}")
@@ -48,11 +58,11 @@ public class MoorhuhnController {
             JWTVerifier verifier = JWT.require(algorithm)
                     .build(); //Reusable verifier instance
             DecodedJWT jwt = verifier.verify(tokenCookie);
-            System.out.println("verification successfull! id was: " + jwt.getClaim("id"));
+            System.out.println("verification successfully! id was: " + jwt.getClaim("id"));
 
         } catch (JWTVerificationException exception){
-            System.out.println("verification not successfull: " + exception);
+            System.out.println("verification not successfully: " + exception);
         }
-        return questionRepository.findAll();
+        return questionRepository.findAllByConfiguration(configuration);
     }
 }
