@@ -18,7 +18,7 @@ services:
   #frontends
   moorhuhn-frontend:
     container_name: moorhuhn-frontend
-    image: ghcr.io/gamify-it/moorhuhn:feature-add-correct-communication-and-verification
+    image: ghcr.io/gamify-it/moorhuhn:main
     restart: always
     expose:
       - "80"
