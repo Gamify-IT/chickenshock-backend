@@ -1,6 +1,6 @@
 package com.moorhuhnservice.moorhuhnservice.repositories;
 
-import com.moorhuhnservice.moorhuhnservice.BaseClasses.Question;
+import com.moorhuhnservice.moorhuhnservice.data.Question;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
