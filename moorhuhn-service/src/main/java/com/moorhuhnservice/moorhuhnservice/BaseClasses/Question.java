@@ -12,7 +12,7 @@ public class Question {
     @Column(nullable = false)
     private String configuration;
     @Column(nullable = false)
-    private String question;
+    private String questionText;
     @Column(nullable = false)
     private String rightAnswer;
     @Column(nullable = false)
@@ -24,9 +24,9 @@ public class Question {
     @Column(nullable = false)
     private String wrongAnswerFour;
 
-    public Question(String configuration, String question, String rightAnswer, String wrongAnswerOne, String wrongAnswerTwo, String wrongAnswerThree, String wrongAnswerFour) {
+    public Question(String configuration, String questionText, String rightAnswer, String wrongAnswerOne, String wrongAnswerTwo, String wrongAnswerThree, String wrongAnswerFour) {
         this.configuration = configuration;
-        this.question = question;
+        this.questionText = questionText;
         this.rightAnswer = rightAnswer;
         this.wrongAnswerOne = wrongAnswerOne;
         this.wrongAnswerTwo = wrongAnswerTwo;
@@ -54,12 +54,12 @@ public class Question {
         this.configuration = configuration;
     }
 
-    public String getQuestion() {
-        return question;
+    public String getQuestionText() {
+        return questionText;
     }
 
-    public void setQuestion(String question) {
-        this.question = question;
+    public void setQuestionText(String questionText) {
+        this.questionText = questionText;
     }
 
     public String getRightAnswer() {
