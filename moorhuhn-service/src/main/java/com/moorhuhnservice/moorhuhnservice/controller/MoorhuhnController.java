@@ -19,6 +19,8 @@ import java.util.Optional;
 @RestController
 public class MoorhuhnController {
 
+    Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+
     @Autowired
     QuestionRepository questionRepository;
 
