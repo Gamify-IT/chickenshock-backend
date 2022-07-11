@@ -3,7 +3,7 @@ package com.moorhuhnservice.moorhuhnservice;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.moorhuhnservice.moorhuhnservice.BaseClasses.Question;
+import com.moorhuhnservice.moorhuhnservice.data.Question;
 import com.moorhuhnservice.moorhuhnservice.repositories.QuestionRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
