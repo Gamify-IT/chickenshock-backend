@@ -60,7 +60,7 @@ public class MoorhuhnController {
         if(questionToUpdate.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "There is no question with id"+ id);
         }else{
-            questionToUpdate.get().setQuestion(questionElement.getQuestionText());
+            questionToUpdate.get().setQuestionText(questionElement.getQuestionText());
             questionToUpdate.get().setRightAnswer(questionElement.getRightAnswer());
             questionToUpdate.get().setWrongAnswerOne(questionElement.getWrongAnswerOne());
             questionToUpdate.get().setWrongAnswerTwo(questionElement.getWrongAnswerTwo());
