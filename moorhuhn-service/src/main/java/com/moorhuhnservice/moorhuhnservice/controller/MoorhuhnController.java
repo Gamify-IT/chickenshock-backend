@@ -30,7 +30,7 @@ public class MoorhuhnController {
         logger.debug("try to save all "+questions.size()+" questions: ");
         List<Question> addedQuestions = new ArrayList<>();
         for (Question question:questions) {
-            addedQuestions.add(questionRepository.save(new Question(question.getConfiguration(),question.getQuestion(),question.getRightAnswer(),question.getWrongAnswerOne(),question.getWrongAnswerTwo(),question.getWrongAnswerThree(),question.getWrongAnswerFour())));
+            addedQuestions.add(questionRepository.save(new Question(question.getConfiguration(),question.getQuestionText(),question.getRightAnswer(),question.getWrongAnswerOne(),question.getWrongAnswerTwo(),question.getWrongAnswerThree(),question.getWrongAnswerFour())));
         }
         return addedQuestions;
     }
@@ -38,7 +38,7 @@ public class MoorhuhnController {
     @PostMapping("/save-a-question")
     public Question saveFirstTestQuestion(@RequestBody Question question) {
         logger.debug("try to save a question");
-        Question questionTest = new Question(question.getConfiguration(), question.getQuestion(), question.getRightAnswer(), question.getWrongAnswerOne(), question.getWrongAnswerTwo(), question.getWrongAnswerThree(), question.getWrongAnswerFour());
+        Question questionTest = new Question(question.getConfiguration(), question.getQuestionText(), question.getRightAnswer(), question.getWrongAnswerOne(), question.getWrongAnswerTwo(), question.getWrongAnswerThree(), question.getWrongAnswerFour());
         questionRepository.save(questionTest);
         return questionTest;
     }
@@ -60,7 +60,7 @@ public class MoorhuhnController {
         if(questionToUpdate.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "There is no question with id"+ id);
         }else{
-            questionToUpdate.get().setQuestion(questionElement.getQuestion());
+            questionToUpdate.get().setQuestion(questionElement.getQuestionText());
             questionToUpdate.get().setRightAnswer(questionElement.getRightAnswer());
             questionToUpdate.get().setWrongAnswerOne(questionElement.getWrongAnswerOne());
             questionToUpdate.get().setWrongAnswerTwo(questionElement.getWrongAnswerTwo());
