@@ -15,12 +15,12 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Logger;
+import org.slf4j.*;
 
 @RestController
 public class MoorhuhnController {
 
-    Logger logger =  Logger.getLogger(this.getClass().getName());
+    private static final Logger logger = LoggerFactory.getLogger(MoorhuhnController.class);
 
     @Autowired
     QuestionRepository questionRepository;
