@@ -27,7 +27,7 @@ public class MoorhuhnController {
 
     @PostMapping("/save-all-questions")
     public List<Question> saveAllQuestions(@RequestBody List<Question> questions) {
-        logger.debug("try to save all "+questions.size()+" questions: ");
+        logger.debug("try to save all {} questions: ", questions.size());
         List<Question> addedQuestions = new ArrayList<>();
         for (Question question:questions) {
             addedQuestions.add(questionRepository.save(new Question(question.getConfiguration(),question.getQuestionText(),question.getRightAnswer(),question.getWrongAnswerOne(),question.getWrongAnswerTwo(),question.getWrongAnswerThree(),question.getWrongAnswerFour())));
@@ -73,16 +73,16 @@ public class MoorhuhnController {
 
     @GetMapping("/get-all-questions/{configuration}")
     public List<Question> getAllQuestions(@CookieValue("token") String tokenCookie, @PathVariable String configuration) {
-        logger.debug("try to get all questions for configuration: " +configuration);
+        logger.debug("try to get all questions for configuration: {}", configuration);
         try {
             Algorithm algorithm = Algorithm.HMAC256("test"); //use more secure key
             JWTVerifier verifier = JWT.require(algorithm)
                     .build(); //Reusable verifier instance
             DecodedJWT jwt = verifier.verify(tokenCookie);
-            logger.debug("verification successfully! id was: " + jwt.getClaim("id"));
+            logger.debug("verification successfully! id was: {}", jwt.getClaim("id"));
 
         } catch (JWTVerificationException exception){
-            logger.debug("verification not successfully: " + exception);
+            logger.debug("verification not successfully: {}", exception);
         }
         return questionRepository.findAllByConfiguration(configuration);
     }
