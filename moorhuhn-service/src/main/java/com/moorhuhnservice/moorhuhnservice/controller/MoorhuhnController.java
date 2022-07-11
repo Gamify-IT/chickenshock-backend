@@ -24,7 +24,7 @@ public class MoorhuhnController {
 
     @PostMapping("/save-all-questions")
     public List<Question> saveAllQuestions(@RequestBody List<Question> questions) {
-        System.out.println("try to save all "+questions.size()+" questions: ");
+        logger.log("try to save all "+questions.size()+" questions: ");
         List<Question> addedQuestions = new ArrayList<>();
         for (Question question:questions) {
             addedQuestions.add(questionRepository.save(new Question(question.getConfiguration(),question.getQuestion(),question.getRightAnswer(),question.getWrongAnswerOne(),question.getWrongAnswerTwo(),question.getWrongAnswerThree(),question.getWrongAnswerFour())));
@@ -34,7 +34,7 @@ public class MoorhuhnController {
 
     @PostMapping("/save-a-question")
     public Question saveFirstTestQuestion(@RequestBody Question question) {
-        System.out.println("try to save a question");
+        logger.log("try to save a question");
         Question questionTest = new Question(question.getConfiguration(), question.getQuestion(), question.getRightAnswer(), question.getWrongAnswerOne(), question.getWrongAnswerTwo(), question.getWrongAnswerThree(), question.getWrongAnswerFour());
         questionRepository.save(questionTest);
         return questionTest;
@@ -70,16 +70,16 @@ public class MoorhuhnController {
 
     @GetMapping("/get-all-questions/{configuration}")
     public List<Question> getAllQuestions(@CookieValue("token") String tokenCookie, @PathVariable String configuration) {
-        System.out.println("try to get all questions for configuration: " +configuration);
+        logger.log("try to get all questions for configuration: " +configuration);
         try {
             Algorithm algorithm = Algorithm.HMAC256("test"); //use more secure key
             JWTVerifier verifier = JWT.require(algorithm)
                     .build(); //Reusable verifier instance
             DecodedJWT jwt = verifier.verify(tokenCookie);
-            System.out.println("verification successfully! id was: " + jwt.getClaim("id"));
+            logger.log("verification successfully! id was: " + jwt.getClaim("id"));
 
         } catch (JWTVerificationException exception){
-            System.out.println("verification not successfully: " + exception);
+            logger.log("verification not successfully: " + exception);
         }
         return questionRepository.findAllByConfiguration(configuration);
     }

@@ -32,7 +32,7 @@ class MoorhuhnServiceApplicationTests {
     private QuestionRepository questionRepository;
 
     @Test
-    public void getQuestionsWithCorrectConfiguration_thenStatus200()
+    void getQuestionsWithCorrectConfiguration_thenStatus200()
             throws Exception {
         Question testQuestion = new Question("configuration", "ist dies die frage?", "dies ist die correcte Antwort", "dies ist die erste falsche Antwort", "dies ist die zweite falsche Antwort", "dies ist die dritte falsche Antwort", "dies ist die vierte falsche Antwort");
         questionRepository.save(testQuestion);
@@ -56,7 +56,7 @@ class MoorhuhnServiceApplicationTests {
     }
 
     @Test
-    public void updateQuestion_thenStatus200()
+    void updateQuestion_thenStatus200()
             throws Exception {
         Question testQuestion = new Question("configuration", "ist dies die frage?", "dies ist die correcte Antwort", "dies ist die erste falsche Antwort", "dies ist die zweite falsche Antwort", "dies ist die dritte falsche Antwort", "dies ist die vierte falsche Antwort");
         Question testQuestionUpdated = new Question("configuration", "ist dies die frage?", "dies ist die WIRKLICH correcte Antwort", "dies ist die erste falsche Antwort", "dies ist die zweite falsche Antwort", "dies ist die dritte falsche Antwort", "dies ist die vierte falsche Antwort");
@@ -80,7 +80,7 @@ class MoorhuhnServiceApplicationTests {
     }
 
     @Test
-    public void deleteQuestion_thenStatus200()
+    void deleteQuestion_thenStatus200()
             throws Exception {
         Question testQuestion = new Question("configuration", "ist dies die frage?", "dies ist die correcte Antwort", "dies ist die erste falsche Antwort", "dies ist die zweite falsche Antwort", "dies ist die dritte falsche Antwort", "dies ist die vierte falsche Antwort");
 
@@ -91,7 +91,7 @@ class MoorhuhnServiceApplicationTests {
     }
 
     @Test
-    public void postQuestions_thenStatus200()
+    void postQuestions_thenStatus200()
             throws Exception {
         Question testQuestion = new Question("configuration", "ist dies die frage?", "dies ist die correcte Antwort", "dies ist die erste falsche Antwort", "dies ist die zweite falsche Antwort", "dies ist die dritte falsche Antwort", "dies ist die vierte falsche Antwort");
         Question testQuestion2 = new Question("configuration", "ist dies die zweite frage?", "dies ist die correcte Antwort", "dies ist die erste falsche Antwort", "dies ist die zweite falsche Antwort", "dies ist die dritte falsche Antwort", "dies ist die vierte falsche Antwort");
