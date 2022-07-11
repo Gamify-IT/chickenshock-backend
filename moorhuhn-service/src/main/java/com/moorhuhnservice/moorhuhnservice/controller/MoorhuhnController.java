@@ -32,10 +32,10 @@ public class MoorhuhnController {
         return addedQuestions;
     }
 
-    @PostMapping("/save-first-test-question")
-    public Question saveFirstTestQuestion() {
-        System.out.println("try to save a static question");
-        Question questionTest = new Question("xyz", "Frage1","AntwortRichtig","AntwortFalsch1","AntwortFalsch2","AntwortFalsch3","AntwortFalsch4");
+    @PostMapping("/save-a-question")
+    public Question saveFirstTestQuestion(@RequestBody Question question) {
+        System.out.println("try to save a question");
+        Question questionTest = new Question(question.getConfiguration(), question.getQuestion(), question.getRightAnswer(), question.getWrongAnswerOne(), question.getWrongAnswerTwo(), question.getWrongAnswerThree(), question.getWrongAnswerFour());
         questionRepository.save(questionTest);
         return questionTest;
     }
