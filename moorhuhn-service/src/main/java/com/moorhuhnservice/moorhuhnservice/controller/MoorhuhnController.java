@@ -82,7 +82,7 @@ public class MoorhuhnController {
             logger.debug("verification successfully! id was: {}", jwt.getClaim("id"));
 
         } catch (JWTVerificationException exception){
-            logger.debug("verification not successfully: {}", exception);
+            logger.debug("verification not successfully.", exception);
         }
         return questionRepository.findAllByConfiguration(configuration);
     }
