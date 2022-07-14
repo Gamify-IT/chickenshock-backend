@@ -1,28 +1,47 @@
 package com.moorhuhnservice.moorhuhnservice.data;
 
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.FieldDefaults;
+
 import javax.persistence.*;
+import java.util.UUID;
+
 @Entity
 @Table(name = "questions")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
-    private long id;
+    long id;
+
     @Column(nullable = false)
-    private String configuration;
+    String configuration;
+
     @Column(nullable = false)
-    private String questionText;
+    String questionText;
+
     @Column(nullable = false)
-    private String rightAnswer;
+    String rightAnswer;
+
     @Column(nullable = false)
-    private String wrongAnswerOne;
+    String wrongAnswerOne;
+
     @Column(nullable = false)
-    private String wrongAnswerTwo;
+    String wrongAnswerTwo;
+
     @Column(nullable = false)
-    private String wrongAnswerThree;
+    String wrongAnswerThree;
+
     @Column(nullable = false)
-    private String wrongAnswerFour;
+    String wrongAnswerFour;
 
     public Question(String configuration, String questionText, String rightAnswer, String wrongAnswerOne, String wrongAnswerTwo, String wrongAnswerThree, String wrongAnswerFour) {
         this.configuration = configuration;
@@ -34,71 +53,4 @@ public class Question {
         this.wrongAnswerFour = wrongAnswerFour;
     }
 
-    public Question() {
-
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getConfiguration() {
-        return configuration;
-    }
-
-    public void setConfiguration(String configuration) {
-        this.configuration = configuration;
-    }
-
-    public String getQuestionText() {
-        return questionText;
-    }
-
-    public void setQuestionText(String questionText) {
-        this.questionText = questionText;
-    }
-
-    public String getRightAnswer() {
-        return rightAnswer;
-    }
-
-    public void setRightAnswer(String rightAnswer) {
-        this.rightAnswer = rightAnswer;
-    }
-
-    public String getWrongAnswerOne() {
-        return wrongAnswerOne;
-    }
-
-    public void setWrongAnswerOne(String wrongAnswerOne) {
-        this.wrongAnswerOne = wrongAnswerOne;
-    }
-
-    public String getWrongAnswerTwo() {
-        return wrongAnswerTwo;
-    }
-
-    public void setWrongAnswerTwo(String wrongAnswerTwo) {
-        this.wrongAnswerTwo = wrongAnswerTwo;
-    }
-
-    public String getWrongAnswerThree() {
-        return wrongAnswerThree;
-    }
-
-    public void setWrongAnswerThree(String wrongAnswerThree) {
-        this.wrongAnswerThree = wrongAnswerThree;
-    }
-
-    public String getWrongAnswerFour() {
-        return wrongAnswerFour;
-    }
-
-    public void setWrongAnswerFour(String wrongAnswerFour) {
-        this.wrongAnswerFour = wrongAnswerFour;
-    }
 }
