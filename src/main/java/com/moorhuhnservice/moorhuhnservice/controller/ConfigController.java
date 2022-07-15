@@ -21,7 +21,7 @@ public class ConfigController {
   ConfigurationRepository configurationRepository;
 
   @Autowired
-  ConfigService moorhuhnService;
+  ConfigService configService;
 
   @Autowired
   QuestionMapper questionMapper;
@@ -39,20 +39,20 @@ public class ConfigController {
   @GetMapping("/{configurationName}")
   public Configuration getConfiguration(@PathVariable String configurationName) {
     log.debug("get configuration {}", configurationName);
-    return moorhuhnService.getConfiguration(configurationName);
+    return configService.getConfiguration(configurationName);
   }
 
   @GetMapping("/{configurationName}/questions")
   public Set<Question> getQuestionsFromConfiguration(@PathVariable String configurationName) {
     log.debug("get questions from configuration {}", configurationName);
-    return moorhuhnService.getConfiguration(configurationName).getQuestions();
+    return configService.getConfiguration(configurationName).getQuestions();
   }
 
   @PostMapping("")
   @ResponseStatus(HttpStatus.CREATED)
   public Configuration createConfiguration(@RequestBody ConfigurationDTO configurationDTO) {
     log.debug("create configuration {}", configurationDTO);
-    return moorhuhnService.saveConfiguration(configurationDTO);
+    return configService.saveConfiguration(configurationDTO);
   }
 
   @PutMapping("/{configurationName}")
@@ -61,6 +61,6 @@ public class ConfigController {
     @RequestBody ConfigurationDTO configurationDTO
   ) {
     log.debug("update {} configuration {}", configurationName, configurationDTO);
-    return moorhuhnService.updateConfiguration(configurationName, configurationDTO);
+    return configService.updateConfiguration(configurationName, configurationDTO);
   }
 }

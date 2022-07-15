@@ -46,9 +46,7 @@ class MoorhuhnServiceApplicationTests {
   private ConfigurationRepository configurationRepository;
 
   private final String API_URL = "/api/v1/minigames/moorhuhn/configurations";
-
   private ObjectMapper objectMapper;
-
   private Configuration createdConfiguration;
 
   @BeforeEach
