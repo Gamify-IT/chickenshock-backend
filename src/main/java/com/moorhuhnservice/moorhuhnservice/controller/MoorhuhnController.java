@@ -57,11 +57,11 @@ public class MoorhuhnController {
   }
 
   @PutMapping("/configurations/{configurationName}")
-  public Configuration createConfiguration(
+  public Configuration updateConfiguration(
     @PathVariable String configurationName,
     @RequestBody ConfigurationDTO configurationDTO
   ) {
     log.debug("create configuration {}", configurationDTO);
-    return moorhuhnService.updateConfiguration(configurationDTO);
+    return moorhuhnService.updateConfiguration(configurationName, configurationDTO);
   }
 }

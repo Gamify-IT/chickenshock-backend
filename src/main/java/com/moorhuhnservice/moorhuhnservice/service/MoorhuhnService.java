@@ -87,10 +87,12 @@ public class MoorhuhnService {
    * Update a configuration by a given ConfigurationDTO
    *
    * @throws ResponseStatusException when configuration with the name does not exist
+   * @param configurationName the name of the configuration that should be updated
    * @param configurationDTO configuration that should be updated
    * @return the updated configuration
    */
-  public Configuration updateConfiguration(ConfigurationDTO configurationDTO) {
+  public Configuration updateConfiguration(String configurationName, ConfigurationDTO configurationDTO) {
+    configurationDTO.setName(configurationName);
     if (!configurationRepository.existsByName(configurationDTO.getName())) {
       throw new ResponseStatusException(
         HttpStatus.NOT_FOUND,
