@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ConfigurationDTO {
+
   String name;
   Set<QuestionDTO> questions;
 }

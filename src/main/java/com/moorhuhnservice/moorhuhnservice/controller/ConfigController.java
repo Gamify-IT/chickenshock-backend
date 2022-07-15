@@ -42,12 +42,6 @@ public class ConfigController {
     return configService.getConfiguration(configurationName);
   }
 
-  @GetMapping("/{configurationName}/questions")
-  public Set<Question> getQuestionsFromConfiguration(@PathVariable String configurationName) {
-    log.debug("get questions from configuration {}", configurationName);
-    return configService.getConfiguration(configurationName).getQuestions();
-  }
-
   @PostMapping("")
   @ResponseStatus(HttpStatus.CREATED)
   public Configuration createConfiguration(@RequestBody ConfigurationDTO configurationDTO) {
@@ -62,5 +56,40 @@ public class ConfigController {
   ) {
     log.debug("update {} configuration {}", configurationName, configurationDTO);
     return configService.updateConfiguration(configurationName, configurationDTO);
+  }
+
+  @GetMapping("/{configurationName}/questions")
+  public Set<Question> getQuestionsFromConfiguration(@PathVariable String configurationName) {
+    log.debug("get questions from configuration {}", configurationName);
+    return configService.getConfiguration(configurationName).getQuestions();
+  }
+
+  @PostMapping("/{configurationName}/questions")
+  @ResponseStatus(HttpStatus.CREATED)
+  public Question addQuestionToConfiguration(
+    @PathVariable String configurationName,
+    @RequestBody QuestionDTO questionDTO
+  ) {
+    log.debug("add question to configuration {}", configurationName);
+    return configService.addQuestionToConfiguration(configurationName, questionDTO);
+  }
+
+  @DeleteMapping("/{configurationName}/questions/{questionId}")
+  public QuestionDTO removeQuestionFromConfiguration(
+    @PathVariable String configurationName,
+    @PathVariable long questionId
+  ) {
+    log.debug("remove question from configuration {}", configurationName);
+    return configService.removeQuestionFromConfiguration(configurationName, questionId);
+  }
+
+  @PutMapping("/{configurationName}/questions/{questionId}")
+  public Question updateQuestionFromConfiguration(
+    @PathVariable String configurationName,
+    @PathVariable long questionId,
+    @RequestBody QuestionDTO questionDTO
+  ) {
+    log.debug("update question from configuration {}", configurationName);
+    return configService.updateQuestionFromConfiguration(configurationName, questionId, questionDTO);
   }
 }

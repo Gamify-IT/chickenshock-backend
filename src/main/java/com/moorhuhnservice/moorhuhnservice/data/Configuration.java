@@ -20,11 +20,19 @@ public class Configuration {
   @Column(name = "name", nullable = false, unique = true)
   String name;
 
-  @OneToMany(cascade = CascadeType.ALL)
+  @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
   Set<Question> questions;
 
   public Configuration(String name, Set<Question> questions) {
     this.name = name;
     this.questions = questions;
+  }
+
+  public void addQuestion(Question question) {
+    this.questions.add(question);
+  }
+
+  public void removeQuestion(Question question) {
+    this.questions.remove(question);
   }
 }
