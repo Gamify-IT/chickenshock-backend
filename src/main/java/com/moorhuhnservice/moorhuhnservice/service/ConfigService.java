@@ -1,15 +1,9 @@
 package com.moorhuhnservice.moorhuhnservice.service;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.JWTVerifier;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.auth0.jwt.interfaces.DecodedJWT;
 import com.moorhuhnservice.moorhuhnservice.data.*;
 import com.moorhuhnservice.moorhuhnservice.data.mapper.ConfigurationMapper;
 import com.moorhuhnservice.moorhuhnservice.data.mapper.QuestionMapper;
 import com.moorhuhnservice.moorhuhnservice.repositories.ConfigurationRepository;
-import java.util.List;
 import java.util.Set;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @Slf4j
-public class MoorhuhnService {
+public class ConfigService {
 
   @Autowired
   QuestionMapper questionMapper;
@@ -29,20 +23,6 @@ public class MoorhuhnService {
 
   @Autowired
   ConfigurationRepository configurationRepository;
-
-  public boolean isAuthorized(String tokenCookie) {
-    boolean authorized = false;
-    try {
-      Algorithm algorithm = Algorithm.HMAC256("test"); //use more secure key
-      JWTVerifier verifier = JWT.require(algorithm).build(); //Reusable verifier instance
-      DecodedJWT jwt = verifier.verify(tokenCookie);
-      authorized = true;
-      log.debug("verification successfully! id was: {}", jwt.getClaim("id"));
-    } catch (JWTVerificationException exception) {
-      log.debug("verification not successfully.", exception);
-    }
-    return authorized;
-  }
 
   /**
    * Search a configuration by given name

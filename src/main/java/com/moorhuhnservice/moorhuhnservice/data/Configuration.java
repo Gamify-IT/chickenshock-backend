@@ -1,11 +1,8 @@
 package com.moorhuhnservice.moorhuhnservice.data;
 
-import java.beans.ConstructorProperties;
-import java.util.List;
 import java.util.Set;
 import javax.persistence.*;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;

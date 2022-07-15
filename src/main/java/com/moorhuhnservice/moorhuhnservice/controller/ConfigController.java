@@ -4,25 +4,24 @@ import com.moorhuhnservice.moorhuhnservice.data.*;
 import com.moorhuhnservice.moorhuhnservice.data.mapper.ConfigurationMapper;
 import com.moorhuhnservice.moorhuhnservice.data.mapper.QuestionMapper;
 import com.moorhuhnservice.moorhuhnservice.repositories.ConfigurationRepository;
-import com.moorhuhnservice.moorhuhnservice.service.MoorhuhnService;
+import com.moorhuhnservice.moorhuhnservice.service.ConfigService;
 import java.util.List;
 import java.util.Set;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 @RestController
-@RequestMapping("api/v1/minigames/moorhuhn")
+@RequestMapping("api/v1/minigames/moorhuhn/configurations")
 @Slf4j
-public class MoorhuhnController {
+public class ConfigController {
 
   @Autowired
   ConfigurationRepository configurationRepository;
 
   @Autowired
-  MoorhuhnService moorhuhnService;
+  ConfigService moorhuhnService;
 
   @Autowired
   QuestionMapper questionMapper;
@@ -30,38 +29,38 @@ public class MoorhuhnController {
   @Autowired
   ConfigurationMapper configurationMapper;
 
-  @GetMapping("/configurations")
+  @GetMapping("")
   public List<Configuration> getConfigurations() {
     log.debug("get all configurations");
     List<Configuration> configurations = configurationRepository.findAll();
     return configurations;
   }
 
-  @GetMapping("/configurations/{configurationName}")
+  @GetMapping("/{configurationName}")
   public Configuration getConfiguration(@PathVariable String configurationName) {
     log.debug("get configuration {}", configurationName);
     return moorhuhnService.getConfiguration(configurationName);
   }
 
-  @GetMapping("/configurations/{configurationName}/questions")
+  @GetMapping("/{configurationName}/questions")
   public Set<Question> getQuestionsFromConfiguration(@PathVariable String configurationName) {
     log.debug("get questions from configuration {}", configurationName);
     return moorhuhnService.getConfiguration(configurationName).getQuestions();
   }
 
-  @PostMapping("/configurations")
+  @PostMapping("")
   @ResponseStatus(HttpStatus.CREATED)
   public Configuration createConfiguration(@RequestBody ConfigurationDTO configurationDTO) {
     log.debug("create configuration {}", configurationDTO);
     return moorhuhnService.saveConfiguration(configurationDTO);
   }
 
-  @PutMapping("/configurations/{configurationName}")
+  @PutMapping("/{configurationName}")
   public Configuration updateConfiguration(
     @PathVariable String configurationName,
     @RequestBody ConfigurationDTO configurationDTO
   ) {
-    log.debug("create configuration {}", configurationDTO);
+    log.debug("update {} configuration {}", configurationName, configurationDTO);
     return moorhuhnService.updateConfiguration(configurationName, configurationDTO);
   }
 }

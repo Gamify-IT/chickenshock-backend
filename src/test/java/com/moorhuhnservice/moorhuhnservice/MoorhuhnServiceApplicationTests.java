@@ -45,7 +45,7 @@ class MoorhuhnServiceApplicationTests {
   @Autowired
   private ConfigurationRepository configurationRepository;
 
-  private final String API_URL = "/api/v1/minigames/moorhuhn";
+  private final String API_URL = "/api/v1/minigames/moorhuhn/configurations";
 
   private ObjectMapper objectMapper;
 
@@ -71,7 +71,7 @@ class MoorhuhnServiceApplicationTests {
   @Test
   public void getConfigurations() throws Exception {
     MvcResult result = mvc
-      .perform(get(API_URL + "/configurations").contentType(MediaType.APPLICATION_JSON))
+      .perform(get(API_URL).contentType(MediaType.APPLICATION_JSON))
       .andExpect(status().isOk())
       .andReturn();
 
@@ -85,8 +85,7 @@ class MoorhuhnServiceApplicationTests {
   public void getQuestionsFromSpecificConfiguration() throws Exception {
     MvcResult result = mvc
       .perform(
-        get(API_URL + "/configurations/" + createdConfiguration.getName() + "/questions")
-          .contentType(MediaType.APPLICATION_JSON)
+        get(API_URL + "/" + createdConfiguration.getName() + "/questions").contentType(MediaType.APPLICATION_JSON)
       )
       .andExpect(status().isOk())
       .andReturn();
@@ -107,10 +106,7 @@ class MoorhuhnServiceApplicationTests {
     String bodyValue = objectMapper.writeValueAsString(newCreatedConfiguration);
     MvcResult result = mvc
       .perform(
-        post(API_URL + "/configurations")
-          .contentType(MediaType.APPLICATION_JSON)
-          .content(bodyValue)
-          .contentType(MediaType.APPLICATION_JSON)
+        post(API_URL).contentType(MediaType.APPLICATION_JSON).content(bodyValue).contentType(MediaType.APPLICATION_JSON)
       )
       .andExpect(status().isCreated())
       .andReturn();
@@ -135,7 +131,7 @@ class MoorhuhnServiceApplicationTests {
     String bodyValue = objectMapper.writeValueAsString(updatedConfiguration);
     MvcResult result = mvc
       .perform(
-        put(API_URL + "/configurations/" + createdConfiguration.getName())
+        put(API_URL + "/" + createdConfiguration.getName())
           .contentType(MediaType.APPLICATION_JSON)
           .content(bodyValue)
           .contentType(MediaType.APPLICATION_JSON)
