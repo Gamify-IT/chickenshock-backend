@@ -56,9 +56,7 @@ public class ConfigService {
         "Configuration with name " + configurationDTO.getName() + " already exists."
       );
     }
-    log.info("ConfigurationDTO object: {}", configurationDTO);
     Configuration configuration = configurationMapper.configurationDTOToConfiguration(configurationDTO);
-    log.info("Configuration object: {}", configuration);
     Configuration savedConfiguration = configurationRepository.save(configuration);
     return savedConfiguration;
   }

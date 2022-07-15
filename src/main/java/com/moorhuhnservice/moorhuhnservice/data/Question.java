@@ -16,11 +16,8 @@ public class Question {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   long id;
-
   String text;
-
   String rightAnswer;
-
   @ElementCollection
   List<String> wrongAnswers;
 

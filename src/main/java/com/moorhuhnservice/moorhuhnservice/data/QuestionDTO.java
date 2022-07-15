@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class QuestionDTO {
-
   String text;
   String rightAnswer;
   List<String> wrongAnswers;
