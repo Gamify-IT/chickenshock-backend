@@ -2,9 +2,9 @@
 # Build stage
 #
 FROM maven:3.8-openjdk-17-slim AS build
-COPY moorhuhn-service/pom.xml /home/app/pom.xml
+COPY pom.xml /home/app/pom.xml
 RUN mvn -f /home/app/pom.xml install
-COPY moorhuhn-service/src /home/app/src
+COPY src /home/app/src
 RUN mvn -f /home/app/pom.xml package -Dmaven.test.skip
 
 
