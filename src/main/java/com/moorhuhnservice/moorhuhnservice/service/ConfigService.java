@@ -78,13 +78,7 @@ public class ConfigService {
    */
   public Configuration updateConfiguration(String configurationName, ConfigurationDTO configurationDTO) {
     configurationDTO.setName(configurationName);
-    if (!configurationRepository.existsByName(configurationDTO.getName())) {
-      throw new ResponseStatusException(
-        HttpStatus.NOT_FOUND,
-        "Configuration with name " + configurationDTO.getName() + " does not exist."
-      );
-    }
-    Configuration configuration = configurationRepository.findByName(configurationDTO.getName());
+    Configuration configuration = getConfiguration(configurationName);
     Set<Question> questions = questionMapper.questionDTOsToQuestions(configurationDTO.getQuestions());
     configuration.setQuestions(questions);
     Configuration updatedConfiguration = configurationRepository.save(configuration);
