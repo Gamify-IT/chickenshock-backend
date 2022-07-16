@@ -92,6 +92,20 @@ public class ConfigService {
   }
 
   /**
+   * Delete a configuration
+   *
+   * @throws ResponseStatusException when configuration with the name does not exist
+   * @param configurationName the name of the configuration that should be updated
+   * @return the updated configuration
+   */
+  public ConfigurationDTO deleteConfiguration(String configurationName) {
+    Configuration configuration = getConfiguration(configurationName);
+    ConfigurationDTO deletedConfigurationDTO = configurationMapper.configurationToConfigurationDTO(configuration);
+    configurationRepository.delete(configuration);
+    return deletedConfigurationDTO;
+  }
+
+  /**
    * Add a question to specific configuration
    *
    * @throws ResponseStatusException when configurationName does not exist
@@ -111,6 +125,7 @@ public class ConfigService {
   /**
    * Delete a question from a specific configuration
    *
+   * @throws ResponseStatusException when configuration with the name or question with id does not exist
    * @param configurationName the name of the configuration where a question should be removed
    * @param questionId the id of the question that should be deleted
    * @return the deleted question as DTO
@@ -136,6 +151,7 @@ public class ConfigService {
   /**
    * Update a question from a specific configuration
    *
+   * @throws ResponseStatusException when configuration with the name or question with id does not exist
    * @param configurationName the name of the configuration where a question should be updated
    * @param questionId the id of the question that should be updated
    * @param questionDTO the content of the question that should be updated

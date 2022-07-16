@@ -58,10 +58,10 @@ public class ConfigController {
     return configService.updateConfiguration(configurationName, configurationDTO);
   }
 
-  @GetMapping("/{configurationName}/questions")
-  public Set<Question> getQuestionsFromConfiguration(@PathVariable String configurationName) {
-    log.debug("get questions from configuration {}", configurationName);
-    return configService.getConfiguration(configurationName).getQuestions();
+  @DeleteMapping("/{configurationName}")
+  public ConfigurationDTO deleteConfiguration(@PathVariable String configurationName) {
+    log.debug("delete configuration {}", configurationName);
+    return configService.deleteConfiguration(configurationName);
   }
 
   @PostMapping("/{configurationName}/questions")

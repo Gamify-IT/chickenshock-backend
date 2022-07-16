@@ -51,10 +51,20 @@ class ConfigControllerTest {
   @BeforeEach
   public void createBasicData() {
     configurationRepository.deleteAll();
-    Question questionOne = new Question("Are you cool?", "Yes", Arrays.asList("No", "Maybe"));
-    Question questionTwo = new Question("Is this game cool?", "Yes", Arrays.asList("No", "Maybe"));
+    Question questionOne = new Question();
+    questionOne.setText("Are you cool?");
+    questionOne.setRightAnswer("Yes");
+    questionOne.setWrongAnswers(Arrays.asList("No", "Maybe"));
 
-    Configuration configuration = new Configuration("initialConfiguration", Set.of(questionOne, questionTwo));
+    Question questionTwo = new Question();
+    questionTwo.setText("Is this game cool?");
+    questionTwo.setRightAnswer("Yes");
+    questionTwo.setWrongAnswers(Arrays.asList("No", "Maybe"));
+
+    Configuration configuration = new Configuration();
+    configuration.setName("initialConfiguration");
+    configuration.setQuestions(Set.of(questionOne, questionTwo));
+
     createdConfiguration = configurationRepository.save(configuration);
 
     objectMapper = new ObjectMapper();
@@ -76,22 +86,17 @@ class ConfigControllerTest {
     List<Configuration> configurations = Arrays.asList(objectMapper.readValue(content, Configuration[].class));
 
     assertSame(1, configurations.size());
+    Configuration singleConfiguration = configurations.get(0);
+    assertEquals(createdConfiguration.getName(), singleConfiguration.getName());
+    assertSame(createdConfiguration.getQuestions().size(), singleConfiguration.getQuestions().size());
   }
 
   @Test
-  public void getQuestionsFromSpecificConfiguration() throws Exception {
+  public void getSpecificConfiguration_DoesNotExist_ThrowsNotFound() throws Exception {
     MvcResult result = mvc
-      .perform(
-        get(API_URL + "/" + createdConfiguration.getName() + "/questions").contentType(MediaType.APPLICATION_JSON)
-      )
-      .andExpect(status().isOk())
+      .perform(get(API_URL + "/" + "notExistingConfiguration").contentType(MediaType.APPLICATION_JSON))
+      .andExpect(status().isNotFound())
       .andReturn();
-
-    String content = result.getResponse().getContentAsString();
-    Set<Question> questions = Set.of(objectMapper.readValue(content, Question[].class));
-    Set<QuestionDTO> questionDTOs = questionMapper.questionsToQuestionDTOs(questions);
-
-    assertEquals(questionMapper.questionsToQuestionDTOs(createdConfiguration.getQuestions()), questionDTOs);
   }
 
   @Test
@@ -143,6 +148,25 @@ class ConfigControllerTest {
       updatedConfigurationDTOResponse.getQuestions()
     );
     assertSame(1, configurationRepository.findAll().size());
+  }
+
+  @Test
+  public void deleteConfiguration() throws Exception {
+    MvcResult result = mvc
+      .perform(delete(API_URL + "/" + createdConfiguration.getName()).contentType(MediaType.APPLICATION_JSON))
+      .andExpect(status().isOk())
+      .andReturn();
+
+    String content = result.getResponse().getContentAsString();
+    ConfigurationDTO deletedConfigurationDTOResponse = objectMapper.readValue(content, ConfigurationDTO.class);
+
+    assertSame(0, configurationRepository.findAll().size());
+    assertEquals(createdConfiguration.getName(), deletedConfigurationDTOResponse.getName());
+    createdConfiguration
+      .getQuestions()
+      .forEach(question -> {
+        assertFalse(questionRepository.existsById(question.getId()));
+      });
   }
 
   @Test
