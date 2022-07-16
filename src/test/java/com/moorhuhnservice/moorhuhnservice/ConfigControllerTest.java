@@ -93,10 +93,9 @@ class ConfigControllerTest {
 
   @Test
   public void getSpecificConfiguration_DoesNotExist_ThrowsNotFound() throws Exception {
-    MvcResult result = mvc
+    mvc
       .perform(get(API_URL + "/" + "notExistingConfiguration").contentType(MediaType.APPLICATION_JSON))
-      .andExpect(status().isNotFound())
-      .andReturn();
+      .andExpect(status().isNotFound());
   }
 
   @Test
@@ -117,7 +116,7 @@ class ConfigControllerTest {
       newCreatedConfigurationResponse
     );
 
-    assertEquals(newCreatedConfiguration.getQuestions(), newCreatedConfigurationDTOResponse.getQuestions());
+    assertEquals(newCreatedConfiguration, newCreatedConfigurationDTOResponse);
     assertSame(2, configurationRepository.findAll().size());
   }
 
@@ -142,11 +141,8 @@ class ConfigControllerTest {
       updatedConfigurationResponse
     );
 
+    assertEquals(updatedConfiguration, updatedConfigurationDTOResponse);
     assertEquals(newQuestionsDTO, updatedConfigurationDTOResponse.getQuestions());
-    assertNotEquals(
-      questionMapper.questionsToQuestionDTOs(createdConfiguration.getQuestions()),
-      updatedConfigurationDTOResponse.getQuestions()
-    );
     assertSame(1, configurationRepository.findAll().size());
   }
 
@@ -191,7 +187,6 @@ class ConfigControllerTest {
     Question newAddedQuestionResponse = objectMapper.readValue(content, Question.class);
     QuestionDTO newAddedQuestionDTOResponse = questionMapper.questionToQuestionDTO(newAddedQuestionResponse);
 
-    assertEquals(addedQuestionDTO.getText(), newAddedQuestionResponse.getText());
     assertEquals(addedQuestionDTO, newAddedQuestionDTOResponse);
   }
 
@@ -199,6 +194,7 @@ class ConfigControllerTest {
   public void removeQuestionFromExistingConfiguration() throws Exception {
     Question removedQuestion = createdConfiguration.getQuestions().stream().findFirst().get();
     assertTrue(questionRepository.existsById(removedQuestion.getId()));
+
     MvcResult result = mvc
       .perform(
         delete(API_URL + "/" + createdConfiguration.getName() + "/questions/" + removedQuestion.getId())
@@ -210,6 +206,7 @@ class ConfigControllerTest {
     String content = result.getResponse().getContentAsString();
     QuestionDTO removedQuestionDTOResult = objectMapper.readValue(content, QuestionDTO.class);
 
+    assertEquals(questionMapper.questionToQuestionDTO(removedQuestion), removedQuestionDTOResult);
     assertSame(
       createdConfiguration.getQuestions().size() - 1,
       configurationRepository.findByName(createdConfiguration.getName()).getQuestions().size()
@@ -236,7 +233,9 @@ class ConfigControllerTest {
 
     String content = result.getResponse().getContentAsString();
     Question updatedQuestionResult = objectMapper.readValue(content, Question.class);
+    QuestionDTO updatedQuestionDTOResult = questionMapper.questionToQuestionDTO(updatedQuestionResult);
 
+    assertEquals(updatedQuestionDTO, updatedQuestionDTOResult);
     assertEquals(newText, updatedQuestionResult.getText());
     assertEquals(newText, questionRepository.findById(updatedQuestion.getId()).get().getText());
   }
