@@ -1,6 +1,7 @@
 package com.moorhuhnservice.moorhuhnservice.data;
 
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.*;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -27,5 +28,18 @@ public class Question {
     this.text = text;
     this.rightAnswer = rightAnswer;
     this.wrongAnswers = wrongAnswers;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Question question = (Question) o;
+    return id == question.id && Objects.equals(text, question.text);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, text);
   }
 }

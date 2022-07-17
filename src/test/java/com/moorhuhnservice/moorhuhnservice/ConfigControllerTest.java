@@ -87,8 +87,7 @@ class ConfigControllerTest {
 
     assertSame(1, configurations.size());
     Configuration singleConfiguration = configurations.get(0);
-    assertEquals(createdConfiguration.getName(), singleConfiguration.getName());
-    assertSame(createdConfiguration.getQuestions().size(), singleConfiguration.getQuestions().size());
+    assertEquals(createdConfiguration, singleConfiguration);
   }
 
   @Test

@@ -6,7 +6,6 @@ import com.moorhuhnservice.moorhuhnservice.data.mapper.QuestionMapper;
 import com.moorhuhnservice.moorhuhnservice.repositories.ConfigurationRepository;
 import com.moorhuhnservice.moorhuhnservice.service.ConfigService;
 import java.util.List;
-import java.util.Set;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
