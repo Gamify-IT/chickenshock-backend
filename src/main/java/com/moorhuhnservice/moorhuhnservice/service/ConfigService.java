@@ -33,7 +33,7 @@ public class ConfigService {
   QuestionRepository questionRepository;
 
   /**
-   * Search a configuration by given name
+   * Search a configuration by given id
    *
    * @throws ResponseStatusException when configuration by configurationName could not be found
    * @param id the id of the configuration searching for
@@ -50,7 +50,6 @@ public class ConfigService {
   /**
    * Save a configuration
    *
-   * @throws ResponseStatusException when configuration with the name already exists
    * @param configurationDTO configuration that should be saved
    * @return the saved configuration as DTO
    */
@@ -66,7 +65,7 @@ public class ConfigService {
   /**
    * Update a configuration
    *
-   * @throws ResponseStatusException when configuration with the name does not exist
+   * @throws ResponseStatusException when configuration with the id does not exist
    * @param id the id of the configuration that should be updated
    * @param configurationDTO configuration that should be updated
    * @return the updated configuration as DTO
@@ -85,7 +84,7 @@ public class ConfigService {
   /**
    * Delete a configuration
    *
-   * @throws ResponseStatusException when configuration with the name does not exist
+   * @throws ResponseStatusException when configuration with the id does not exist
    * @param id the id of the configuration that should be updated
    * @return the deleted configuration as DTO
    */
@@ -99,7 +98,7 @@ public class ConfigService {
   /**
    * Add a question to specific configuration
    *
-   * @throws ResponseStatusException when configurationName does not exist
+   * @throws ResponseStatusException when configuration with the id does not exist
    * @param id the id of the configuration where a question should be added
    * @param questionDTO the question that should be added
    * @return the added question as DTO
@@ -117,7 +116,7 @@ public class ConfigService {
   /**
    * Delete a question from a specific configuration
    *
-   * @throws ResponseStatusException when configuration with the name or question with id does not exist
+   * @throws ResponseStatusException when configuration with the id or question with id does not exist
    * @param id the id of the configuration where a question should be removed
    * @param questionId the id of the question that should be deleted
    * @return the deleted question as DTO
@@ -139,7 +138,7 @@ public class ConfigService {
   /**
    * Update a question from a specific configuration
    *
-   * @throws ResponseStatusException when configuration with the name or question with id does not exist
+   * @throws ResponseStatusException when configuration with the id or question with id does not exist
    * @param id the id of the configuration where a question should be updated
    * @param questionId the id of the question that should be updated
    * @param questionDTO the content of the question that should be updated
@@ -166,7 +165,7 @@ public class ConfigService {
    *
    * @throws ResponseStatusException when question with the id in the given configuration does not exist
    * @param questionId id of searched question
-   * @param configuration in which configuration the question is part of
+   * @param configuration configuration in which the question is part of
    * @return an optional of the question
    */
   private Optional<Question> getQuestionInConfiguration(UUID questionId, Configuration configuration) {
