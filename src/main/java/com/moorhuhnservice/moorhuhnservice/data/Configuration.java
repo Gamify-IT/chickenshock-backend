@@ -1,11 +1,13 @@
 package com.moorhuhnservice.moorhuhnservice.data;
 
 import java.util.Set;
+import java.util.UUID;
 import javax.persistence.*;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.Type;
 
 @Entity
 @Data
@@ -14,17 +16,13 @@ import lombok.experimental.FieldDefaults;
 public class Configuration {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  long id;
-
-  @Column(name = "name", nullable = false, unique = true)
-  String name;
+  @GeneratedValue(generator = "uuid")
+  UUID id;
 
   @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
   Set<Question> questions;
 
-  public Configuration(String name, Set<Question> questions) {
-    this.name = name;
+  public Configuration(Set<Question> questions) {
     this.questions = questions;
   }
 

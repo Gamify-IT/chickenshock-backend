@@ -7,6 +7,7 @@ import com.moorhuhnservice.moorhuhnservice.repositories.ConfigurationRepository;
 import com.moorhuhnservice.moorhuhnservice.repositories.QuestionRepository;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,18 +36,15 @@ public class ConfigService {
    * Search a configuration by given name
    *
    * @throws ResponseStatusException when configuration by configurationName could not be found
-   * @param configurationName the name of the configuration searching for
+   * @param id the id of the configuration searching for
    * @return the found configuration
    */
-  public Configuration getConfiguration(final String configurationName) {
-    final Configuration configuration = configurationRepository.findByName(configurationName);
-    if (configuration == null) {
-      throw new ResponseStatusException(
-        HttpStatus.NOT_FOUND,
-        "There is no configuration with configurationName " + configurationName
-      );
+  public Configuration getConfiguration(final UUID id) {
+    final Optional<Configuration> configuration = configurationRepository.findById(id);
+    if (configuration.isEmpty()) {
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "There is no configuration with id " + id);
     }
-    return configuration;
+    return configuration.get();
   }
 
   /**
@@ -54,46 +52,45 @@ public class ConfigService {
    *
    * @throws ResponseStatusException when configuration with the name already exists
    * @param configurationDTO configuration that should be saved
-   * @return the saved configuration
+   * @return the saved configuration as DTO
    */
-  public Configuration saveConfiguration(final ConfigurationDTO configurationDTO) {
-    if (configurationRepository.existsByName(configurationDTO.getName())) {
-      throw new ResponseStatusException(
-        HttpStatus.BAD_REQUEST,
-        "Configuration with name " + configurationDTO.getName() + " already exists."
-      );
-    }
+  public ConfigurationDTO saveConfiguration(final ConfigurationDTO configurationDTO) {
     final Configuration configuration = configurationMapper.configurationDTOToConfiguration(configurationDTO);
     final Configuration savedConfiguration = configurationRepository.save(configuration);
-    return savedConfiguration;
+    final ConfigurationDTO savedConfigurationDTO = configurationMapper.configurationToConfigurationDTO(
+      savedConfiguration
+    );
+    return savedConfigurationDTO;
   }
 
   /**
    * Update a configuration
    *
    * @throws ResponseStatusException when configuration with the name does not exist
-   * @param configurationName the name of the configuration that should be updated
+   * @param id the id of the configuration that should be updated
    * @param configurationDTO configuration that should be updated
-   * @return the updated configuration
+   * @return the updated configuration as DTO
    */
-  public Configuration updateConfiguration(final String configurationName, final ConfigurationDTO configurationDTO) {
-    configurationDTO.setName(configurationName);
-    final Configuration configuration = getConfiguration(configurationName);
+  public ConfigurationDTO updateConfiguration(final UUID id, final ConfigurationDTO configurationDTO) {
+    final Configuration configuration = getConfiguration(id);
     final Set<Question> questions = questionMapper.questionDTOsToQuestions(configurationDTO.getQuestions());
     configuration.setQuestions(questions);
     final Configuration updatedConfiguration = configurationRepository.save(configuration);
-    return updatedConfiguration;
+    final ConfigurationDTO updatedConfigurationDTO = configurationMapper.configurationToConfigurationDTO(
+      updatedConfiguration
+    );
+    return updatedConfigurationDTO;
   }
 
   /**
    * Delete a configuration
    *
    * @throws ResponseStatusException when configuration with the name does not exist
-   * @param configurationName the name of the configuration that should be updated
-   * @return the updated configuration
+   * @param id the id of the configuration that should be updated
+   * @return the deleted configuration as DTO
    */
-  public ConfigurationDTO deleteConfiguration(final String configurationName) {
-    final Configuration configuration = getConfiguration(configurationName);
+  public ConfigurationDTO deleteConfiguration(final UUID id) {
+    final Configuration configuration = getConfiguration(id);
     final ConfigurationDTO deletedConfigurationDTO = configurationMapper.configurationToConfigurationDTO(configuration);
     configurationRepository.delete(configuration);
     return deletedConfigurationDTO;
@@ -103,29 +100,30 @@ public class ConfigService {
    * Add a question to specific configuration
    *
    * @throws ResponseStatusException when configurationName does not exist
-   * @param configurationName the name of the configuration where a question should be added
+   * @param id the id of the configuration where a question should be added
    * @param questionDTO the question that should be added
-   * @return the added question
+   * @return the added question as DTO
    */
-  public Question addQuestionToConfiguration(final String configurationName, final QuestionDTO questionDTO) {
-    final Configuration configuration = getConfiguration(configurationName);
+  public QuestionDTO addQuestionToConfiguration(final UUID id, final QuestionDTO questionDTO) {
+    final Configuration configuration = getConfiguration(id);
     final Question question = questionMapper.questionDTOToQuestion(questionDTO);
     final Question savedQuestion = questionRepository.save(question);
+    final QuestionDTO savedQuestionDTO = questionMapper.questionToQuestionDTO(savedQuestion);
     configuration.addQuestion(savedQuestion);
     configurationRepository.save(configuration);
-    return savedQuestion;
+    return savedQuestionDTO;
   }
 
   /**
    * Delete a question from a specific configuration
    *
    * @throws ResponseStatusException when configuration with the name or question with id does not exist
-   * @param configurationName the name of the configuration where a question should be removed
+   * @param id the id of the configuration where a question should be removed
    * @param questionId the id of the question that should be deleted
    * @return the deleted question as DTO
    */
-  public QuestionDTO removeQuestionFromConfiguration(final String configurationName, final long questionId) {
-    final Configuration configuration = getConfiguration(configurationName);
+  public QuestionDTO removeQuestionFromConfiguration(final UUID id, final UUID questionId) {
+    final Configuration configuration = getConfiguration(id);
     final Optional<Question> optionalQuestion = getQuestionInConfiguration(questionId, configuration);
     if (optionalQuestion.isEmpty()) {
       throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Question with " + questionId + " does not exist.");
@@ -142,17 +140,17 @@ public class ConfigService {
    * Update a question from a specific configuration
    *
    * @throws ResponseStatusException when configuration with the name or question with id does not exist
-   * @param configurationName the name of the configuration where a question should be updated
+   * @param id the id of the configuration where a question should be updated
    * @param questionId the id of the question that should be updated
    * @param questionDTO the content of the question that should be updated
-   * @return the updated question
+   * @return the updated question as DTO
    */
-  public Question updateQuestionFromConfiguration(
-    final String configurationName,
-    final long questionId,
+  public QuestionDTO updateQuestionFromConfiguration(
+    final UUID id,
+    final UUID questionId,
     final QuestionDTO questionDTO
   ) {
-    final Configuration configuration = getConfiguration(configurationName);
+    final Configuration configuration = getConfiguration(id);
     final Optional<Question> optionalQuestion = getQuestionInConfiguration(questionId, configuration);
     if (optionalQuestion.isEmpty()) {
       throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Question with " + questionId + " does not exist.");
@@ -160,7 +158,8 @@ public class ConfigService {
     final Question question = questionMapper.questionDTOToQuestion(questionDTO);
     question.setId(questionId);
     final Question savedQuestion = questionRepository.save(question);
-    return savedQuestion;
+    final QuestionDTO savedQuestionDTO = questionMapper.questionToQuestionDTO(savedQuestion);
+    return savedQuestionDTO;
   }
 
   /**
@@ -170,11 +169,11 @@ public class ConfigService {
    * @param configuration in which configuration the question is part of
    * @return an optional of the question
    */
-  private Optional<Question> getQuestionInConfiguration(long questionId, Configuration configuration) {
+  private Optional<Question> getQuestionInConfiguration(UUID questionId, Configuration configuration) {
     return configuration
       .getQuestions()
       .stream()
-      .filter(filteredQuestion -> filteredQuestion.getId() == questionId)
+      .filter(filteredQuestion -> filteredQuestion.getId().equals(questionId))
       .findFirst();
   }
 }

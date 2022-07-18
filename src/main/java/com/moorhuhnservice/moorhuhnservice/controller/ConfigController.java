@@ -6,6 +6,7 @@ import com.moorhuhnservice.moorhuhnservice.data.mapper.QuestionMapper;
 import com.moorhuhnservice.moorhuhnservice.repositories.ConfigurationRepository;
 import com.moorhuhnservice.moorhuhnservice.service.ConfigService;
 import java.util.List;
+import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,66 +30,65 @@ public class ConfigController {
   ConfigurationMapper configurationMapper;
 
   @GetMapping("")
-  public List<Configuration> getConfigurations() {
+  public List<ConfigurationDTO> getConfigurations() {
     log.debug("get all configurations");
     List<Configuration> configurations = configurationRepository.findAll();
-    return configurations;
+    List<ConfigurationDTO> configurationDTOs = configurationMapper.configurationsToConfigurationDTOs(configurations);
+    return configurationDTOs;
   }
 
-  @GetMapping("/{configurationName}")
-  public Configuration getConfiguration(@PathVariable final String configurationName) {
-    log.debug("get configuration {}", configurationName);
-    return configService.getConfiguration(configurationName);
+  @GetMapping("/{id}")
+  public ConfigurationDTO getConfiguration(@PathVariable final UUID id) {
+    log.debug("get configuration {}", id);
+    final Configuration configuration = configService.getConfiguration(id);
+    return configurationMapper.configurationToConfigurationDTO(configuration);
   }
 
   @PostMapping("")
   @ResponseStatus(HttpStatus.CREATED)
-  public Configuration createConfiguration(@RequestBody final ConfigurationDTO configurationDTO) {
+  public ConfigurationDTO createConfiguration(@RequestBody final ConfigurationDTO configurationDTO) {
     log.debug("create configuration {}", configurationDTO);
     return configService.saveConfiguration(configurationDTO);
   }
 
-  @PutMapping("/{configurationName}")
-  public Configuration updateConfiguration(
-    @PathVariable final String configurationName,
+  @PutMapping("/{id}")
+  public ConfigurationDTO updateConfiguration(
+    @PathVariable final UUID id,
     @RequestBody final ConfigurationDTO configurationDTO
   ) {
-    log.debug("update {} configuration {}", configurationName, configurationDTO);
-    return configService.updateConfiguration(configurationName, configurationDTO);
+    log.debug("update {} configuration {}", id, configurationDTO);
+    return configService.updateConfiguration(id, configurationDTO);
   }
 
-  @DeleteMapping("/{configurationName}")
-  public ConfigurationDTO deleteConfiguration(@PathVariable final String configurationName) {
-    log.debug("delete configuration {}", configurationName);
-    return configService.deleteConfiguration(configurationName);
+  @DeleteMapping("/{id}")
+  public ConfigurationDTO deleteConfiguration(@PathVariable final UUID id) {
+    log.debug("delete configuration {}", id);
+    return configService.deleteConfiguration(id);
   }
 
-  @PostMapping("/{configurationName}/questions")
+  @PostMapping("/{id}/questions")
   @ResponseStatus(HttpStatus.CREATED)
-  public Question addQuestionToConfiguration(
-    @PathVariable final String configurationName,
+  public QuestionDTO addQuestionToConfiguration(
+    @PathVariable final UUID id,
     @RequestBody final QuestionDTO questionDTO
   ) {
-    log.debug("add question to configuration {}", configurationName);
-    return configService.addQuestionToConfiguration(configurationName, questionDTO);
+    log.debug("add question to configuration {}", id);
+    return configService.addQuestionToConfiguration(id, questionDTO);
   }
 
-  @DeleteMapping("/{configurationName}/questions/{questionId}")
-  public QuestionDTO removeQuestionFromConfiguration(
-    @PathVariable final String configurationName,
-    @PathVariable final long questionId
-  ) {
-    log.debug("remove question from configuration {}", configurationName);
-    return configService.removeQuestionFromConfiguration(configurationName, questionId);
+  @DeleteMapping("/{id}/questions/{questionId}")
+  public QuestionDTO removeQuestionFromConfiguration(@PathVariable final UUID id, @PathVariable final UUID questionId) {
+    log.debug("remove question from configuration {}", id);
+    return configService.removeQuestionFromConfiguration(id, questionId);
   }
 
-  @PutMapping("/{configurationName}/questions/{questionId}")
-  public Question updateQuestionFromConfiguration(
-    @PathVariable final String configurationName,
-    @PathVariable final long questionId,
+  @PutMapping("/{id}/questions/{questionId}")
+  public QuestionDTO updateQuestionFromConfiguration(
+    @PathVariable final UUID id,
+    @PathVariable final UUID questionId,
     @RequestBody final QuestionDTO questionDTO
   ) {
-    log.debug("update question from configuration {}", configurationName);
-    return configService.updateQuestionFromConfiguration(configurationName, questionId, questionDTO);
+    log.debug("update question from configuration {}", id);
+    return configService.updateQuestionFromConfiguration(id, questionId, questionDTO);
   }
 }
