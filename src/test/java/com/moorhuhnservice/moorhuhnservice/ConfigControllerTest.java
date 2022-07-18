@@ -179,6 +179,8 @@ class ConfigControllerTest {
     final String content = result.getResponse().getContentAsString();
     final ConfigurationDTO deletedConfigurationDTOResponse = objectMapper.readValue(content, ConfigurationDTO.class);
 
+    assertEquals(createdConfigurationDTO.getId(), deletedConfigurationDTOResponse.getId());
+    assertTrue(createdConfigurationDTO.equalsContent(deletedConfigurationDTOResponse));
     assertSame(0, configurationRepository.findAll().size());
     createdConfiguration
       .getQuestions()
@@ -227,6 +229,7 @@ class ConfigControllerTest {
     final String content = result.getResponse().getContentAsString();
     final QuestionDTO removedQuestionDTOResult = objectMapper.readValue(content, QuestionDTO.class);
 
+    assertEquals(removedQuestionDTO.getId(), removedQuestionDTOResult.getId());
     assertTrue(removedQuestionDTO.equalsContent(removedQuestionDTOResult));
     assertSame(
       createdConfiguration.getQuestions().size() - 1,
