@@ -36,29 +36,29 @@ public class ConfigController {
   }
 
   @GetMapping("/{configurationName}")
-  public Configuration getConfiguration(@PathVariable String configurationName) {
+  public Configuration getConfiguration(@PathVariable final String configurationName) {
     log.debug("get configuration {}", configurationName);
     return configService.getConfiguration(configurationName);
   }
 
   @PostMapping("")
   @ResponseStatus(HttpStatus.CREATED)
-  public Configuration createConfiguration(@RequestBody ConfigurationDTO configurationDTO) {
+  public Configuration createConfiguration(@RequestBody final ConfigurationDTO configurationDTO) {
     log.debug("create configuration {}", configurationDTO);
     return configService.saveConfiguration(configurationDTO);
   }
 
   @PutMapping("/{configurationName}")
   public Configuration updateConfiguration(
-    @PathVariable String configurationName,
-    @RequestBody ConfigurationDTO configurationDTO
+    @PathVariable final String configurationName,
+    @RequestBody final ConfigurationDTO configurationDTO
   ) {
     log.debug("update {} configuration {}", configurationName, configurationDTO);
     return configService.updateConfiguration(configurationName, configurationDTO);
   }
 
   @DeleteMapping("/{configurationName}")
-  public ConfigurationDTO deleteConfiguration(@PathVariable String configurationName) {
+  public ConfigurationDTO deleteConfiguration(@PathVariable final String configurationName) {
     log.debug("delete configuration {}", configurationName);
     return configService.deleteConfiguration(configurationName);
   }
@@ -66,8 +66,8 @@ public class ConfigController {
   @PostMapping("/{configurationName}/questions")
   @ResponseStatus(HttpStatus.CREATED)
   public Question addQuestionToConfiguration(
-    @PathVariable String configurationName,
-    @RequestBody QuestionDTO questionDTO
+    @PathVariable final String configurationName,
+    @RequestBody final QuestionDTO questionDTO
   ) {
     log.debug("add question to configuration {}", configurationName);
     return configService.addQuestionToConfiguration(configurationName, questionDTO);
@@ -75,8 +75,8 @@ public class ConfigController {
 
   @DeleteMapping("/{configurationName}/questions/{questionId}")
   public QuestionDTO removeQuestionFromConfiguration(
-    @PathVariable String configurationName,
-    @PathVariable long questionId
+    @PathVariable final String configurationName,
+    @PathVariable final long questionId
   ) {
     log.debug("remove question from configuration {}", configurationName);
     return configService.removeQuestionFromConfiguration(configurationName, questionId);
@@ -84,9 +84,9 @@ public class ConfigController {
 
   @PutMapping("/{configurationName}/questions/{questionId}")
   public Question updateQuestionFromConfiguration(
-    @PathVariable String configurationName,
-    @PathVariable long questionId,
-    @RequestBody QuestionDTO questionDTO
+    @PathVariable final String configurationName,
+    @PathVariable final long questionId,
+    @RequestBody final QuestionDTO questionDTO
   ) {
     log.debug("update question from configuration {}", configurationName);
     return configService.updateQuestionFromConfiguration(configurationName, questionId, questionDTO);

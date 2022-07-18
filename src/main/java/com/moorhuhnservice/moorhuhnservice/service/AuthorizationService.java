@@ -12,12 +12,12 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class AuthorizationService {
 
-  public boolean isAuthorized(String tokenCookie) {
+  public boolean isAuthorized(final String tokenCookie) {
     boolean authorized = false;
     try {
-      Algorithm algorithm = Algorithm.HMAC256("test"); //use more secure key
-      JWTVerifier verifier = JWT.require(algorithm).build(); //Reusable verifier instance
-      DecodedJWT jwt = verifier.verify(tokenCookie);
+      final Algorithm algorithm = Algorithm.HMAC256("test"); //use more secure key
+      final JWTVerifier verifier = JWT.require(algorithm).build(); //Reusable verifier instance
+      final DecodedJWT jwt = verifier.verify(tokenCookie);
       authorized = true;
       log.debug("verification successfully! id was: {}", jwt.getClaim("id"));
     } catch (JWTVerificationException exception) {

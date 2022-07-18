@@ -28,11 +28,11 @@ public class Configuration {
     this.questions = questions;
   }
 
-  public void addQuestion(Question question) {
+  public void addQuestion(final Question question) {
     this.questions.add(question);
   }
 
-  public void removeQuestion(Question question) {
+  public void removeQuestion(final Question question) {
     this.questions.remove(question);
   }
 }

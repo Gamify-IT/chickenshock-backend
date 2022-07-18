@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ConfigurationRepository extends JpaRepository<Configuration, Long> {
-  Configuration findByName(String name);
-  boolean existsByName(String name);
+  Configuration findByName(final String name);
+  boolean existsByName(final String name);
 }

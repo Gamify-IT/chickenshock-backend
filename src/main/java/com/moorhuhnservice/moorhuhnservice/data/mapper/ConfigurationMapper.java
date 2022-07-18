@@ -6,7 +6,7 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface ConfigurationMapper {
-  ConfigurationDTO configurationToConfigurationDTO(Configuration configuration);
+  ConfigurationDTO configurationToConfigurationDTO(final Configuration configuration);
 
-  Configuration configurationDTOToConfiguration(ConfigurationDTO configurationDTO);
+  Configuration configurationDTOToConfiguration(final ConfigurationDTO configurationDTO);
 }
