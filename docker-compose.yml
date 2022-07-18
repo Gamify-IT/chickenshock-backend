@@ -13,7 +13,7 @@ services:
     restart: always
     environment:
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=asdf
+      - POSTGRES_PASSWORD=postgres
 
   #frontends
   moorhuhn-frontend:
