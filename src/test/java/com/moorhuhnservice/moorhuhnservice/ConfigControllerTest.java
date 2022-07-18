@@ -124,11 +124,7 @@ class ConfigControllerTest {
         newCreatedConfigurationDTOResponse
           .getQuestions()
           .stream()
-          .anyMatch(filteredQuestion ->
-            filteredQuestion.getText().equals(question.getText()) &&
-            filteredQuestion.getRightAnswer().equals(question.getRightAnswer()) &&
-            filteredQuestion.getWrongAnswers().containsAll(question.getWrongAnswers())
-          )
+          .anyMatch(filteredQuestion -> question.equalsContent(filteredQuestion))
       );
     }
     assertSame(2, configurationRepository.findAll().size());
@@ -158,11 +154,7 @@ class ConfigControllerTest {
         updatedConfigurationDTOResponse
           .getQuestions()
           .stream()
-          .anyMatch(filteredQuestion ->
-            filteredQuestion.getText().equals(question.getText()) &&
-            filteredQuestion.getRightAnswer().equals(question.getRightAnswer()) &&
-            filteredQuestion.getWrongAnswers().containsAll(question.getWrongAnswers())
-          )
+          .anyMatch(filteredQuestion -> question.equalsContent(filteredQuestion))
       );
     }
     assertEquals(createdConfigurationDTO.getId(), updatedConfigurationDTOResponse.getId());
