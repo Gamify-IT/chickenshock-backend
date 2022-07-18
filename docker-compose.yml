@@ -30,5 +30,7 @@ services:
     restart: always
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d:ro
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     ports:
       - "80:80"
