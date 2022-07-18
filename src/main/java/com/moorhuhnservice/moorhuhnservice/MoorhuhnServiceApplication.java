@@ -8,7 +8,6 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication
-@PropertySource(value = "classpath:db.properties")
 public class MoorhuhnServiceApplication {
 
   public static void main(String[] args) {
