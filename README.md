@@ -61,7 +61,7 @@ docker run -d -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgr
 To stop and remove it simply type
 ```sh
 docker stop moorhuhn-database
-
+```
 
 ### Rest mappings
 Rest mappings are defined in [`moorhuhn-service/src/main/java/com/moorhuhnservice/moorhuhnservice/controller/MoorhuhnController.java`](moorhuhn-service/src/main/java/com/moorhuhnservice/moorhuhnservice/controller/MoorhuhnController.java)
