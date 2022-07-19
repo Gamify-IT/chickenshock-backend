@@ -1,10 +1,11 @@
-package com.moorhuhnservice.moorhuhnservice.controller;
+package de.unistuttgart.moorhuhnbackend.controller;
 
-import com.moorhuhnservice.moorhuhnservice.data.*;
-import com.moorhuhnservice.moorhuhnservice.data.mapper.ConfigurationMapper;
-import com.moorhuhnservice.moorhuhnservice.data.mapper.QuestionMapper;
-import com.moorhuhnservice.moorhuhnservice.repositories.ConfigurationRepository;
-import com.moorhuhnservice.moorhuhnservice.service.ConfigService;
+import de.unistuttgart.moorhuhnbackend.data.ConfigurationDTO;
+import de.unistuttgart.moorhuhnbackend.data.QuestionDTO;
+import de.unistuttgart.moorhuhnbackend.data.mapper.ConfigurationMapper;
+import de.unistuttgart.moorhuhnbackend.data.mapper.QuestionMapper;
+import de.unistuttgart.moorhuhnbackend.repositories.ConfigurationRepository;
+import de.unistuttgart.moorhuhnbackend.service.ConfigService;
 import java.util.List;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;

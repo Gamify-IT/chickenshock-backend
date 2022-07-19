@@ -1,9 +1,8 @@
-package com.moorhuhnservice.moorhuhnservice.data.mapper;
+package de.unistuttgart.moorhuhnbackend.data.mapper;
 
-import com.moorhuhnservice.moorhuhnservice.data.Configuration;
-import com.moorhuhnservice.moorhuhnservice.data.ConfigurationDTO;
+import de.unistuttgart.moorhuhnbackend.data.Configuration;
+import de.unistuttgart.moorhuhnbackend.data.ConfigurationDTO;
 import java.util.List;
-import java.util.Optional;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

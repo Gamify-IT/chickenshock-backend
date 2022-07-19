@@ -1,6 +1,5 @@
-package com.moorhuhnservice.moorhuhnservice.data;
+package de.unistuttgart.moorhuhnbackend.data;
 
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import javax.persistence.*;

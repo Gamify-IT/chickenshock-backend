@@ -1,12 +1,14 @@
-package com.moorhuhnservice.moorhuhnservice.service;
+package de.unistuttgart.moorhuhnbackend.service;
 
-import com.moorhuhnservice.moorhuhnservice.data.*;
-import com.moorhuhnservice.moorhuhnservice.data.mapper.ConfigurationMapper;
-import com.moorhuhnservice.moorhuhnservice.data.mapper.QuestionMapper;
-import com.moorhuhnservice.moorhuhnservice.repositories.ConfigurationRepository;
-import com.moorhuhnservice.moorhuhnservice.repositories.QuestionRepository;
+import de.unistuttgart.moorhuhnbackend.data.Configuration;
+import de.unistuttgart.moorhuhnbackend.data.ConfigurationDTO;
+import de.unistuttgart.moorhuhnbackend.data.Question;
+import de.unistuttgart.moorhuhnbackend.data.QuestionDTO;
+import de.unistuttgart.moorhuhnbackend.data.mapper.ConfigurationMapper;
+import de.unistuttgart.moorhuhnbackend.data.mapper.QuestionMapper;
+import de.unistuttgart.moorhuhnbackend.repositories.ConfigurationRepository;
+import de.unistuttgart.moorhuhnbackend.repositories.QuestionRepository;
 import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

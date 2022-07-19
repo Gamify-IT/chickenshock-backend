@@ -8,11 +8,11 @@
         <version>2.7.0</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.moorhuhn-service</groupId>
-    <artifactId>moorhuhn-service</artifactId>
+    <groupId>de.unistuttgart</groupId>
+    <artifactId>moorhuhn-backend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>moorhuhn-service</name>
-    <description>Moorhuhn service</description>
+    <name>Moorhuhn Backend</name>
+    <description>Backend for the Moorhuhn minigame</description>
     <properties>
         <java.version>17</java.version>
         <org.mapstruct.version>1.5.2.Final</org.mapstruct.version>
@@ -97,7 +97,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.moorhuhnservice.moorhuhnservice.MoorhuhnServiceApplication</mainClass>
+                            <mainClass>de.unistuttgart.moorhuhnbackend.MoorhuhnServiceApplication</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

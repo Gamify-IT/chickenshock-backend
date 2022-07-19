@@ -1,4 +1,4 @@
-package com.moorhuhnservice.moorhuhnservice.data;
+package de.unistuttgart.moorhuhnbackend.data;
 
 import java.util.Objects;
 import java.util.Set;

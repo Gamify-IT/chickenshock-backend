@@ -1,4 +1,4 @@
-package com.moorhuhnservice.moorhuhnservice.data;
+package de.unistuttgart.moorhuhnbackend.data;
 
 import java.util.Set;
 import java.util.UUID;
@@ -7,7 +7,6 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.hibernate.annotations.Type;
 
 @Entity
 @Data

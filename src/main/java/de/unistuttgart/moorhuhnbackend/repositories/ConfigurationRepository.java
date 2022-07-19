@@ -1,6 +1,6 @@
-package com.moorhuhnservice.moorhuhnservice.repositories;
+package de.unistuttgart.moorhuhnbackend.repositories;
 
-import com.moorhuhnservice.moorhuhnservice.data.Configuration;
+import de.unistuttgart.moorhuhnbackend.data.Configuration;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

@@ -1,7 +1,7 @@
-package com.moorhuhnservice.moorhuhnservice.data.mapper;
+package de.unistuttgart.moorhuhnbackend.data.mapper;
 
-import com.moorhuhnservice.moorhuhnservice.data.Question;
-import com.moorhuhnservice.moorhuhnservice.data.QuestionDTO;
+import de.unistuttgart.moorhuhnbackend.data.Question;
+import de.unistuttgart.moorhuhnbackend.data.QuestionDTO;
 import java.util.Set;
 import org.mapstruct.Mapper;
 
