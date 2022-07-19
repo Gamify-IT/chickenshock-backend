@@ -1,7 +1,7 @@
 package com.moorhuhnservice.moorhuhnservice.data;
 
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,9 +18,9 @@ public class QuestionDTO {
 
   String text;
   String rightAnswer;
-  List<String> wrongAnswers;
+  Set<String> wrongAnswers;
 
-  public QuestionDTO(String text, String rightAnswer, List<String> wrongAnswers) {
+  public QuestionDTO(String text, String rightAnswer, Set<String> wrongAnswers) {
     this.text = text;
     this.rightAnswer = rightAnswer;
     this.wrongAnswers = wrongAnswers;

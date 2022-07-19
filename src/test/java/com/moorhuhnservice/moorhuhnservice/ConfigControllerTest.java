@@ -55,12 +55,12 @@ class ConfigControllerTest {
     final Question questionOne = new Question();
     questionOne.setText("Are you cool?");
     questionOne.setRightAnswer("Yes");
-    questionOne.setWrongAnswers(Arrays.asList("No", "Maybe"));
+    questionOne.setWrongAnswers(Set.of("No", "Maybe"));
 
     final Question questionTwo = new Question();
     questionTwo.setText("Is this game cool?");
     questionTwo.setRightAnswer("Yes");
-    questionTwo.setWrongAnswers(Arrays.asList("No", "Maybe"));
+    questionTwo.setWrongAnswers(Set.of("No", "Maybe"));
 
     final Configuration configuration = new Configuration();
     configuration.setQuestions(Set.of(questionOne, questionTwo));
@@ -103,7 +103,7 @@ class ConfigControllerTest {
   @Test
   public void createConfiguration() throws Exception {
     final ConfigurationDTO newCreatedConfigurationDTO = new ConfigurationDTO(
-      Set.of(new QuestionDTO("Is this a new configuration?", "Yes", Arrays.asList("Maybe", "No")))
+      Set.of(new QuestionDTO("Is this a new configuration?", "Yes", Set.of("Maybe", "No")))
     );
     final String bodyValue = objectMapper.writeValueAsString(newCreatedConfigurationDTO);
     final MvcResult result = mvc
@@ -133,7 +133,7 @@ class ConfigControllerTest {
   @Test
   public void updateConfiguration() throws Exception {
     final Set<QuestionDTO> newQuestionsDTO = Set.of(
-      new QuestionDTO("Is this a new configuration?", "Yes", Arrays.asList("Maybe", "No"))
+      new QuestionDTO("Is this a new configuration?", "Yes", Set.of("Maybe", "No"))
     );
     createdConfigurationDTO.setQuestions(newQuestionsDTO);
     final String bodyValue = objectMapper.writeValueAsString(createdConfigurationDTO);
@@ -186,7 +186,7 @@ class ConfigControllerTest {
     final QuestionDTO addedQuestionDTO = new QuestionDTO(
       "What is this question about?",
       "Question",
-      Arrays.asList("Nothing", "Everything")
+      Set.of("Nothing", "Everything")
     );
 
     final String bodyValue = objectMapper.writeValueAsString(addedQuestionDTO);

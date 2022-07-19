@@ -1,14 +1,13 @@
 package com.moorhuhnservice.moorhuhnservice.data;
 
 import java.util.List;
-import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
 import javax.persistence.*;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.hibernate.annotations.Type;
 
 @Entity
 @Data
@@ -24,9 +23,9 @@ public class Question {
   String rightAnswer;
 
   @ElementCollection
-  List<String> wrongAnswers;
+  Set<String> wrongAnswers;
 
-  public Question(String text, String rightAnswer, List<String> wrongAnswers) {
+  public Question(String text, String rightAnswer, Set<String> wrongAnswers) {
     this.text = text;
     this.rightAnswer = rightAnswer;
     this.wrongAnswers = wrongAnswers;
