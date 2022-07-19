@@ -78,7 +78,7 @@ public class ConfigController {
 
   @DeleteMapping("/{id}/questions/{questionId}")
   public QuestionDTO removeQuestionFromConfiguration(@PathVariable final UUID id, @PathVariable final UUID questionId) {
-    log.debug("remove question {} from configuration {}", questionDTO, id);
+    log.debug("remove question {} from configuration {}", questionId, id);
     return configService.removeQuestionFromConfiguration(id, questionId);
   }
 
