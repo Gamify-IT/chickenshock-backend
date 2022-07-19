@@ -54,12 +54,10 @@ public class ConfigService {
    * @return the saved configuration as DTO
    */
   public ConfigurationDTO saveConfiguration(final ConfigurationDTO configurationDTO) {
-    final Configuration configuration = configurationMapper.configurationDTOToConfiguration(configurationDTO);
-    final Configuration savedConfiguration = configurationRepository.save(configuration);
-    final ConfigurationDTO savedConfigurationDTO = configurationMapper.configurationToConfigurationDTO(
-      savedConfiguration
+    final Configuration savedConfiguration = configurationRepository.save(
+      configurationMapper.configurationDTOToConfiguration(configurationDTO)
     );
-    return savedConfigurationDTO;
+    return configurationMapper.configurationToConfigurationDTO(savedConfiguration);
   }
 
   /**
@@ -100,12 +98,10 @@ public class ConfigService {
    */
   public QuestionDTO addQuestionToConfiguration(final UUID id, final QuestionDTO questionDTO) {
     final Configuration configuration = getConfiguration(id);
-    final Question question = questionMapper.questionDTOToQuestion(questionDTO);
-    final Question savedQuestion = questionRepository.save(question);
-    final QuestionDTO savedQuestionDTO = questionMapper.questionToQuestionDTO(savedQuestion);
-    configuration.addQuestion(savedQuestion);
+    final Question question = questionRepository.save(questionMapper.questionDTOToQuestion(questionDTO));
+    configuration.addQuestion(question);
     configurationRepository.save(configuration);
-    return savedQuestionDTO;
+    return questionMapper.questionToQuestionDTO(question);
   }
 
   /**
@@ -118,16 +114,17 @@ public class ConfigService {
    */
   public QuestionDTO removeQuestionFromConfiguration(final UUID id, final UUID questionId) {
     final Configuration configuration = getConfiguration(id);
-    final Optional<Question> optionalQuestion = getQuestionInConfiguration(questionId, configuration);
-    if (optionalQuestion.isEmpty()) {
-      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Question with " + questionId + " does not exist.");
-    }
-    final Question question = optionalQuestion.get();
-    final QuestionDTO deletedQuestionDTO = questionMapper.questionToQuestionDTO(question);
+    final Question question = getQuestionInConfiguration(questionId, configuration)
+      .orElseThrow(() ->
+        new ResponseStatusException(
+          HttpStatus.NOT_FOUND,
+          String.format("Question with ID %s does not exist in configuration %s.", questionId, configuration)
+        )
+      );
     configuration.removeQuestion(question);
     configurationRepository.save(configuration);
     questionRepository.delete(question);
-    return deletedQuestionDTO;
+    return questionMapper.questionToQuestionDTO(question);
   }
 
   /**
@@ -145,15 +142,17 @@ public class ConfigService {
     final QuestionDTO questionDTO
   ) {
     final Configuration configuration = getConfiguration(id);
-    final Optional<Question> optionalQuestion = getQuestionInConfiguration(questionId, configuration);
-    if (optionalQuestion.isEmpty()) {
-      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Question with " + questionId + " does not exist.");
-    }
+    getQuestionInConfiguration(questionId, configuration)
+      .orElseThrow(() ->
+        new ResponseStatusException(
+          HttpStatus.NOT_FOUND,
+          String.format("Question with ID %s does not exist in configuration %s.", questionId, configuration)
+        )
+      );
     final Question question = questionMapper.questionDTOToQuestion(questionDTO);
     question.setId(questionId);
     final Question savedQuestion = questionRepository.save(question);
-    final QuestionDTO savedQuestionDTO = questionMapper.questionToQuestionDTO(savedQuestion);
-    return savedQuestionDTO;
+    return questionMapper.questionToQuestionDTO(savedQuestion);
   }
 
   /**

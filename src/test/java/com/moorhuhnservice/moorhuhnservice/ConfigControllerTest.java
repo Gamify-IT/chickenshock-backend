@@ -177,9 +177,7 @@ class ConfigControllerTest {
     assertSame(0, configurationRepository.findAll().size());
     createdConfiguration
       .getQuestions()
-      .forEach(question -> {
-        assertFalse(questionRepository.existsById(question.getId()));
-      });
+      .forEach(question -> assertFalse(questionRepository.existsById(question.getId())));
   }
 
   @Test

@@ -32,16 +32,13 @@ public class ConfigController {
   @GetMapping("")
   public List<ConfigurationDTO> getConfigurations() {
     log.debug("get all configurations");
-    List<Configuration> configurations = configurationRepository.findAll();
-    List<ConfigurationDTO> configurationDTOs = configurationMapper.configurationsToConfigurationDTOs(configurations);
-    return configurationDTOs;
+    return configurationMapper.configurationsToConfigurationDTOs(configurationRepository.findAll());
   }
 
   @GetMapping("/{id}")
   public ConfigurationDTO getConfiguration(@PathVariable final UUID id) {
     log.debug("get configuration {}", id);
-    final Configuration configuration = configService.getConfiguration(id);
-    return configurationMapper.configurationToConfigurationDTO(configuration);
+    return configurationMapper.configurationToConfigurationDTO(configService.getConfiguration(id));
   }
 
   @PostMapping("")
