@@ -22,7 +22,7 @@ public class Configuration {
   @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
   Set<Question> questions;
 
-  public Configuration(Set<Question> questions) {
+  public Configuration(final Set<Question> questions) {
     this.questions = questions;
   }
 

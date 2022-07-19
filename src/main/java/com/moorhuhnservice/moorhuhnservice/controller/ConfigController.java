@@ -56,7 +56,7 @@ public class ConfigController {
     @PathVariable final UUID id,
     @RequestBody final ConfigurationDTO configurationDTO
   ) {
-    log.debug("update {} configuration {}", id, configurationDTO);
+    log.debug("update configuration {} with {}", id, configurationDTO);
     return configService.updateConfiguration(id, configurationDTO);
   }
 
@@ -72,13 +72,13 @@ public class ConfigController {
     @PathVariable final UUID id,
     @RequestBody final QuestionDTO questionDTO
   ) {
-    log.debug("add question to configuration {}", id);
+    log.debug("add question {} to configuration {}", questionDTO, id);
     return configService.addQuestionToConfiguration(id, questionDTO);
   }
 
   @DeleteMapping("/{id}/questions/{questionId}")
   public QuestionDTO removeQuestionFromConfiguration(@PathVariable final UUID id, @PathVariable final UUID questionId) {
-    log.debug("remove question from configuration {}", id);
+    log.debug("remove question {} from configuration {}", questionDTO, id);
     return configService.removeQuestionFromConfiguration(id, questionId);
   }
 
@@ -88,7 +88,7 @@ public class ConfigController {
     @PathVariable final UUID questionId,
     @RequestBody final QuestionDTO questionDTO
   ) {
-    log.debug("update question from configuration {}", id);
+    log.debug("update question {} with {} for configuration {}", questionId, questionDTO, id);
     return configService.updateQuestionFromConfiguration(id, questionId, questionDTO);
   }
 }
