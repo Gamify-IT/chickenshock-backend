@@ -40,11 +40,11 @@ public class ConfigService {
    * @return the found configuration
    */
   public Configuration getConfiguration(final UUID id) {
-    final Optional<Configuration> configuration = configurationRepository.findById(id);
-    if (configuration.isEmpty()) {
-      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "There is no configuration with id " + id);
-    }
-    return configuration.get();
+    return configurationRepository
+      .findById(id)
+      .orElseThrow(() ->
+        new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("There is no configuration with id %s.", id))
+      );
   }
 
   /**
@@ -72,13 +72,9 @@ public class ConfigService {
    */
   public ConfigurationDTO updateConfiguration(final UUID id, final ConfigurationDTO configurationDTO) {
     final Configuration configuration = getConfiguration(id);
-    final Set<Question> questions = questionMapper.questionDTOsToQuestions(configurationDTO.getQuestions());
-    configuration.setQuestions(questions);
+    configuration.setQuestions(questionMapper.questionDTOsToQuestions(configurationDTO.getQuestions()));
     final Configuration updatedConfiguration = configurationRepository.save(configuration);
-    final ConfigurationDTO updatedConfigurationDTO = configurationMapper.configurationToConfigurationDTO(
-      updatedConfiguration
-    );
-    return updatedConfigurationDTO;
+    return configurationMapper.configurationToConfigurationDTO(updatedConfiguration);
   }
 
   /**
@@ -90,9 +86,8 @@ public class ConfigService {
    */
   public ConfigurationDTO deleteConfiguration(final UUID id) {
     final Configuration configuration = getConfiguration(id);
-    final ConfigurationDTO deletedConfigurationDTO = configurationMapper.configurationToConfigurationDTO(configuration);
     configurationRepository.delete(configuration);
-    return deletedConfigurationDTO;
+    return configurationMapper.configurationToConfigurationDTO(configuration);
   }
 
   /**
