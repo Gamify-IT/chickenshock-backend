@@ -114,6 +114,7 @@ class ConfigControllerTest {
     final String content = result.getResponse().getContentAsString();
     final ConfigurationDTO newCreatedConfigurationDTOResponse = objectMapper.readValue(content, ConfigurationDTO.class);
 
+    assertNotNull(newCreatedConfigurationDTOResponse.getId());
     // because question object are not equals, we have to compare the content without id
     assertSame(
       newCreatedConfigurationDTO.getQuestions().size(),

@@ -25,7 +25,7 @@ public class Question {
   @ElementCollection
   Set<String> wrongAnswers;
 
-  public Question(String text, String rightAnswer, Set<String> wrongAnswers) {
+  public Question(final String text, final String rightAnswer, final Set<String> wrongAnswers) {
     this.text = text;
     this.rightAnswer = rightAnswer;
     this.wrongAnswers = wrongAnswers;

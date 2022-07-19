@@ -18,7 +18,7 @@ public class ConfigurationDTO {
 
   Set<QuestionDTO> questions;
 
-  public ConfigurationDTO(Set<QuestionDTO> questions) {
+  public ConfigurationDTO(final Set<QuestionDTO> questions) {
     this.questions = questions;
   }
 

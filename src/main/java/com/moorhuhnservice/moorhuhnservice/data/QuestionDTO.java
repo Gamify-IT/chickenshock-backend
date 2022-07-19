@@ -20,7 +20,7 @@ public class QuestionDTO {
   String rightAnswer;
   Set<String> wrongAnswers;
 
-  public QuestionDTO(String text, String rightAnswer, Set<String> wrongAnswers) {
+  public QuestionDTO(final String text, final String rightAnswer, final Set<String> wrongAnswers) {
     this.text = text;
     this.rightAnswer = rightAnswer;
     this.wrongAnswers = wrongAnswers;

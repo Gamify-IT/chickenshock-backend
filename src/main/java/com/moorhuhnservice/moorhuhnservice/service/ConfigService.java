@@ -168,11 +168,11 @@ public class ConfigService {
    * @param configuration configuration in which the question is part of
    * @return an optional of the question
    */
-  private Optional<Question> getQuestionInConfiguration(UUID questionId, Configuration configuration) {
+  private Optional<Question> getQuestionInConfiguration(final UUID questionId, final Configuration configuration) {
     return configuration
       .getQuestions()
-      .stream()
+      .parallelStream()
       .filter(filteredQuestion -> filteredQuestion.getId().equals(questionId))
-      .findFirst();
+      .findAny();
   }
 }
