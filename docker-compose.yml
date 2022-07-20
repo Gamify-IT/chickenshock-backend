@@ -8,12 +8,10 @@ services:
     image: postgres:14-alpine
     ports:
       - "5432:5432"
-    volumes:
-      - ./.volumes/moorhuhn-db:/var/lib/postgresql/data
     restart: always
     environment:
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=asdf
+      - POSTGRES_PASSWORD=postgres
 
   #frontends
   moorhuhn-frontend:
@@ -30,5 +28,7 @@ services:
     restart: always
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d:ro
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     ports:
       - "80:80"
