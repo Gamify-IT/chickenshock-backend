@@ -27,6 +27,7 @@ import org.springframework.test.web.servlet.MvcResult;
 
 @AutoConfigureMockMvc
 @SpringBootTest
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ConfigControllerTest {
 
   @Autowired
@@ -71,7 +72,7 @@ class ConfigControllerTest {
     objectMapper = new ObjectMapper();
   }
 
-  @AfterEach
+  @AfterAll
   public void deleteBasicData() {
     configurationRepository.deleteAll();
   }
