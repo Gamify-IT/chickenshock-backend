@@ -47,8 +47,8 @@ class ConfigControllerTest {
 
   private final String API_URL = "/api/v1/minigames/moorhuhn/configurations";
   private ObjectMapper objectMapper;
-  private Configuration createdConfiguration;
-  private ConfigurationDTO createdConfigurationDTO;
+  private Configuration initialConfig;
+  private ConfigurationDTO initialConfigDTO;
 
   @BeforeEach
   public void createBasicData() {
@@ -66,8 +66,8 @@ class ConfigControllerTest {
     final Configuration configuration = new Configuration();
     configuration.setQuestions(Set.of(questionOne, questionTwo));
 
-    createdConfiguration = configurationRepository.save(configuration);
-    createdConfigurationDTO = configurationMapper.configurationToConfigurationDTO(createdConfiguration);
+    initialConfig = configurationRepository.save(configuration);
+    initialConfigDTO = configurationMapper.configurationToConfigurationDTO(initialConfig);
 
     objectMapper = new ObjectMapper();
   }
@@ -84,14 +84,12 @@ class ConfigControllerTest {
       .andExpect(status().isOk())
       .andReturn();
 
-    final String content = result.getResponse().getContentAsString();
     final List<ConfigurationDTO> configurations = Arrays.asList(
-      objectMapper.readValue(content, ConfigurationDTO[].class)
+      objectMapper.readValue(result.getResponse().getContentAsString(), ConfigurationDTO[].class)
     );
 
     assertSame(1, configurations.size());
-    final ConfigurationDTO singleConfiguration = configurations.get(0);
-    assertTrue(createdConfigurationDTO.equalsContent(singleConfiguration));
+    assertTrue(initialConfigDTO.equalsContent(configurations.get(0)));
   }
 
   @Test
@@ -112,8 +110,10 @@ class ConfigControllerTest {
       .andExpect(status().isCreated())
       .andReturn();
 
-    final String content = result.getResponse().getContentAsString();
-    final ConfigurationDTO newCreatedConfigurationDTOResponse = objectMapper.readValue(content, ConfigurationDTO.class);
+    final ConfigurationDTO newCreatedConfigurationDTOResponse = objectMapper.readValue(
+      result.getResponse().getContentAsString(),
+      ConfigurationDTO.class
+    );
 
     assertNotNull(newCreatedConfigurationDTOResponse.getId());
     // because question object are not equals, we have to compare the content without id
@@ -137,21 +137,21 @@ class ConfigControllerTest {
     final Set<QuestionDTO> newQuestionsDTO = Set.of(
       new QuestionDTO("Is this a new configuration?", "Yes", Set.of("Maybe", "No"))
     );
-    createdConfigurationDTO.setQuestions(newQuestionsDTO);
-    final String bodyValue = objectMapper.writeValueAsString(createdConfigurationDTO);
+    initialConfigDTO.setQuestions(newQuestionsDTO);
+    final String bodyValue = objectMapper.writeValueAsString(initialConfigDTO);
     final MvcResult result = mvc
-      .perform(
-        put(API_URL + "/" + createdConfiguration.getId()).content(bodyValue).contentType(MediaType.APPLICATION_JSON)
-      )
+      .perform(put(API_URL + "/" + initialConfig.getId()).content(bodyValue).contentType(MediaType.APPLICATION_JSON))
       .andExpect(status().isOk())
       .andReturn();
 
-    final String content = result.getResponse().getContentAsString();
-    final ConfigurationDTO updatedConfigurationDTOResponse = objectMapper.readValue(content, ConfigurationDTO.class);
+    final ConfigurationDTO updatedConfigurationDTOResponse = objectMapper.readValue(
+      result.getResponse().getContentAsString(),
+      ConfigurationDTO.class
+    );
 
     // because question object are not equals, we have to compare the content without id
-    assertSame(createdConfigurationDTO.getQuestions().size(), updatedConfigurationDTOResponse.getQuestions().size());
-    for (QuestionDTO question : createdConfigurationDTO.getQuestions()) {
+    assertSame(initialConfigDTO.getQuestions().size(), updatedConfigurationDTOResponse.getQuestions().size());
+    for (QuestionDTO question : initialConfigDTO.getQuestions()) {
       assertTrue(
         updatedConfigurationDTOResponse
           .getQuestions()
@@ -159,26 +159,26 @@ class ConfigControllerTest {
           .anyMatch(filteredQuestion -> question.equalsContent(filteredQuestion))
       );
     }
-    assertEquals(createdConfigurationDTO.getId(), updatedConfigurationDTOResponse.getId());
+    assertEquals(initialConfigDTO.getId(), updatedConfigurationDTOResponse.getId());
     assertSame(1, configurationRepository.findAll().size());
   }
 
   @Test
   public void deleteConfiguration() throws Exception {
     final MvcResult result = mvc
-      .perform(delete(API_URL + "/" + createdConfiguration.getId()).contentType(MediaType.APPLICATION_JSON))
+      .perform(delete(API_URL + "/" + initialConfig.getId()).contentType(MediaType.APPLICATION_JSON))
       .andExpect(status().isOk())
       .andReturn();
 
-    final String content = result.getResponse().getContentAsString();
-    final ConfigurationDTO deletedConfigurationDTOResponse = objectMapper.readValue(content, ConfigurationDTO.class);
+    final ConfigurationDTO deletedConfigurationDTOResponse = objectMapper.readValue(
+      result.getResponse().getContentAsString(),
+      ConfigurationDTO.class
+    );
 
-    assertEquals(createdConfigurationDTO.getId(), deletedConfigurationDTOResponse.getId());
-    assertTrue(createdConfigurationDTO.equalsContent(deletedConfigurationDTOResponse));
+    assertEquals(initialConfigDTO.getId(), deletedConfigurationDTOResponse.getId());
+    assertTrue(initialConfigDTO.equalsContent(deletedConfigurationDTOResponse));
     assertSame(0, configurationRepository.findAll().size());
-    createdConfiguration
-      .getQuestions()
-      .forEach(question -> assertFalse(questionRepository.existsById(question.getId())));
+    initialConfig.getQuestions().forEach(question -> assertFalse(questionRepository.existsById(question.getId())));
   }
 
   @Test
@@ -192,47 +192,51 @@ class ConfigControllerTest {
     final String bodyValue = objectMapper.writeValueAsString(addedQuestionDTO);
     final MvcResult result = mvc
       .perform(
-        post(API_URL + "/" + createdConfiguration.getId() + "/questions")
+        post(API_URL + "/" + initialConfig.getId() + "/questions")
           .content(bodyValue)
           .contentType(MediaType.APPLICATION_JSON)
       )
       .andExpect(status().isCreated())
       .andReturn();
 
-    final String content = result.getResponse().getContentAsString();
-    final QuestionDTO newAddedQuestionResponse = objectMapper.readValue(content, QuestionDTO.class);
+    final QuestionDTO newAddedQuestionResponse = objectMapper.readValue(
+      result.getResponse().getContentAsString(),
+      QuestionDTO.class
+    );
 
     assertTrue(addedQuestionDTO.equalsContent(newAddedQuestionResponse));
   }
 
   @Test
   public void removeQuestionFromExistingConfiguration() throws Exception {
-    final QuestionDTO removedQuestionDTO = createdConfigurationDTO.getQuestions().stream().findFirst().get();
+    final QuestionDTO removedQuestionDTO = initialConfigDTO.getQuestions().stream().findFirst().get();
     assertTrue(questionRepository.existsById(removedQuestionDTO.getId()));
 
     final MvcResult result = mvc
       .perform(
-        delete(API_URL + "/" + createdConfiguration.getId() + "/questions/" + removedQuestionDTO.getId())
+        delete(API_URL + "/" + initialConfig.getId() + "/questions/" + removedQuestionDTO.getId())
           .contentType(MediaType.APPLICATION_JSON)
       )
       .andExpect(status().isOk())
       .andReturn();
 
-    final String content = result.getResponse().getContentAsString();
-    final QuestionDTO removedQuestionDTOResult = objectMapper.readValue(content, QuestionDTO.class);
+    final QuestionDTO removedQuestionDTOResult = objectMapper.readValue(
+      result.getResponse().getContentAsString(),
+      QuestionDTO.class
+    );
 
     assertEquals(removedQuestionDTO.getId(), removedQuestionDTOResult.getId());
     assertTrue(removedQuestionDTO.equalsContent(removedQuestionDTOResult));
     assertSame(
-      createdConfiguration.getQuestions().size() - 1,
-      configurationRepository.findById(createdConfiguration.getId()).get().getQuestions().size()
+      initialConfig.getQuestions().size() - 1,
+      configurationRepository.findById(initialConfig.getId()).get().getQuestions().size()
     );
     assertFalse(questionRepository.existsById(removedQuestionDTO.getId()));
   }
 
   @Test
   public void updateQuestionFromExistingConfiguration() throws Exception {
-    final Question updatedQuestion = createdConfiguration.getQuestions().stream().findFirst().get();
+    final Question updatedQuestion = initialConfig.getQuestions().stream().findFirst().get();
     final QuestionDTO updatedQuestionDTO = questionMapper.questionToQuestionDTO(updatedQuestion);
     final String newText = "Is this a new updated question?";
     updatedQuestionDTO.setText(newText);
@@ -240,15 +244,17 @@ class ConfigControllerTest {
     final String bodyValue = objectMapper.writeValueAsString(updatedQuestionDTO);
     final MvcResult result = mvc
       .perform(
-        put(API_URL + "/" + createdConfiguration.getId() + "/questions/" + updatedQuestion.getId())
+        put(API_URL + "/" + initialConfig.getId() + "/questions/" + updatedQuestion.getId())
           .content(bodyValue)
           .contentType(MediaType.APPLICATION_JSON)
       )
       .andExpect(status().isOk())
       .andReturn();
 
-    final String content = result.getResponse().getContentAsString();
-    final QuestionDTO updatedQuestionResultDTO = objectMapper.readValue(content, QuestionDTO.class);
+    final QuestionDTO updatedQuestionResultDTO = objectMapper.readValue(
+      result.getResponse().getContentAsString(),
+      QuestionDTO.class
+    );
 
     assertTrue(updatedQuestionDTO.equalsContent(updatedQuestionResultDTO));
     assertEquals(newText, updatedQuestionResultDTO.getText());
