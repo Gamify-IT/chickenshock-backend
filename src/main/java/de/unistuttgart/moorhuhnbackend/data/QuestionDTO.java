@@ -26,14 +26,13 @@ public class QuestionDTO {
     this.wrongAnswers = wrongAnswers;
   }
 
-  public boolean equalsContent(final Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    final QuestionDTO that = (QuestionDTO) o;
+  public boolean equalsContent(final QuestionDTO other) {
+    if (this == other) return true;
+    if (other == null) return false;
     return (
-      Objects.equals(text, that.text) &&
-      Objects.equals(rightAnswer, that.rightAnswer) &&
-      Objects.equals(wrongAnswers, that.wrongAnswers)
+      Objects.equals(text, other.text) &&
+      Objects.equals(rightAnswer, other.rightAnswer) &&
+      Objects.equals(wrongAnswers, other.wrongAnswers)
     );
   }
 }

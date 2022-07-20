@@ -22,10 +22,9 @@ public class ConfigurationDTO {
     this.questions = questions;
   }
 
-  public boolean equalsContent(final Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    final ConfigurationDTO that = (ConfigurationDTO) o;
-    return Objects.equals(questions, that.questions);
+  public boolean equalsContent(final ConfigurationDTO other) {
+    if (this == other) return true;
+    if (other == null) return false;
+    return Objects.equals(questions, other.questions);
   }
 }
