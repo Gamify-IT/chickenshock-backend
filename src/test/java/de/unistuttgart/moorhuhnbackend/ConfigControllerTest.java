@@ -78,7 +78,7 @@ class ConfigControllerTest {
   }
 
   @Test
-  public void getConfigurations() throws Exception {
+  void getConfigurations() throws Exception {
     final MvcResult result = mvc
       .perform(get(API_URL).contentType(MediaType.APPLICATION_JSON))
       .andExpect(status().isOk())
@@ -93,14 +93,14 @@ class ConfigControllerTest {
   }
 
   @Test
-  public void getSpecificConfiguration_DoesNotExist_ThrowsNotFound() throws Exception {
+  void getSpecificConfiguration_DoesNotExist_ThrowsNotFound() throws Exception {
     mvc
       .perform(get(API_URL + "/" + UUID.randomUUID()).contentType(MediaType.APPLICATION_JSON))
       .andExpect(status().isNotFound());
   }
 
   @Test
-  public void createConfiguration() throws Exception {
+  void createConfiguration() throws Exception {
     final ConfigurationDTO newCreatedConfigurationDTO = new ConfigurationDTO(
       Set.of(new QuestionDTO("Is this a new configuration?", "Yes", Set.of("Maybe", "No")))
     );
@@ -133,7 +133,7 @@ class ConfigControllerTest {
   }
 
   @Test
-  public void updateConfiguration() throws Exception {
+  void updateConfiguration() throws Exception {
     final Set<QuestionDTO> newQuestionsDTO = Set.of(
       new QuestionDTO("Is this a new configuration?", "Yes", Set.of("Maybe", "No"))
     );
@@ -164,7 +164,7 @@ class ConfigControllerTest {
   }
 
   @Test
-  public void deleteConfiguration() throws Exception {
+  void deleteConfiguration() throws Exception {
     final MvcResult result = mvc
       .perform(delete(API_URL + "/" + initialConfig.getId()).contentType(MediaType.APPLICATION_JSON))
       .andExpect(status().isOk())
@@ -182,7 +182,7 @@ class ConfigControllerTest {
   }
 
   @Test
-  public void addQuestionToExistingConfiguration() throws Exception {
+  void addQuestionToExistingConfiguration() throws Exception {
     final QuestionDTO addedQuestionDTO = new QuestionDTO(
       "What is this question about?",
       "Question",
@@ -208,7 +208,7 @@ class ConfigControllerTest {
   }
 
   @Test
-  public void removeQuestionFromExistingConfiguration() throws Exception {
+  void removeQuestionFromExistingConfiguration() throws Exception {
     final QuestionDTO removedQuestionDTO = initialConfigDTO.getQuestions().stream().findFirst().get();
     assertTrue(questionRepository.existsById(removedQuestionDTO.getId()));
 
@@ -235,7 +235,7 @@ class ConfigControllerTest {
   }
 
   @Test
-  public void updateQuestionFromExistingConfiguration() throws Exception {
+  void updateQuestionFromExistingConfiguration() throws Exception {
     final Question updatedQuestion = initialConfig.getQuestions().stream().findFirst().get();
     final QuestionDTO updatedQuestionDTO = questionMapper.questionToQuestionDTO(updatedQuestion);
     final String newText = "Is this a new updated question?";
