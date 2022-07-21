@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface QuestionMapper {
-  QuestionDTO questionToQuestionDTO(final Question Question);
+  QuestionDTO questionToQuestionDTO(final Question question);
 
   Question questionDTOToQuestion(final QuestionDTO questionDTO);
 

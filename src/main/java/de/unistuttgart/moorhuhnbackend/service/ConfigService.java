@@ -144,13 +144,12 @@ public class ConfigService {
     final QuestionDTO questionDTO
   ) {
     final Configuration configuration = getConfiguration(id);
-    getQuestionInConfiguration(questionId, configuration)
-      .orElseThrow(() ->
-        new ResponseStatusException(
-          HttpStatus.NOT_FOUND,
-          String.format("Question with ID %s does not exist in configuration %s.", questionId, configuration)
-        )
+    if (getQuestionInConfiguration(questionId, configuration).isEmpty()) {
+      throw new ResponseStatusException(
+        HttpStatus.NOT_FOUND,
+        String.format("Question with ID %s does not exist in configuration %s.", questionId, configuration)
       );
+    }
     final Question question = questionMapper.questionDTOToQuestion(questionDTO);
     question.setId(questionId);
     final Question savedQuestion = questionRepository.save(question);
