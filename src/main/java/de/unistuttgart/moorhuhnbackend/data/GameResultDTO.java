@@ -28,11 +28,11 @@ public class GameResultDTO {
     private int killsCount;
     private int shotCount;
     private int points;
-    private List<String> correctAnsweredQuestions;
-    private List<String> wrongAnsweredQuestions;
+    private List<UUID> correctAnsweredQuestions;
+    private List<UUID> wrongAnsweredQuestions;
     private UUID configurationAsUUID;
 
-    public GameResultDTO(int questionCount, float timeLimit, float finishedInSeconds, int correctKillsCount, int wrongKillsCount, int killsCount, int shotCount, int points, List<String> correctAnsweredQuestions, List<String> wrongAnsweredQuestions, UUID configurationAsUUID)
+    public GameResultDTO(int questionCount, float timeLimit, float finishedInSeconds, int correctKillsCount, int wrongKillsCount, int killsCount, int shotCount, int points, List<UUID> correctAnsweredQuestions, List<UUID> wrongAnsweredQuestions, UUID configurationAsUUID)
     {
         this.questionCount = questionCount;
         this.timeLimit = timeLimit;

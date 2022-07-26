@@ -8,6 +8,4 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ConfigurationRepository extends JpaRepository<Configuration, UUID> {
-    Question findByText(String questionText);
-}
+public interface ConfigurationRepository extends JpaRepository<Configuration, UUID> {}
