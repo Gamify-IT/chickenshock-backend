@@ -7,6 +7,7 @@ import de.unistuttgart.moorhuhnbackend.data.mapper.QuestionMapper;
 import de.unistuttgart.moorhuhnbackend.repositories.ConfigurationRepository;
 import de.unistuttgart.moorhuhnbackend.service.ConfigService;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,5 +89,11 @@ public class ConfigController {
   ) {
     log.debug("update question {} with {} for configuration {}", questionId, questionDTO, id);
     return configService.updateQuestionFromConfiguration(id, questionId, questionDTO);
+  }
+
+  @GetMapping("/{id}/questions")
+  public Set<QuestionDTO> getQuestions(@PathVariable final UUID id) {
+    log.debug("get configuration {}", id);
+    return configurationMapper.configurationToConfigurationDTO(configService.getConfiguration(id)).getQuestions();
   }
 }

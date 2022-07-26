@@ -3,8 +3,8 @@ package de.unistuttgart.moorhuhnbackend.service;
 import de.unistuttgart.moorhuhnbackend.data.GameResult;
 import de.unistuttgart.moorhuhnbackend.data.GameResultDTO;
 import de.unistuttgart.moorhuhnbackend.data.Question;
+import de.unistuttgart.moorhuhnbackend.repositories.ConfigurationRepository;
 import de.unistuttgart.moorhuhnbackend.repositories.GameResultRepository;
-import de.unistuttgart.moorhuhnbackend.repositories.QuestionRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,10 +21,10 @@ import java.util.List;
 public class GameResultService {
 
     @Autowired
-    QuestionRepository questionRepository;
-    @Autowired
     GameResultRepository gameResultRepository;
 
+    @Autowired
+    ConfigurationRepository configurationRepository;
     /**
      * Cast list of question texts to a List of Questions
      *
@@ -34,7 +34,7 @@ public class GameResultService {
     public List<Question> castQuestionList(final List<String> questionTextList) {
         List<Question> questionList = new ArrayList<>();
         for (String questionText : questionTextList) {
-            Question questionToAdd = questionRepository.findByText(questionText);
+            Question questionToAdd = configurationRepository.findByText(questionText);
             if (questionToAdd == null) {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("There is no question with questionText %s.", questionText));
             } else {
