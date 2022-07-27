@@ -24,9 +24,11 @@ public class GameResultService {
 
     @Autowired
     GameResultRepository gameResultRepository;
-
     @Autowired
     QuestionRepository questionRepository;
+
+    @Autowired
+    AuthorizationService authorizationService;
     /**
      * Cast list of question texts to a List of Questions
      *
@@ -51,9 +53,10 @@ public class GameResultService {
      *
      * @param gameResultDTO extern gameResultDTO
      */
-    public void saveGameResult(GameResultDTO gameResultDTO) {
+    public void saveGameResult(GameResultDTO gameResultDTO, String token) {
         List<Question> correctQuestions = this.castQuestionList(gameResultDTO.getCorrectAnsweredQuestions());
         List<Question> wrongQuestions = this.castQuestionList(gameResultDTO.getWrongAnsweredQuestions());
+        String playerId = authorizationService.getPlayerId(token);
         GameResult result = new GameResult(gameResultDTO.getQuestionCount(), gameResultDTO.getTimeLimit(), gameResultDTO.getFinishedInSeconds(), gameResultDTO.getCorrectKillsCount(), gameResultDTO.getWrongKillsCount(), gameResultDTO.getKillsCount(), gameResultDTO.getShotCount(), gameResultDTO.getPoints(), correctQuestions, wrongQuestions, gameResultDTO.getConfigurationAsUUID(), "");
         gameResultRepository.save(result);
     }

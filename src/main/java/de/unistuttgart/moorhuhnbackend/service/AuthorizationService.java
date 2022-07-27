@@ -25,4 +25,17 @@ public class AuthorizationService {
     }
     return authorized;
   }
+
+  public String getPlayerId(final String tokenCookie) {
+    try {
+      final Algorithm algorithm = Algorithm.HMAC256("test"); //use more secure key
+      final JWTVerifier verifier = JWT.require(algorithm).build(); //Reusable verifier instance
+      final DecodedJWT jwt = verifier.verify(tokenCookie);
+      log.debug("verification successfully! id was: {}", jwt.getClaim("id"));
+      return jwt.getClaim("id").toString();
+    } catch (JWTVerificationException exception) {
+      log.debug("verification not successfully.", exception);
+    }
+    return "no ID for this player found";
+  }
 }
