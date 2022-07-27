@@ -26,9 +26,9 @@ public class GameResult {
     private int killsCount;
     private int shotCount;
     private int points;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Question> correctAnsweredQuestions;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Question> wrongAnsweredQuestions;
     private UUID configurationAsUUID;
     private String playerId;
