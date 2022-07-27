@@ -57,7 +57,7 @@ public class GameResultService {
         List<Question> correctQuestions = this.castQuestionList(gameResultDTO.getCorrectAnsweredQuestions());
         List<Question> wrongQuestions = this.castQuestionList(gameResultDTO.getWrongAnsweredQuestions());
         String playerId = authorizationService.getPlayerId(token);
-        GameResult result = new GameResult(gameResultDTO.getQuestionCount(), gameResultDTO.getTimeLimit(), gameResultDTO.getFinishedInSeconds(), gameResultDTO.getCorrectKillsCount(), gameResultDTO.getWrongKillsCount(), gameResultDTO.getKillsCount(), gameResultDTO.getShotCount(), gameResultDTO.getPoints(), correctQuestions, wrongQuestions, gameResultDTO.getConfigurationAsUUID(), "");
+        GameResult result = new GameResult(gameResultDTO.getQuestionCount(), gameResultDTO.getTimeLimit(), gameResultDTO.getFinishedInSeconds(), gameResultDTO.getCorrectKillsCount(), gameResultDTO.getWrongKillsCount(), gameResultDTO.getKillsCount(), gameResultDTO.getShotCount(), gameResultDTO.getPoints(), correctQuestions, wrongQuestions, gameResultDTO.getConfigurationAsUUID(), playerId);
         gameResultRepository.save(result);
     }
 }
