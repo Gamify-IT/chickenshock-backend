@@ -45,7 +45,7 @@ class ConfigControllerTest {
   @Autowired
   private QuestionRepository questionRepository;
 
-  private final String API_URL = "/api/v1/minigames/moorhuhn/configurations";
+  private final String API_URL = "/configurations";
   private ObjectMapper objectMapper;
   private Configuration initialConfig;
   private ConfigurationDTO initialConfigDTO;
