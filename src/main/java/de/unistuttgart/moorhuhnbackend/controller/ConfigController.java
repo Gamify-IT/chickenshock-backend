@@ -15,7 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/v1/minigames/moorhuhn/configurations")
+@RequestMapping("/configurations")
 @Slf4j
 public class ConfigController {
 
