@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - "main"
-      - "feature/save-moorhuhn-results"
     tags:
       - "v*"
   pull_request:
