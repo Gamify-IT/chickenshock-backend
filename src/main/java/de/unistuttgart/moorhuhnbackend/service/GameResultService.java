@@ -30,12 +30,12 @@ public class GameResultService {
     /**
      * Cast list of question texts to a List of Questions
      *
-     * @param questionTextList list of question texts
+     * @param questionUUIDList list of question UUIDs
      * @return a list of questions
      */
-    public List<Question> castQuestionList(final List<UUID> questionTextList) {
+    public List<Question> castQuestionList(final List<UUID> questionUUIDList) {
         List<Question> questionList = new ArrayList<>();
-        for (UUID uuid : questionTextList) {
+        for (UUID uuid : questionUUIDList) {
             Optional<Question> questionToAdd = questionRepository.findById(uuid);
             if (questionToAdd.isEmpty()) {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("There is no question with uuid %s.", uuid));
