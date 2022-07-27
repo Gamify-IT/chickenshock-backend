@@ -16,7 +16,7 @@ public class GameResultController {
     @Autowired
     GameResultService gameResultService;
 
-    @PostMapping("/")
+    @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
     public GameResultDTO saveGameResult(
             @RequestBody final GameResultDTO gameResultDTO
