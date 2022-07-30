@@ -8,14 +8,19 @@ Make sure you have the following installed:
 
 - Java: [JDK 1.17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html) or higher
 - Maven: [Maven 3.6.3](https://maven.apache.org/download.cgi)
-- Postgres : [Postgres](https://www.postgresql.org/download/)
-
-Alternatively you can use [Docker](https://www.docker.com/)
+- Docker: [Docker latest or higher](https://www.docker.com/)
 
 First you have to change the spring.datasource.username and the spring.datasource.password in the application.properties file. If you changed the properties of the postgres db, you also have to change spring.datasource.url.
 
+### Run
 
-### Run 
+#### Docker-compose
+
+Start all dependencies with our docker-compose files.
+Check the [manual for starting the dependencies with docker-compose](https://github.com/Gamify-IT/docs/blob/main/dev-manuals/docker-compose/docker-compose.md).
+
+#### Project build
+
 ```sh
 mvn install
 ```
