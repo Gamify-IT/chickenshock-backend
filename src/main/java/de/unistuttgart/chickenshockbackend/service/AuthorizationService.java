@@ -1,4 +1,4 @@
-package de.unistuttgart.moorhuhnbackend.service;
+package de.unistuttgart.chickenshockbackend.service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;

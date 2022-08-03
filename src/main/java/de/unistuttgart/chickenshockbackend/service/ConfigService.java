@@ -1,13 +1,13 @@
-package de.unistuttgart.moorhuhnbackend.service;
+package de.unistuttgart.chickenshockbackend.service;
 
-import de.unistuttgart.moorhuhnbackend.data.Configuration;
-import de.unistuttgart.moorhuhnbackend.data.ConfigurationDTO;
-import de.unistuttgart.moorhuhnbackend.data.Question;
-import de.unistuttgart.moorhuhnbackend.data.QuestionDTO;
-import de.unistuttgart.moorhuhnbackend.data.mapper.ConfigurationMapper;
-import de.unistuttgart.moorhuhnbackend.data.mapper.QuestionMapper;
-import de.unistuttgart.moorhuhnbackend.repositories.ConfigurationRepository;
-import de.unistuttgart.moorhuhnbackend.repositories.QuestionRepository;
+import de.unistuttgart.chickenshockbackend.data.Configuration;
+import de.unistuttgart.chickenshockbackend.data.ConfigurationDTO;
+import de.unistuttgart.chickenshockbackend.data.Question;
+import de.unistuttgart.chickenshockbackend.data.QuestionDTO;
+import de.unistuttgart.chickenshockbackend.data.mapper.ConfigurationMapper;
+import de.unistuttgart.chickenshockbackend.data.mapper.QuestionMapper;
+import de.unistuttgart.chickenshockbackend.repositories.ConfigurationRepository;
+import de.unistuttgart.chickenshockbackend.repositories.QuestionRepository;
 import java.util.Optional;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;

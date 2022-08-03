@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>de.unistuttgart</groupId>
-    <artifactId>moorhuhn-backend</artifactId>
+    <artifactId>chickenshock-backend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Moorhuhn Backend</name>
-    <description>Backend for the Moorhuhn minigame</description>
+    <name>Chickenshock Backend</name>
+    <description>Backend for the Chickenshock minigame</description>
     <properties>
         <java.version>17</java.version>
         <org.mapstruct.version>1.5.2.Final</org.mapstruct.version>
@@ -97,7 +97,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>de.unistuttgart.moorhuhnbackend.MoorhuhnServiceApplication</mainClass>
+                            <mainClass>de.unistuttgart.chickenshockbackend.ChickenshockServiceApplication</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

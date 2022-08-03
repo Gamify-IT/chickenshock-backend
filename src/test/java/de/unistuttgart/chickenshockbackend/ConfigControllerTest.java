@@ -1,18 +1,18 @@
-package de.unistuttgart.moorhuhnbackend;
+package de.unistuttgart.chickenshockbackend;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.unistuttgart.moorhuhnbackend.data.Configuration;
-import de.unistuttgart.moorhuhnbackend.data.ConfigurationDTO;
-import de.unistuttgart.moorhuhnbackend.data.Question;
-import de.unistuttgart.moorhuhnbackend.data.QuestionDTO;
-import de.unistuttgart.moorhuhnbackend.data.mapper.ConfigurationMapper;
-import de.unistuttgart.moorhuhnbackend.data.mapper.QuestionMapper;
-import de.unistuttgart.moorhuhnbackend.repositories.ConfigurationRepository;
-import de.unistuttgart.moorhuhnbackend.repositories.QuestionRepository;
+import de.unistuttgart.chickenshockbackend.data.Configuration;
+import de.unistuttgart.chickenshockbackend.data.ConfigurationDTO;
+import de.unistuttgart.chickenshockbackend.data.Question;
+import de.unistuttgart.chickenshockbackend.data.QuestionDTO;
+import de.unistuttgart.chickenshockbackend.data.mapper.ConfigurationMapper;
+import de.unistuttgart.chickenshockbackend.data.mapper.QuestionMapper;
+import de.unistuttgart.chickenshockbackend.repositories.ConfigurationRepository;
+import de.unistuttgart.chickenshockbackend.repositories.QuestionRepository;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;

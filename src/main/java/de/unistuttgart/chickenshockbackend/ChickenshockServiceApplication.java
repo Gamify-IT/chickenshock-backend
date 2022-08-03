@@ -1,12 +1,12 @@
-package de.unistuttgart.moorhuhnbackend;
+package de.unistuttgart.chickenshockbackend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MoorhuhnServiceApplication {
+public class ChickenshockServiceApplication {
 
   public static void main(String[] args) {
-    SpringApplication.run(MoorhuhnServiceApplication.class, args);
+    SpringApplication.run(ChickenshockServiceApplication.class, args);
   }
 }

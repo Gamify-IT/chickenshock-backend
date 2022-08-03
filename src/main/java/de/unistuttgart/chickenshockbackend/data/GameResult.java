@@ -1,4 +1,4 @@
-package de.unistuttgart.moorhuhnbackend.data;
+package de.unistuttgart.chickenshockbackend.data;
 
 import lombok.AccessLevel;
 import lombok.Data;
