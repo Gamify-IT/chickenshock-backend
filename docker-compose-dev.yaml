@@ -23,8 +23,8 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
 
-  moorhuhn-db:
-    container_name: moorhuhn-db
+  chickenshock-db:
+    container_name: chickenshock-db
     image: postgres:14-alpine
     restart: always
     ports:
@@ -77,9 +77,9 @@ services:
     expose:
       - "80"
 
-  moorhuhn:
-    container_name: moorhuhn
-    image: ghcr.io/gamify-it/moorhuhn:main
+  chickenshock:
+    container_name: chickenshock
+    image: ghcr.io/gamify-it/chickenshock:main
     restart: always
     pull_policy: always
     expose:

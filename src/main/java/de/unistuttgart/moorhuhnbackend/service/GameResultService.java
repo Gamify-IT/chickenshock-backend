@@ -1,10 +1,10 @@
-package de.unistuttgart.moorhuhnbackend.service;
+package de.unistuttgart.chickenshockbackend.service;
 
-import de.unistuttgart.moorhuhnbackend.data.GameResult;
-import de.unistuttgart.moorhuhnbackend.data.GameResultDTO;
-import de.unistuttgart.moorhuhnbackend.data.Question;
-import de.unistuttgart.moorhuhnbackend.repositories.GameResultRepository;
-import de.unistuttgart.moorhuhnbackend.repositories.QuestionRepository;
+import de.unistuttgart.chickenshockbackend.data.GameResult;
+import de.unistuttgart.chickenshockbackend.data.GameResultDTO;
+import de.unistuttgart.chickenshockbackend.data.Question;
+import de.unistuttgart.chickenshockbackend.repositories.GameResultRepository;
+import de.unistuttgart.chickenshockbackend.repositories.QuestionRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

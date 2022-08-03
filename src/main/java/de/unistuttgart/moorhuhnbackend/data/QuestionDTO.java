@@ -1,4 +1,4 @@
-package de.unistuttgart.moorhuhnbackend.data;
+package de.unistuttgart.chickenshockbackend.data;
 
 import java.util.Objects;
 import java.util.Set;

@@ -1,5 +1,5 @@
-# Moorhuhn-Backend
-This repo serves to persist the moorhuhn data in a db and to communicate with different Microservices.
+# Chickenshock-Backend
+This repo serves to persist the chickenshock data in a db and to communicate with different Microservices.
 
 
 # Development
@@ -34,39 +34,39 @@ java -jar crossword-service-0.0.1-SNAPSHOT.jar
 
 Build the Docker container with
 ```sh
-docker build  -t moorhuhn-backend-dev .
+docker build  -t chickenshock-backend-dev .
 ```
 And run it at port 8000 with 
 ```
-docker run -d -p 8000:80 -e POSTGRES_URL="postgresql://host.docker.internal:5432/postgres" -e POSTGRES_USER="postgres" -e POSTGRES_PASSWORD="postgres" --name moorhuhn-backend-dev moorhuhn-backend-dev
+docker run -d -p 8000:80 -e POSTGRES_URL="postgresql://host.docker.internal:5432/postgres" -e POSTGRES_USER="postgres" -e POSTGRES_PASSWORD="postgres" --name chickenshock-backend-dev chickenshock-backend-dev
 ```
 
 To monitor, stop and remove the container you can use the following commands:
 ```sh
-docker ps -a -f name=moorhuhn-backend-dev
+docker ps -a -f name=chickenshock-backend-dev
 ```
 ```sh
-docker stop moorhuhn-backend-dev
+docker stop chickenshock-backend-dev
 ```
 ```sh
-docker rm moorhuhn-backend-dev
+docker rm chickenshock-backend-dev
 ```
 
 To run the prebuild container use
 ```sh
-docker run -d -p 8000:80 -e POSTGRES_URL="postgresql://host.docker.internal:5432/postgres" -e POSTGRES_USER="postgres" -e POSTGRES_PASSWORD="postgres" --name moorhuhn-backend ghcr.io/gamify-it/moorhuhn-backend:latest
+docker run -d -p 8000:80 -e POSTGRES_URL="postgresql://host.docker.internal:5432/postgres" -e POSTGRES_USER="postgres" -e POSTGRES_PASSWORD="postgres" --name chickenshock-backend ghcr.io/gamify-it/chickenshock-backend:latest
 ```
 
 
 ### testing database
 to setup a database with docker for testing you can use
 ```sh
-docker run -d -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=postgres  --rm --name moorhuhn-database postgres
+docker run -d -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=postgres  --rm --name chickenshock-database postgres
 ```
 To stop and remove it simply type
 ```sh
-docker stop moorhuhn-database
+docker stop chickenshock-database
 ```
 
 ### Rest mappings
-Rest mappings are defined in [`moorhuhn-service/src/main/java/com/moorhuhnservice/moorhuhnservice/controller/MoorhuhnController.java`](moorhuhn-service/src/main/java/com/moorhuhnservice/moorhuhnservice/controller/MoorhuhnController.java)
+Rest mappings are defined in [`chickenshock-service/src/main/java/com/chickenshockservice/chickenshockservice/controller/ChickenshockController.java`](chickenshock-service/src/main/java/com/chickenshockservice/chickenshockservice/controller/ChickenshockController.java)

@@ -1,7 +1,7 @@
-package de.unistuttgart.moorhuhnbackend.data.mapper;
+package de.unistuttgart.chickenshockbackend.data.mapper;
 
-import de.unistuttgart.moorhuhnbackend.data.Configuration;
-import de.unistuttgart.moorhuhnbackend.data.ConfigurationDTO;
+import de.unistuttgart.chickenshockbackend.data.Configuration;
+import de.unistuttgart.chickenshockbackend.data.ConfigurationDTO;
 import java.util.List;
 import org.mapstruct.Mapper;
 

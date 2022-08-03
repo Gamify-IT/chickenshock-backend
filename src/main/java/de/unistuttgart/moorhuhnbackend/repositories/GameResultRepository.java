@@ -1,6 +1,6 @@
-package de.unistuttgart.moorhuhnbackend.repositories;
+package de.unistuttgart.chickenshockbackend.repositories;
 
-import de.unistuttgart.moorhuhnbackend.data.GameResult;
+import de.unistuttgart.chickenshockbackend.data.GameResult;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

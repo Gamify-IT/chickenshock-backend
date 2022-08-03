@@ -1,11 +1,11 @@
-package de.unistuttgart.moorhuhnbackend.controller;
+package de.unistuttgart.chickenshockbackend.controller;
 
-import de.unistuttgart.moorhuhnbackend.data.ConfigurationDTO;
-import de.unistuttgart.moorhuhnbackend.data.QuestionDTO;
-import de.unistuttgart.moorhuhnbackend.data.mapper.ConfigurationMapper;
-import de.unistuttgart.moorhuhnbackend.data.mapper.QuestionMapper;
-import de.unistuttgart.moorhuhnbackend.repositories.ConfigurationRepository;
-import de.unistuttgart.moorhuhnbackend.service.ConfigService;
+import de.unistuttgart.chickenshockbackend.data.ConfigurationDTO;
+import de.unistuttgart.chickenshockbackend.data.QuestionDTO;
+import de.unistuttgart.chickenshockbackend.data.mapper.ConfigurationMapper;
+import de.unistuttgart.chickenshockbackend.data.mapper.QuestionMapper;
+import de.unistuttgart.chickenshockbackend.repositories.ConfigurationRepository;
+import de.unistuttgart.chickenshockbackend.service.ConfigService;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
