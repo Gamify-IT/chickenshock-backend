@@ -8,8 +8,6 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.lang.Nullable;
 
 import java.util.List;
-import java.util.Objects;
-import java.util.Set;
 import java.util.UUID;
 
 @Data
@@ -51,17 +49,17 @@ public class GameResultDTO {
         if (this == other) return true;
         if (other == null) return false;
 
-        if (id != this.id) return false;
-        if (questionCount != this.questionCount) return false;
-        if (Float.compare(this.timeLimit, timeLimit) != 0) return false;
-        if (Float.compare(this.finishedInSeconds, finishedInSeconds) != 0) return false;
-        if (correctKillsCount != this.correctKillsCount) return false;
-        if (wrongKillsCount != this.wrongKillsCount) return false;
-        if (killsCount != this.killsCount) return false;
-        if (shotCount != this.shotCount) return false;
-        if (points != this.points) return false;
-        if (!correctAnsweredQuestions.equals(this.correctAnsweredQuestions)) return false;
-        if (!wrongAnsweredQuestions.equals(this.wrongAnsweredQuestions)) return false;
-        return configurationAsUUID.equals(this.configurationAsUUID);
+        if (id != other.id) return false;
+        if (questionCount != other.questionCount) return false;
+        if (Float.compare(other.timeLimit, timeLimit) != 0) return false;
+        if (Float.compare(other.finishedInSeconds, finishedInSeconds) != 0) return false;
+        if (correctKillsCount != other.correctKillsCount) return false;
+        if (wrongKillsCount != other.wrongKillsCount) return false;
+        if (killsCount != other.killsCount) return false;
+        if (shotCount != other.shotCount) return false;
+        if (points != other.points) return false;
+        if (!correctAnsweredQuestions.equals(other.correctAnsweredQuestions)) return false;
+        if (!wrongAnsweredQuestions.equals(other.wrongAnsweredQuestions)) return false;
+        return configurationAsUUID.equals(other.configurationAsUUID);
     }
 }
