@@ -19,11 +19,10 @@ public class GameResultController {
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
     public GameResultDTO saveGameResult(
-            @CookieValue("token") String tokenCookie,
             @RequestBody final GameResultDTO gameResultDTO
     ) {
         log.debug("save game result");
-        gameResultService.saveGameResult(gameResultDTO, tokenCookie);
+        gameResultService.saveGameResult(gameResultDTO);
         return gameResultDTO;
     }
 }

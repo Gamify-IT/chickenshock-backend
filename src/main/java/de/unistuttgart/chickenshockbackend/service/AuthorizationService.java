@@ -26,6 +26,7 @@ public class AuthorizationService {
     return authorized;
   }
 
+  @Deprecated(since = "dont use this method until we have a correct working login")
   public String getPlayerId(final String tokenCookie) {
     try {
       final Algorithm algorithm = Algorithm.HMAC256("test"); //use more secure key

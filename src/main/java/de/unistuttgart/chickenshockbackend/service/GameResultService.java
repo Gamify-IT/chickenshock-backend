@@ -1,8 +1,6 @@
 package de.unistuttgart.chickenshockbackend.service;
 
-import de.unistuttgart.chickenshockbackend.data.GameResult;
-import de.unistuttgart.chickenshockbackend.data.GameResultDTO;
-import de.unistuttgart.chickenshockbackend.data.Question;
+import de.unistuttgart.chickenshockbackend.data.*;
 import de.unistuttgart.chickenshockbackend.repositories.GameResultRepository;
 import de.unistuttgart.chickenshockbackend.repositories.QuestionRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -32,18 +30,19 @@ public class GameResultService {
     /**
      * Cast list of question texts to a List of Questions
      *
-     * @param questionUUIDList list of question UUIDs
+     * @param roundResultDTOs list of RoundResults
      * @return a list of questions
      */
-    public List<Question> castQuestionList(final List<UUID> questionUUIDList) {
-        List<Question> questionList = new ArrayList<>();
-        for (UUID uuid : questionUUIDList) {
-            Optional<Question> questionToAdd = questionRepository.findById(uuid);
+    public List<RoundResult> castQuestionList(final List<RoundResultDTO> roundResultDTOs) {
+        List<RoundResult> questionList = new ArrayList<>();
+        for (RoundResultDTO roundResultDTO : roundResultDTOs) {
+            Optional<Question> questionToAdd = questionRepository.findById(roundResultDTO.getQuestionUUId());
             if (questionToAdd.isEmpty()) {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("There is no question with uuid %s.", uuid));
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("There is no question with uuid %s.", roundResultDTO.getQuestionUUId()));
             } else {
-                questionList.add(questionToAdd.get());
-            }
+                RoundResult roundResult = new RoundResult(questionToAdd.get(),roundResultDTO.getAnswer());
+                questionList.add(roundResult);
+             }
         }
         return questionList;
     }
@@ -53,11 +52,11 @@ public class GameResultService {
      *
      * @param gameResultDTO extern gameResultDTO
      */
-    public void saveGameResult(GameResultDTO gameResultDTO, String token) {
-        List<Question> correctQuestions = this.castQuestionList(gameResultDTO.getCorrectAnsweredQuestions());
-        List<Question> wrongQuestions = this.castQuestionList(gameResultDTO.getWrongAnsweredQuestions());
-        String playerId = authorizationService.getPlayerId(token);
-        GameResult result = new GameResult(gameResultDTO.getQuestionCount(), gameResultDTO.getTimeLimit(), gameResultDTO.getFinishedInSeconds(), gameResultDTO.getCorrectKillsCount(), gameResultDTO.getWrongKillsCount(), gameResultDTO.getKillsCount(), gameResultDTO.getShotCount(), gameResultDTO.getPoints(), correctQuestions, wrongQuestions, gameResultDTO.getConfigurationAsUUID(), playerId);
+    public void saveGameResult(GameResultDTO gameResultDTO) {
+        List<RoundResult> correctQuestions = this.castQuestionList(gameResultDTO.getCorrectAnsweredQuestions());
+        List<RoundResult> wrongQuestions = this.castQuestionList(gameResultDTO.getWrongAnsweredQuestions());
+        //String playerId = authorizationService.getPlayerId(token);TODO: after login is implemented
+        GameResult result = new GameResult(gameResultDTO.getQuestionCount(), gameResultDTO.getTimeLimit(), gameResultDTO.getFinishedInSeconds(), gameResultDTO.getCorrectKillsCount(), gameResultDTO.getWrongKillsCount(), gameResultDTO.getKillsCount(), gameResultDTO.getShotCount(), gameResultDTO.getPoints(), correctQuestions, wrongQuestions, gameResultDTO.getConfigurationAsUUID(), "playerId");
         gameResultRepository.save(result);
     }
 }

@@ -27,14 +27,14 @@ public class GameResult {
     private int shotCount;
     private int points;
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Question> correctAnsweredQuestions;
+    private List<RoundResult> correctAnsweredQuestions;
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Question> wrongAnsweredQuestions;
+    private List<RoundResult> wrongAnsweredQuestions;
     private UUID configurationAsUUID;
     private String playerId;
     private LocalDateTime playedTime;
 
-    public GameResult(int questionCount, float timeLimit, float finishedInSeconds, int correctKillsCount, int wrongKillsCount, int killsCount, int shotCount, int points, List<Question> correctAnsweredQuestions, List<Question> wrongAnsweredQuestions, UUID configurationAsUUID, String playerId)
+    public GameResult(int questionCount, float timeLimit, float finishedInSeconds, int correctKillsCount, int wrongKillsCount, int killsCount, int shotCount, int points, List<RoundResult> correctAnsweredQuestions, List<RoundResult> wrongAnsweredQuestions, UUID configurationAsUUID, String playerId)
     {
         this.questionCount = questionCount;
         this.timeLimit = timeLimit;
