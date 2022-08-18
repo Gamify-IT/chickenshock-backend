@@ -39,18 +39,18 @@ public class GameResult {
   private LocalDateTime playedTime;
 
   public GameResult(
-    int questionCount,
-    float timeLimit,
-    float finishedInSeconds,
-    int correctKillsCount,
-    int wrongKillsCount,
-    int killsCount,
-    int shotCount,
-    int points,
-    List<RoundResult> correctAnsweredQuestions,
-    List<RoundResult> wrongAnsweredQuestions,
-    UUID configurationAsUUID,
-    String playerId
+    final int questionCount,
+    final float timeLimit,
+    final float finishedInSeconds,
+    final int correctKillsCount,
+    final int wrongKillsCount,
+    final int killsCount,
+    final int shotCount,
+    final int points,
+    final List<RoundResult> correctAnsweredQuestions,
+    final List<RoundResult> wrongAnsweredQuestions,
+    final UUID configurationAsUUID,
+    final String playerId
   ) {
     this.questionCount = questionCount;
     this.timeLimit = timeLimit;

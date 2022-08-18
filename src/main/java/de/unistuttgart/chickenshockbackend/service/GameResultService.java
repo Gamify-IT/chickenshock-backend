@@ -59,11 +59,11 @@ public class GameResultService {
    *
    * @param gameResultDTO extern gameResultDTO
    */
-  public void saveGameResult(GameResultDTO gameResultDTO) {
-    List<RoundResult> correctQuestions = this.castQuestionList(gameResultDTO.getCorrectAnsweredQuestions());
-    List<RoundResult> wrongQuestions = this.castQuestionList(gameResultDTO.getWrongAnsweredQuestions());
+  public void saveGameResult(final GameResultDTO gameResultDTO) {
+    final List<RoundResult> correctQuestions = this.castQuestionList(gameResultDTO.getCorrectAnsweredQuestions());
+    final List<RoundResult> wrongQuestions = this.castQuestionList(gameResultDTO.getWrongAnsweredQuestions());
     //String playerId = authorizationService.getPlayerId(token);TODO: after login is implemented
-    GameResult result = new GameResult(
+    final GameResult result = new GameResult(
       gameResultDTO.getQuestionCount(),
       gameResultDTO.getTimeLimit(),
       gameResultDTO.getFinishedInSeconds(),
@@ -79,18 +79,18 @@ public class GameResultService {
     );
     gameResultRepository.save(result);
 
-    int overworldResult = calculateResult(result.getCorrectKillsCount(), result.getWrongKillsCount());
+    final int resultScore = calculateResultScore(result.getCorrectKillsCount(), result.getWrongKillsCount());
 
-    OverworldResultDTO resultDTO = new OverworldResultDTO(
+    final OverworldResultDTO resultDTO = new OverworldResultDTO(
       "CHICKENSHOCK",
       gameResultDTO.getConfigurationAsUUID(),
-      overworldResult,
+      resultScore,
       "1"
     );
     resultClient.submit(resultDTO);
   }
 
-  private int calculateResult(int correctAnswers, int wrongAnswers) {
+  private int calculateResultScore(final int correctAnswers, final int wrongAnswers) {
     return (int) (
       (100 * correctAnswers) / (correctAnswers + wrongAnswers) * Math.min(1, (wrongAnswers + correctAnswers) / 4.0)
     );

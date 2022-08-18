@@ -21,7 +21,7 @@ public class RoundResultDTO {
   UUID questionUUId;
   String answer;
 
-  public RoundResultDTO(UUID questionUUId, String answer) {
+  public RoundResultDTO(final UUID questionUUId, final String answer) {
     this.questionUUId = questionUUId;
     this.answer = answer;
   }

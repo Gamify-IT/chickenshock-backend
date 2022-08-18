@@ -31,17 +31,17 @@ public class GameResultDTO {
   private UUID configurationAsUUID;
 
   public GameResultDTO(
-    int questionCount,
-    float timeLimit,
-    float finishedInSeconds,
-    int correctKillsCount,
-    int wrongKillsCount,
-    int killsCount,
-    int shotCount,
-    int points,
-    List<RoundResultDTO> correctAnsweredQuestions,
-    List<RoundResultDTO> wrongAnsweredQuestions,
-    UUID configurationAsUUID
+    final int questionCount,
+    final float timeLimit,
+    final float finishedInSeconds,
+    final int correctKillsCount,
+    final int wrongKillsCount,
+    final int killsCount,
+    final int shotCount,
+    final int points,
+    final List<RoundResultDTO> correctAnsweredQuestions,
+    final List<RoundResultDTO> wrongAnsweredQuestions,
+    final UUID configurationAsUUID
   ) {
     this.questionCount = questionCount;
     this.timeLimit = timeLimit;

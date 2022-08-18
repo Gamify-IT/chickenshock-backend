@@ -25,7 +25,7 @@ public class RoundResult {
 
   String answer;
 
-  public RoundResult(Question question, String answer) {
+  public RoundResult(final Question question, final String answer) {
     this.question = question;
     this.answer = answer;
   }
