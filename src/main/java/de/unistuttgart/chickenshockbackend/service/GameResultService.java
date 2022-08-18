@@ -90,7 +90,7 @@ public class GameResultService {
     resultClient.submit(resultDTO);
   }
 
-  private int calculateResult(int wrongAnswers, int correctAnswers) {
+  private int calculateResult(int correctAnswers, int wrongAnswers) {
     return (int) (
       (100 * correctAnswers) / (correctAnswers + wrongAnswers) * Math.min(1, (wrongAnswers + correctAnswers) / 4.0)
     );
