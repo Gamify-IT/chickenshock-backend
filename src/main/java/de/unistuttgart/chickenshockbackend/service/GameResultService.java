@@ -91,6 +91,6 @@ public class GameResultService {
   }
 
   private int calculateResult(int wrongAnswers, int correctAnswers) {
-    return (100 * wrongAnswers) / correctAnswers / Math.min(1, (wrongAnswers + correctAnswers) / 4);
+    return (100 * correctAnswers) / (correctAnswers+wrongAnswers) / Math.min(1, (wrongAnswers + correctAnswers) / 4);
   }
 }
