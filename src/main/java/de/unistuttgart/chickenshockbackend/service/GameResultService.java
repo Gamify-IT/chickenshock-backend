@@ -2,17 +2,14 @@ package de.unistuttgart.chickenshockbackend.service;
 
 import de.unistuttgart.chickenshockbackend.clients.ResultClient;
 import de.unistuttgart.chickenshockbackend.data.*;
+import de.unistuttgart.chickenshockbackend.data.mapper.RoundResultMapper;
 import de.unistuttgart.chickenshockbackend.repositories.GameResultRepository;
 import de.unistuttgart.chickenshockbackend.repositories.QuestionRepository;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @Slf4j
@@ -31,28 +28,8 @@ public class GameResultService {
   @Autowired
   AuthorizationService authorizationService;
 
-  /**
-   * Cast list of question texts to a List of Questions
-   *
-   * @param roundResultDTOs list of RoundResults
-   * @return a list of questions
-   */
-  public List<RoundResult> castQuestionList(final List<RoundResultDTO> roundResultDTOs) {
-    List<RoundResult> questionList = new ArrayList<>();
-    for (RoundResultDTO roundResultDTO : roundResultDTOs) {
-      Optional<Question> questionToAdd = questionRepository.findById(roundResultDTO.getQuestionUUId());
-      if (questionToAdd.isEmpty()) {
-        throw new ResponseStatusException(
-          HttpStatus.NOT_FOUND,
-          String.format("There is no question with uuid %s.", roundResultDTO.getQuestionUUId())
-        );
-      } else {
-        RoundResult roundResult = new RoundResult(questionToAdd.get(), roundResultDTO.getAnswer());
-        questionList.add(roundResult);
-      }
-    }
-    return questionList;
-  }
+  @Autowired
+  RoundResultMapper roundResultMapper;
 
   /**
    * Casts a GameResultDTO to GameResult and saves it in the Database
@@ -60,8 +37,8 @@ public class GameResultService {
    * @param gameResultDTO extern gameResultDTO
    */
   public void saveGameResult(final GameResultDTO gameResultDTO) {
-    final List<RoundResult> correctQuestions = this.castQuestionList(gameResultDTO.getCorrectAnsweredQuestions());
-    final List<RoundResult> wrongQuestions = this.castQuestionList(gameResultDTO.getWrongAnsweredQuestions());
+    final List<RoundResult> correctQuestions = roundResultMapper.roundResultDTOsToRoundResults(gameResultDTO.getCorrectAnsweredQuestions());
+    final List<RoundResult> wrongQuestions = roundResultMapper.roundResultDTOsToRoundResults(gameResultDTO.getWrongAnsweredQuestions());
     //String playerId = authorizationService.getPlayerId(token);TODO: after login is implemented
     final GameResult result = new GameResult(
       gameResultDTO.getQuestionCount(),
