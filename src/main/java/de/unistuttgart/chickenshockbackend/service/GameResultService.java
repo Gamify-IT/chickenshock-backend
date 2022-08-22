@@ -79,7 +79,12 @@ public class GameResultService {
     );
     gameResultRepository.save(result);
 
-    final int resultScore = calculateResultScore(result.getCorrectKillsCount(), result.getWrongKillsCount());
+    final int resultScore = calculateResultScore(
+      result.getCorrectKillsCount(),
+      result.getWrongKillsCount(),
+      result.getQuestionCount(),
+      result.getTimeLimit()
+    );
 
     final OverworldResultDTO resultDTO = new OverworldResultDTO(
       "CHICKENSHOCK",
@@ -90,9 +95,16 @@ public class GameResultService {
     resultClient.submit(resultDTO);
   }
 
-  private int calculateResultScore(final int correctAnswers, final int wrongAnswers) {
+  private int calculateResultScore(
+    final int correctAnswers,
+    final int wrongAnswers,
+    final int numberOfQuestions,
+    final float time
+  ) {
     return (int) (
-      (100 * correctAnswers) / (correctAnswers + wrongAnswers) * Math.min(1, (wrongAnswers + correctAnswers) / 4.0)
+      (100 * correctAnswers) /
+      (correctAnswers + wrongAnswers) *
+      Math.min(1, (wrongAnswers + correctAnswers) / Math.min(time / 15, numberOfQuestions))
     );
   }
 }
