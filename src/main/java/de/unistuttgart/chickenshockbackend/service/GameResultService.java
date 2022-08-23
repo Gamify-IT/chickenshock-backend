@@ -16,6 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class GameResultService {
 
+  double TIME_PER_QUESTION = 15.0;
+
   @Autowired
   ResultClient resultClient;
 
@@ -37,8 +39,12 @@ public class GameResultService {
    * @param gameResultDTO extern gameResultDTO
    */
   public void saveGameResult(final GameResultDTO gameResultDTO) {
-    final List<RoundResult> correctQuestions = roundResultMapper.roundResultDTOsToRoundResults(gameResultDTO.getCorrectAnsweredQuestions());
-    final List<RoundResult> wrongQuestions = roundResultMapper.roundResultDTOsToRoundResults(gameResultDTO.getWrongAnsweredQuestions());
+    final List<RoundResult> correctQuestions = roundResultMapper.roundResultDTOsToRoundResults(
+      gameResultDTO.getCorrectAnsweredQuestions()
+    );
+    final List<RoundResult> wrongQuestions = roundResultMapper.roundResultDTOsToRoundResults(
+      gameResultDTO.getWrongAnsweredQuestions()
+    );
     //String playerId = authorizationService.getPlayerId(token);TODO: after login is implemented
     final GameResult result = new GameResult(
       gameResultDTO.getQuestionCount(),
@@ -62,6 +68,7 @@ public class GameResultService {
       result.getQuestionCount(),
       result.getTimeLimit()
     );
+    System.out.println(result.getTimeLimit());
 
     final OverworldResultDTO resultDTO = new OverworldResultDTO(
       "CHICKENSHOCK",
@@ -81,7 +88,7 @@ public class GameResultService {
     return (int) (
       (100 * correctAnswers) /
       (correctAnswers + wrongAnswers) *
-      Math.min(1, (wrongAnswers + correctAnswers) / Math.min(time / 15, numberOfQuestions))
+      Math.min(1, (wrongAnswers + correctAnswers) / Math.min(time / TIME_PER_QUESTION, numberOfQuestions))
     );
   }
 }
