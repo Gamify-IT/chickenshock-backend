@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class GameResultService {
 
-  double TIME_PER_QUESTION = 15.0;
+  final double TIME_PER_QUESTION = 15.0;
 
   @Autowired
   ResultClient resultClient;
