@@ -16,8 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class GameResultService {
 
-  final double TIME_PER_QUESTION = 15.0;
-
   @Autowired
   ResultClient resultClient;
 
@@ -62,12 +60,7 @@ public class GameResultService {
     );
     gameResultRepository.save(result);
 
-    final int resultScore = calculateResultScore(
-      result.getCorrectKillsCount(),
-      result.getWrongKillsCount(),
-      result.getQuestionCount(),
-      result.getTimeLimit()
-    );
+    final int resultScore = calculateResultScore(result.getCorrectKillsCount(), result.getQuestionCount());
     System.out.println(result.getTimeLimit());
 
     final OverworldResultDTO resultDTO = new OverworldResultDTO(
@@ -79,16 +72,7 @@ public class GameResultService {
     resultClient.submit(resultDTO);
   }
 
-  private int calculateResultScore(
-    final int correctAnswers,
-    final int wrongAnswers,
-    final int numberOfQuestions,
-    final float time
-  ) {
-    return (int) (
-      (100 * correctAnswers) /
-      (correctAnswers + wrongAnswers) *
-      Math.min(1, (wrongAnswers + correctAnswers) / Math.min(time / TIME_PER_QUESTION, numberOfQuestions))
-    );
+  private int calculateResultScore(final int correctAnswers, final int numberOfQuestions) {
+    return (int) ((100.0 * correctAnswers) / numberOfQuestions);
   }
 }
