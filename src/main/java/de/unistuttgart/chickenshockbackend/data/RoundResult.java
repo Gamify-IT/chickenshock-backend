@@ -1,12 +1,14 @@
 package de.unistuttgart.chickenshockbackend.data;
 
+import java.util.UUID;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
-
-import javax.persistence.*;
-import java.util.UUID;
 
 @Entity
 @Data
@@ -14,17 +16,17 @@ import java.util.UUID;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class RoundResult {
 
-    @Id
-    @GeneratedValue(generator = "uuid")
-    UUID id;
+  @Id
+  @GeneratedValue(generator = "uuid")
+  UUID id;
 
-    @ManyToOne
-    Question question;
-    String answer;
+  @ManyToOne
+  Question question;
 
-    public RoundResult(Question question, String answer)
-    {
-        this.question = question;
-        this.answer = answer;
-    }
+  String answer;
+
+  public RoundResult(final Question question, final String answer) {
+    this.question = question;
+    this.answer = answer;
+  }
 }

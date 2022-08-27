@@ -235,6 +235,17 @@ class ConfigControllerTest {
   }
 
   @Test
+  void removeQuestionFromExistingConfigurationNotFound() throws Exception {
+    mvc
+      .perform(
+        delete(API_URL + "/" + initialConfig.getId() + "/questions/" + UUID.randomUUID().toString())
+          .contentType(MediaType.APPLICATION_JSON)
+      )
+      .andExpect(status().isNotFound())
+      .andReturn();
+  }
+
+  @Test
   void updateQuestionFromExistingConfiguration() throws Exception {
     final Question updatedQuestion = initialConfig.getQuestions().stream().findFirst().get();
     final QuestionDTO updatedQuestionDTO = questionMapper.questionToQuestionDTO(updatedQuestion);
@@ -259,5 +270,23 @@ class ConfigControllerTest {
     assertTrue(updatedQuestionDTO.equalsContent(updatedQuestionResultDTO));
     assertEquals(newText, updatedQuestionResultDTO.getText());
     assertEquals(newText, questionRepository.findById(updatedQuestion.getId()).get().getText());
+  }
+
+  @Test
+  void updateQuestionFromExistingConfigurationNotFound() throws Exception {
+    final Question updatedQuestion = initialConfig.getQuestions().stream().findFirst().get();
+    final QuestionDTO updatedQuestionDTO = questionMapper.questionToQuestionDTO(updatedQuestion);
+    final String newText = "Is this a new updated question?";
+    updatedQuestionDTO.setText(newText);
+
+    final String bodyValue = objectMapper.writeValueAsString(updatedQuestionDTO);
+    mvc
+      .perform(
+        put(API_URL + "/" + initialConfig.getId() + "/questions/" + UUID.randomUUID().toString())
+          .content(bodyValue)
+          .contentType(MediaType.APPLICATION_JSON)
+      )
+      .andExpect(status().isNotFound())
+      .andReturn();
   }
 }
