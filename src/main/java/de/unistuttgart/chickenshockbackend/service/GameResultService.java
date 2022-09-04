@@ -23,12 +23,6 @@ public class GameResultService {
   GameResultRepository gameResultRepository;
 
   @Autowired
-  QuestionRepository questionRepository;
-
-  @Autowired
-  AuthorizationService authorizationService;
-
-  @Autowired
   RoundResultMapper roundResultMapper;
 
   /**
@@ -36,14 +30,13 @@ public class GameResultService {
    *
    * @param gameResultDTO extern gameResultDTO
    */
-  public void saveGameResult(final GameResultDTO gameResultDTO) {
+  public void saveGameResult(final GameResultDTO gameResultDTO, String userId) {
     final List<RoundResult> correctQuestions = roundResultMapper.roundResultDTOsToRoundResults(
       gameResultDTO.getCorrectAnsweredQuestions()
     );
     final List<RoundResult> wrongQuestions = roundResultMapper.roundResultDTOsToRoundResults(
       gameResultDTO.getWrongAnsweredQuestions()
     );
-    //String playerId = authorizationService.getPlayerId(token);TODO: after login is implemented
     final GameResult result = new GameResult(
       gameResultDTO.getQuestionCount(),
       gameResultDTO.getTimeLimit(),
@@ -56,7 +49,7 @@ public class GameResultService {
       correctQuestions,
       wrongQuestions,
       gameResultDTO.getConfigurationAsUUID(),
-      "playerId"
+      userId
     );
     gameResultRepository.save(result);
 
@@ -67,7 +60,7 @@ public class GameResultService {
       "CHICKENSHOCK",
       gameResultDTO.getConfigurationAsUUID(),
       resultScore,
-      "1"
+      userId
     );
     resultClient.submit(resultDTO);
   }

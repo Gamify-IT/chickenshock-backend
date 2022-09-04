@@ -2,6 +2,7 @@ package de.unistuttgart.chickenshockbackend.controller;
 
 import de.unistuttgart.chickenshockbackend.data.GameResultDTO;
 import de.unistuttgart.chickenshockbackend.service.GameResultService;
+import de.unistuttgart.chickenshockbackend.service.JWTValidatorService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,11 +16,15 @@ public class GameResultController {
   @Autowired
   GameResultService gameResultService;
 
+  @Autowired
+  JWTValidatorService jwtValidatorService;
+
   @PostMapping("")
   @ResponseStatus(HttpStatus.CREATED)
-  public GameResultDTO saveGameResult(@RequestBody final GameResultDTO gameResultDTO) {
+  public GameResultDTO saveGameResult(@CookieValue("access_token") final String accessToken, @RequestBody final GameResultDTO gameResultDTO) {
+    final String userId = jwtValidatorService.validate(accessToken).getSubject();
     log.debug("save game result");
-    gameResultService.saveGameResult(gameResultDTO);
+    gameResultService.saveGameResult(gameResultDTO, userId);
     return gameResultDTO;
   }
 }
