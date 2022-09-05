@@ -102,7 +102,7 @@ class ConfigControllerTest {
   @Test
   void createConfiguration() throws Exception {
     final ConfigurationDTO newCreatedConfigurationDTO = new ConfigurationDTO(
-      Set.of(new QuestionDTO("Is this a new configuration?", "Yes", Set.of("Maybe", "No")))
+      Set.of(new QuestionDTO("Is this a new configuration?", "Yes", Set.of("Maybe", "No"))), 40
     );
     final String bodyValue = objectMapper.writeValueAsString(newCreatedConfigurationDTO);
     final MvcResult result = mvc
