@@ -7,6 +7,7 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.beans.factory.annotation.Value;
 
 @Entity
 @Data
@@ -21,8 +22,12 @@ public class Configuration {
   @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
   Set<Question> questions;
 
-  public Configuration(final Set<Question> questions) {
+  @Value("${game.time}")
+  int time;
+
+  public Configuration(final Set<Question> questions, final int time) {
     this.questions = questions;
+    this.time = time;
   }
 
   public void addQuestion(final Question question) {
@@ -31,5 +36,9 @@ public class Configuration {
 
   public void removeQuestion(final Question question) {
     this.questions.remove(question);
+  }
+
+  public void setTime(final int time) {
+    this.time = time;
   }
 }
