@@ -27,7 +27,7 @@ mvn install
 in the folder of the project.
 Go to the target folder and run 
 ```sh
-java -jar crossword-service-0.0.1-SNAPSHOT.jar
+java -jar chickenshock-service-0.0.1-SNAPSHOT.jar
 ```
 
 ### With Docker
