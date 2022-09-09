@@ -70,7 +70,24 @@
             <artifactId>jwks-rsa</artifactId>
             <version>0.21.1</version>
         </dependency>
+        <dependency>
+            <groupId>de.unistuttgart</groupId>
+            <artifactId>authentification-validator</artifactId>
+            <version>v0.0.1</version>
+        </dependency>
     </dependencies>
+
+    <repositories>
+        <repository>
+            <id>github</id>
+            <name>GitHub Gamify-IT Apache Maven Packages</name>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <url>https://maven.pkg.github.com/Gamify-IT/authentification-validator</url>
+        </repository>
+    </repositories>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
