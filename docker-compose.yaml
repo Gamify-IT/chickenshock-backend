@@ -11,6 +11,8 @@ services:
     environment:
       POSTGRES_SETUP: >
         keycloak/default.sql
+        overworld/default.sql
+        chickenshock/default.sql
 
   keycloak-db:
     container_name: keycloak-db
