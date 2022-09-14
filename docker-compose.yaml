@@ -81,6 +81,7 @@ services:
       - POSTGRES_URL=postgresql://overworld-db:5432/postgres
       - CHICKENSHOCK_URL=http://chickenshock-backend/api/v1
       - KEYCLOAK_ISSUER=http://localhost/keycloak/realms/Gamify-IT
+      - KEYCLOAK_URL=http://keycloak/keycloak/realms/Gamify-IT
 
   chickenshock-backend:
     container_name: chickenshock-backend
@@ -96,6 +97,7 @@ services:
       - POSTGRES_URL=postgresql://chickenshock-db:5432/postgres
       - OVERWORLD_URL=http://overworld-backend/api/v1
       - KEYCLOAK_ISSUER=http://localhost/keycloak/realms/Gamify-IT
+      - KEYCLOAK_URL=http://keycloak/keycloak/realms/Gamify-IT
 
 
   #frontends
