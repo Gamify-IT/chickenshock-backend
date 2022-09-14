@@ -37,7 +37,4 @@ public class Configuration {
     this.questions.remove(question);
   }
 
-  public void setTime(final int time) {
-    this.time = time;
-  }
 }

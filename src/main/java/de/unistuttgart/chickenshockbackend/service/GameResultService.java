@@ -40,7 +40,7 @@ public class GameResultService {
             "CHICKENSHOCK",
             gameResultDTO.getConfigurationAsUUID(),
             resultScore,
-            "1"
+            userId
     );
     try {
       resultClient.submit(resultDTO);
