@@ -45,7 +45,7 @@ services:
       - POSTGRES_PASSWORD=postgres
 
   #backends
-  lkeycloak:
+  keycloak:
     container_name: keycloak
     expose:
       - "80"

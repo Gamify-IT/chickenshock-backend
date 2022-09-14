@@ -71,7 +71,7 @@
             <version>0.21.1</version>
         </dependency>
         <dependency>
-            <groupId>de.unistuttgart</groupId>
+            <groupId>de.uni-stuttgart.gamify-it</groupId>
             <artifactId>authentification-validator</artifactId>
             <version>v0.0.1</version>
         </dependency>
@@ -79,12 +79,9 @@
 
     <repositories>
         <repository>
-            <id>github</id>
-            <name>GitHub Gamify-IT Apache Maven Packages</name>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <url>https://maven.pkg.github.com/Gamify-IT/authentification-validator</url>
+            <id>sqa-artifactory</id>
+            <name>SQA Artifactory-releases</name>
+            <url>https://rss-artifactory.ddnss.org/artifactory/libs-release</url>
         </repository>
     </repositories>
 
