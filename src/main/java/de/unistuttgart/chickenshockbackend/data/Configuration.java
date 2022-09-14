@@ -22,7 +22,6 @@ public class Configuration {
   @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
   Set<Question> questions;
 
-  @Value("${game.time}")
   int time;
 
   public Configuration(final Set<Question> questions, final int time) {
@@ -38,7 +37,4 @@ public class Configuration {
     this.questions.remove(question);
   }
 
-  public void setTime(final int time) {
-    this.time = time;
-  }
 }

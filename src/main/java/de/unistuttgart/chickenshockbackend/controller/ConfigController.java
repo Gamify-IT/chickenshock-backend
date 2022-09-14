@@ -6,11 +6,16 @@ import de.unistuttgart.chickenshockbackend.data.mapper.ConfigurationMapper;
 import de.unistuttgart.chickenshockbackend.data.mapper.QuestionMapper;
 import de.unistuttgart.chickenshockbackend.repositories.ConfigurationRepository;
 import de.unistuttgart.chickenshockbackend.service.ConfigService;
+
+import java.net.MalformedURLException;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+
+import de.unistuttgart.gamifyit.authentificationvalidator.JWTValidatorService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,47 +25,72 @@ import org.springframework.web.bind.annotation.*;
 public class ConfigController {
 
   @Autowired
-  ConfigurationRepository configurationRepository;
+  private ConfigurationRepository configurationRepository;
 
   @Autowired
-  ConfigService configService;
+  private ConfigService configService;
 
   @Autowired
-  QuestionMapper questionMapper;
+  private QuestionMapper questionMapper;
+
+  @Value("${keycloak.issuer}")
+  private String keycloakIssuer;
+
+  private JWTValidatorService jwtValidatorService;
 
   @Autowired
-  ConfigurationMapper configurationMapper;
+  private ConfigurationMapper configurationMapper;
+
+  @Autowired
+  private void setJWTValidatorService() throws MalformedURLException {
+    jwtValidatorService = new JWTValidatorService(keycloakIssuer);
+  }
 
   @GetMapping("")
-  public List<ConfigurationDTO> getConfigurations() {
+  public List<ConfigurationDTO> getConfigurations(@CookieValue("access_token") final String accessToken) {
+    jwtValidatorService.validate(accessToken);
     log.debug("get all configurations");
     return configurationMapper.configurationsToConfigurationDTOs(configurationRepository.findAll());
   }
 
   @GetMapping("/{id}")
-  public ConfigurationDTO getConfiguration(@PathVariable final UUID id) {
+  public ConfigurationDTO getConfiguration(
+    @CookieValue("access_token") final String accessToken,
+    @PathVariable final UUID id
+  ) {
+    jwtValidatorService.validate(accessToken);
     log.debug("get configuration {}", id);
     return configurationMapper.configurationToConfigurationDTO(configService.getConfiguration(id));
   }
 
   @PostMapping("")
   @ResponseStatus(HttpStatus.CREATED)
-  public ConfigurationDTO createConfiguration(@RequestBody final ConfigurationDTO configurationDTO) {
+  public ConfigurationDTO createConfiguration(
+    @CookieValue("access_token") final String accessToken,
+    @RequestBody final ConfigurationDTO configurationDTO
+  ) {
+    jwtValidatorService.checkLecturer(accessToken);
     log.debug("create configuration {}", configurationDTO);
     return configService.saveConfiguration(configurationDTO);
   }
 
   @PutMapping("/{id}")
   public ConfigurationDTO updateConfiguration(
+    @CookieValue("access_token") final String accessToken,
     @PathVariable final UUID id,
     @RequestBody final ConfigurationDTO configurationDTO
   ) {
+    jwtValidatorService.checkLecturer(accessToken);
     log.debug("update configuration {} with {}", id, configurationDTO);
     return configService.updateConfiguration(id, configurationDTO);
   }
 
   @DeleteMapping("/{id}")
-  public ConfigurationDTO deleteConfiguration(@PathVariable final UUID id) {
+  public ConfigurationDTO deleteConfiguration(
+    @CookieValue("access_token") final String accessToken,
+    @PathVariable final UUID id
+  ) {
+    jwtValidatorService.checkLecturer(accessToken);
     log.debug("delete configuration {}", id);
     return configService.deleteConfiguration(id);
   }
@@ -68,26 +98,36 @@ public class ConfigController {
   @PostMapping("/{id}/questions")
   @ResponseStatus(HttpStatus.CREATED)
   public QuestionDTO addQuestionToConfiguration(
+    @CookieValue("access_token") final String accessToken,
     @PathVariable final UUID id,
     @RequestBody final QuestionDTO questionDTO
   ) {
+    jwtValidatorService.checkLecturer(accessToken);
     log.debug("add question {} to configuration {}", questionDTO, id);
     return configService.addQuestionToConfiguration(id, questionDTO);
   }
 
   @DeleteMapping("/{id}/questions/{questionId}")
-  public QuestionDTO removeQuestionFromConfiguration(@PathVariable final UUID id, @PathVariable final UUID questionId) {
+  public QuestionDTO removeQuestionFromConfiguration(
+    @CookieValue("access_token") final String accessToken,
+    @PathVariable final UUID id,
+    @PathVariable final UUID questionId
+  ) {
+    jwtValidatorService.checkLecturer(accessToken);
     log.debug("remove question {} from configuration {}", questionId, id);
     return configService.removeQuestionFromConfiguration(id, questionId);
   }
 
   @PutMapping("/{id}/questions/{questionId}")
   public QuestionDTO updateQuestionFromConfiguration(
+    @CookieValue("access_token") final String accessToken,
     @PathVariable final UUID id,
     @PathVariable final UUID questionId,
     @RequestBody final QuestionDTO questionDTO
   ) {
+    jwtValidatorService.checkLecturer(accessToken);
     log.debug("update question {} with {} for configuration {}", questionId, questionDTO, id);
     return configService.updateQuestionFromConfiguration(id, questionId, questionDTO);
   }
+
 }

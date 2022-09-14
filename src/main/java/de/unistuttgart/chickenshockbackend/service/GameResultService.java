@@ -27,12 +27,6 @@ public class GameResultService {
   GameResultRepository gameResultRepository;
 
   @Autowired
-  QuestionRepository questionRepository;
-
-  @Autowired
-  AuthorizationService authorizationService;
-
-  @Autowired
   RoundResultMapper roundResultMapper;
 
   /**
@@ -40,13 +34,13 @@ public class GameResultService {
    *
    * @param gameResultDTO extern gameResultDTO
    */
-  public void saveGameResult(final GameResultDTO gameResultDTO) {
+  public void saveGameResult(final GameResultDTO gameResultDTO, final String userId) {
     final int resultScore = calculateResultScore(gameResultDTO.getCorrectKillsCount(), gameResultDTO.getQuestionCount());
     final OverworldResultDTO resultDTO = new OverworldResultDTO(
             "CHICKENSHOCK",
             gameResultDTO.getConfigurationAsUUID(),
             resultScore,
-            "1"
+            userId
     );
     try {
       resultClient.submit(resultDTO);
@@ -68,7 +62,7 @@ public class GameResultService {
               correctQuestions,
               wrongQuestions,
               gameResultDTO.getConfigurationAsUUID(),
-              "playerId"
+              userId
       );
       gameResultRepository.save(result);
     } catch (FeignException.BadGateway badGateway) {
