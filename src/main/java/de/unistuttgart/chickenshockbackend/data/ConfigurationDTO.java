@@ -20,14 +20,16 @@ public class ConfigurationDTO {
   UUID id;
 
   Set<QuestionDTO> questions;
+  int time;
 
-  public ConfigurationDTO(final Set<QuestionDTO> questions) {
+  public ConfigurationDTO(final Set<QuestionDTO> questions, final int time) {
     this.questions = questions;
+    this.time = time;
   }
 
   public boolean equalsContent(final ConfigurationDTO other) {
     if (this == other) return true;
     if (other == null) return false;
-    return Objects.equals(questions, other.questions);
+    return Objects.equals(questions, other.questions) && Objects.equals(time, other.time);
   }
 }

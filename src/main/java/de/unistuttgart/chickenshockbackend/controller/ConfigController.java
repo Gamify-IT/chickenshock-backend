@@ -130,13 +130,4 @@ public class ConfigController {
     return configService.updateQuestionFromConfiguration(id, questionId, questionDTO);
   }
 
-  @GetMapping("/{id}/questions")
-  public Set<QuestionDTO> getQuestions(
-    @CookieValue("access_token") final String accessToken,
-    @PathVariable final UUID id
-  ) {
-    jwtValidatorService.validate(accessToken);
-    log.debug("get configuration {}", id);
-    return configurationMapper.configurationToConfigurationDTO(configService.getConfiguration(id)).getQuestions();
-  }
 }
