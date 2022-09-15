@@ -1,6 +1,7 @@
 package de.unistuttgart.chickenshockbackend;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -17,17 +18,25 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+
+import de.unistuttgart.gamifyit.authentificationvalidator.JWTValidatorService;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import javax.servlet.http.Cookie;
+
 @AutoConfigureMockMvc
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@ExtendWith(MockitoExtension.class)
 class ConfigControllerTest {
 
   @Autowired
@@ -49,6 +58,9 @@ class ConfigControllerTest {
   private ObjectMapper objectMapper;
   private Configuration initialConfig;
   private ConfigurationDTO initialConfigDTO;
+
+  @MockBean
+  JWTValidatorService jwtValidatorService;
 
   @BeforeEach
   public void createBasicData() {
@@ -79,8 +91,10 @@ class ConfigControllerTest {
 
   @Test
   void getConfigurations() throws Exception {
+    when(jwtValidatorService.validate("testToken")).thenReturn(null);
+    Cookie cookie = new Cookie("access_token", "testToken");
     final MvcResult result = mvc
-      .perform(get(API_URL).contentType(MediaType.APPLICATION_JSON))
+      .perform(get(API_URL).cookie(cookie).contentType(MediaType.APPLICATION_JSON))
       .andExpect(status().isOk())
       .andReturn();
 
