@@ -31,21 +31,11 @@ public class ConfigController {
   @Autowired
   private QuestionMapper questionMapper;
 
-  @Value("${keycloak.issuer}")
-  private String keycloakIssuer;
-
-  @Value("${keycloak.url}")
-  private String keycloakUrl;
-
+  @Autowired
   private JWTValidatorService jwtValidatorService;
 
   @Autowired
   private ConfigurationMapper configurationMapper;
-
-  @Autowired
-  private void setJWTValidatorService() throws MalformedURLException {
-    jwtValidatorService = new JWTValidatorService(keycloakIssuer, keycloakUrl);
-  }
 
   @GetMapping("")
   public List<ConfigurationDTO> getConfigurations(@CookieValue("access_token") final String accessToken) {

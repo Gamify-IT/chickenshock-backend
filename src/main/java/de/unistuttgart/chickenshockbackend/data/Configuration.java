@@ -36,5 +36,4 @@ public class Configuration {
   public void removeQuestion(final Question question) {
     this.questions.remove(question);
   }
-
 }

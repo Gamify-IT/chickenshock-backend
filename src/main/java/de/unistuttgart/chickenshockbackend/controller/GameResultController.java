@@ -3,32 +3,24 @@ package de.unistuttgart.chickenshockbackend.controller;
 import de.unistuttgart.chickenshockbackend.data.GameResultDTO;
 import de.unistuttgart.chickenshockbackend.service.GameResultService;
 import de.unistuttgart.gamifyit.authentificationvalidator.JWTValidatorService;
-import java.net.MalformedURLException;
+import de.unistuttgart.gamifyit.authentificationvalidator.Properties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/results")
+@Import({JWTValidatorService.class, Properties.class})
 @Slf4j
 public class GameResultController {
 
   @Autowired
   private GameResultService gameResultService;
 
-  @Value("${keycloak.issuer}")
-  private String keycloakIssuer;
-  @Value("${keycloak.url}")
-  private String keycloakUrl;
-
-  private JWTValidatorService jwtValidatorService;
-
   @Autowired
-  private void setJWTValidatorService() throws MalformedURLException {
-    jwtValidatorService = new JWTValidatorService(keycloakIssuer, keycloakUrl);
-  }
+  private JWTValidatorService jwtValidatorService;
 
   @PostMapping("")
   @ResponseStatus(HttpStatus.CREATED)
