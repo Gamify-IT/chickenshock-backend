@@ -5,6 +5,8 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -102,97 +104,7 @@ class GameResultControllerTest {
       .forEach(question -> initialQuestion2 = question);
 
     objectMapper = new ObjectMapper();
-    DecodedJWT jwtTest = new DecodedJWT() {
-      @Override
-      public String getToken() {
-        return null;
-      }
-
-      @Override
-      public String getHeader() {
-        return null;
-      }
-
-      @Override
-      public String getPayload() {
-        return null;
-      }
-
-      @Override
-      public String getSignature() {
-        return "testUser";
-      }
-
-      @Override
-      public String getAlgorithm() {
-        return null;
-      }
-
-      @Override
-      public String getType() {
-        return null;
-      }
-
-      @Override
-      public String getContentType() {
-        return null;
-      }
-
-      @Override
-      public String getKeyId() {
-        return null;
-      }
-
-      @Override
-      public Claim getHeaderClaim(String s) {
-        return null;
-      }
-
-      @Override
-      public String getIssuer() {
-        return null;
-      }
-
-      @Override
-      public String getSubject() {
-        return null;
-      }
-
-      @Override
-      public List<String> getAudience() {
-        return null;
-      }
-
-      @Override
-      public Date getExpiresAt() {
-        return null;
-      }
-
-      @Override
-      public Date getNotBefore() {
-        return null;
-      }
-
-      @Override
-      public Date getIssuedAt() {
-        return null;
-      }
-
-      @Override
-      public String getId() {
-        return null;
-      }
-
-      @Override
-      public Claim getClaim(String s) {
-        return null;
-      }
-
-      @Override
-      public Map<String, Claim> getClaims() {
-        return null;
-      }
-    };
+    DecodedJWT jwtTest = JWT.decode(JWT.create().withSubject("testUser").sign(Algorithm.none()));
     when(jwtValidatorService.validate("testToken")).thenReturn(jwtTest);
   }
 
