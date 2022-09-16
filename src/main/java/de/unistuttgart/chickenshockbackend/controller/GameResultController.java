@@ -3,7 +3,6 @@ package de.unistuttgart.chickenshockbackend.controller;
 import de.unistuttgart.chickenshockbackend.data.GameResultDTO;
 import de.unistuttgart.chickenshockbackend.service.GameResultService;
 import de.unistuttgart.gamifyit.authentificationvalidator.JWTValidatorService;
-import de.unistuttgart.gamifyit.authentificationvalidator.Properties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
@@ -12,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/results")
-@Import({JWTValidatorService.class, Properties.class})
+@Import({JWTValidatorService.class})
 @Slf4j
 public class GameResultController {
 
