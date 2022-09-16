@@ -61,6 +61,7 @@ class ConfigControllerTest {
 
   @MockBean
   JWTValidatorService jwtValidatorService;
+  Cookie cookie = new Cookie("access_token", "testToken");
 
   @BeforeEach
   public void createBasicData() {
@@ -82,7 +83,10 @@ class ConfigControllerTest {
     initialConfigDTO = configurationMapper.configurationToConfigurationDTO(initialConfig);
 
     objectMapper = new ObjectMapper();
+
+    when(jwtValidatorService.validate("testToken")).thenReturn(null);
   }
+
 
   @AfterAll
   public void deleteBasicData() {
@@ -91,8 +95,6 @@ class ConfigControllerTest {
 
   @Test
   void getConfigurations() throws Exception {
-    when(jwtValidatorService.validate("testToken")).thenReturn(null);
-    Cookie cookie = new Cookie("access_token", "testToken");
     final MvcResult result = mvc
       .perform(get(API_URL).cookie(cookie).contentType(MediaType.APPLICATION_JSON))
       .andExpect(status().isOk())
@@ -109,7 +111,7 @@ class ConfigControllerTest {
   @Test
   void getSpecificConfiguration_DoesNotExist_ThrowsNotFound() throws Exception {
     mvc
-      .perform(get(API_URL + "/" + UUID.randomUUID()).contentType(MediaType.APPLICATION_JSON))
+      .perform(get(API_URL + "/" + UUID.randomUUID()).cookie(cookie).contentType(MediaType.APPLICATION_JSON))
       .andExpect(status().isNotFound());
   }
 
@@ -120,7 +122,7 @@ class ConfigControllerTest {
     );
     final String bodyValue = objectMapper.writeValueAsString(newCreatedConfigurationDTO);
     final MvcResult result = mvc
-      .perform(post(API_URL).content(bodyValue).contentType(MediaType.APPLICATION_JSON))
+      .perform(post(API_URL).cookie(cookie).content(bodyValue).contentType(MediaType.APPLICATION_JSON))
       .andExpect(status().isCreated())
       .andReturn();
 
@@ -154,7 +156,7 @@ class ConfigControllerTest {
     initialConfigDTO.setQuestions(newQuestionsDTO);
     final String bodyValue = objectMapper.writeValueAsString(initialConfigDTO);
     final MvcResult result = mvc
-      .perform(put(API_URL + "/" + initialConfig.getId()).content(bodyValue).contentType(MediaType.APPLICATION_JSON))
+      .perform(put(API_URL + "/" + initialConfig.getId()).cookie(cookie).content(bodyValue).contentType(MediaType.APPLICATION_JSON))
       .andExpect(status().isOk())
       .andReturn();
 
@@ -180,7 +182,7 @@ class ConfigControllerTest {
   @Test
   void deleteConfiguration() throws Exception {
     final MvcResult result = mvc
-      .perform(delete(API_URL + "/" + initialConfig.getId()).contentType(MediaType.APPLICATION_JSON))
+      .perform(delete(API_URL + "/" + initialConfig.getId()).cookie(cookie).contentType(MediaType.APPLICATION_JSON))
       .andExpect(status().isOk())
       .andReturn();
 
@@ -207,6 +209,7 @@ class ConfigControllerTest {
     final MvcResult result = mvc
       .perform(
         post(API_URL + "/" + initialConfig.getId() + "/questions")
+          .cookie(cookie)
           .content(bodyValue)
           .contentType(MediaType.APPLICATION_JSON)
       )
@@ -229,6 +232,7 @@ class ConfigControllerTest {
     final MvcResult result = mvc
       .perform(
         delete(API_URL + "/" + initialConfig.getId() + "/questions/" + removedQuestionDTO.getId())
+          .cookie(cookie)
           .contentType(MediaType.APPLICATION_JSON)
       )
       .andExpect(status().isOk())
@@ -252,7 +256,8 @@ class ConfigControllerTest {
   void removeQuestionFromExistingConfigurationNotFound() throws Exception {
     mvc
       .perform(
-        delete(API_URL + "/" + initialConfig.getId() + "/questions/" + UUID.randomUUID().toString())
+        delete(API_URL + "/" + initialConfig.getId() + "/questions/" + UUID.randomUUID())
+          .cookie(cookie)
           .contentType(MediaType.APPLICATION_JSON)
       )
       .andExpect(status().isNotFound())
@@ -270,6 +275,7 @@ class ConfigControllerTest {
     final MvcResult result = mvc
       .perform(
         put(API_URL + "/" + initialConfig.getId() + "/questions/" + updatedQuestion.getId())
+          .cookie(cookie)
           .content(bodyValue)
           .contentType(MediaType.APPLICATION_JSON)
       )
@@ -296,7 +302,8 @@ class ConfigControllerTest {
     final String bodyValue = objectMapper.writeValueAsString(updatedQuestionDTO);
     mvc
       .perform(
-        put(API_URL + "/" + initialConfig.getId() + "/questions/" + UUID.randomUUID().toString())
+        put(API_URL + "/" + initialConfig.getId() + "/questions/" + UUID.randomUUID())
+          .cookie(cookie)
           .content(bodyValue)
           .contentType(MediaType.APPLICATION_JSON)
       )
