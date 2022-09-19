@@ -2,7 +2,16 @@
 
 This repo serves to persist the chickenshock data in a db and to communicate with different Microservices.
 
-# Development
+<!-- TOC -->
+* [Getting started](#getting-started)
+  * [Run](#run)
+    * [Docker-compose](#docker-compose)
+    * [Project build](#project-build)
+    * [With Docker](#with-docker)
+  * [Testing Database](#testing-database)
+* [Rest mappings](#rest-mappings)
+  * [Swagger-Ui (if started)](#swagger-ui--if-started-)
+<!-- TOC -->
 
 ## Getting started
 
@@ -37,7 +46,7 @@ Go to the target folder and run
 java -jar chickenshock-service-0.0.1-SNAPSHOT.jar
 ```
 
-### With Docker
+#### With Docker
 
 Build the Docker container with
 
@@ -85,12 +94,12 @@ To stop and remove it simply type
 docker stop chickenshock-database
 ```
 
-### Rest mappings
+## Rest mappings
 
 Rest mappings are defined
 in [`chickenshock-service/src/main/java/com/chickenshockservice/chickenshockservice/controller/ChickenshockController.java`](chickenshock-service/src/main/java/com/chickenshockservice/chickenshockservice/controller/ChickenshockController.java)
 
-#### Swagger-Ui (if started)
+### Swagger-Ui (if started)
 
 Access swagger-ui for visuals under: ```http://localhost/minigames/chickenshock/api/v1/swagger-ui/index.html#/``` and
 fill ```http://localhost/minigames/chickenshock/api/v1/v3/api-docs``` into the input field in the navbar.
