@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
@@ -19,6 +19,7 @@
         <lombok.version>1.18.24</lombok.version>
         <plugin.prettier.goal>write</plugin.prettier.goal>
         <spring-cloud.version>2021.0.3</spring-cloud.version>
+        <org.springdoc.version>1.6.9</org.springdoc.version>
     </properties>
     <dependencies>
         <dependency>
@@ -73,7 +74,12 @@
         <dependency>
             <groupId>de.uni-stuttgart.gamify-it</groupId>
             <artifactId>authentification-validator</artifactId>
-            <version>v0.0.2</version>
+            <version>v1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>${org.springdoc.version}</version>
         </dependency>
     </dependencies>
 
