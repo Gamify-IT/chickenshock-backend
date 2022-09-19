@@ -9,6 +9,9 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.lang.Nullable;
 
+/**
+ * The RoundResultDTO.class contains the round result related information
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

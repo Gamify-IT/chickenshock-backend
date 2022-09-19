@@ -7,6 +7,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+/**
+ * The OverworldResultDTO.class contains all the info that is sent to the Overworld-backend
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

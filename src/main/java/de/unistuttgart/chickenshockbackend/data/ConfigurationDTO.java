@@ -10,6 +10,9 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.lang.Nullable;
 
+/**
+ * The ConfigurationDTO.class contains all data that has to be stored to configure a chickenshock game
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,6 +23,7 @@ public class ConfigurationDTO {
     UUID id;
 
     Set<QuestionDTO> questions;
+
     int time;
 
     public ConfigurationDTO(final Set<QuestionDTO> questions, final int time) {

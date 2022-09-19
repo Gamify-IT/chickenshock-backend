@@ -4,14 +4,16 @@ import de.unistuttgart.chickenshockbackend.data.Question;
 import de.unistuttgart.chickenshockbackend.data.RoundResult;
 import de.unistuttgart.chickenshockbackend.data.RoundResultDTO;
 import de.unistuttgart.chickenshockbackend.repositories.QuestionRepository;
+import java.util.ArrayList;
+import java.util.List;
 import org.mapstruct.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
-import java.util.List;
-
+/**
+ * This mapper maps the RoundResultDTO objects (used from external clients) and RoundResult objects (used from internal code)
+ */
 @Mapper(componentModel = "spring")
 public abstract class RoundResultMapper {
 

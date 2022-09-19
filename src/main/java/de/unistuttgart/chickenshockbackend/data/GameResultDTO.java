@@ -9,6 +9,9 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.lang.Nullable;
 
+/**
+ * The GameResultDTO.class contains all data that is saved after one chickenshock game
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

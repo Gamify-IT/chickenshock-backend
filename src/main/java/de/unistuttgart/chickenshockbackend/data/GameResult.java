@@ -9,6 +9,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+/**
+ * The GameResult.class contains all data that is saved after one chickenshock game
+ */
 @Entity
 @Data
 @NoArgsConstructor

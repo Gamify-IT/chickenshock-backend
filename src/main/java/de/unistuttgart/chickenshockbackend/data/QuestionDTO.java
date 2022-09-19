@@ -10,6 +10,9 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.lang.Nullable;
 
+/**
+ * The QuestionDTO.class contains the question related information
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

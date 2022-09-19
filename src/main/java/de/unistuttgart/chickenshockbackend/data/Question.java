@@ -11,6 +11,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+/**
+ * The Question.class contains the question related information
+ */
 @Entity
 @Data
 @NoArgsConstructor

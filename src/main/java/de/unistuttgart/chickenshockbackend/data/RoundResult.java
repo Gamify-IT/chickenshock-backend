@@ -10,6 +10,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+/**
+ * The RoundResult.class contains the round result related information
+ */
 @Entity
 @Data
 @NoArgsConstructor

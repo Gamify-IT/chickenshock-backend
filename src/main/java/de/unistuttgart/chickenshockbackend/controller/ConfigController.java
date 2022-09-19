@@ -14,6 +14,9 @@ import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * This controller handles all game-configuration-related REST-APIs
+ */
 @RestController
 @RequestMapping("/configurations")
 @Import({ JWTValidatorService.class })

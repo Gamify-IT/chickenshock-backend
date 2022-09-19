@@ -8,6 +8,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+/**
+ * The Configuration.class contains all data that has to be stored to configure a chickenshock game
+ */
 @Entity
 @Data
 @NoArgsConstructor

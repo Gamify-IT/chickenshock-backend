@@ -17,6 +17,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+/**
+ * This service handles the logic for the ConfigController.class
+ */
 @Service
 @Slf4j
 @Transactional
@@ -42,6 +45,9 @@ public class ConfigService {
      * @throws ResponseStatusException when configuration by configurationName could not be found
      */
     public Configuration getConfiguration(final UUID id) {
+        if (id == null) {
+            throw new IllegalArgumentException(String.format("id is null"));
+        }
         return configurationRepository
             .findById(id)
             .orElseThrow(() ->
@@ -59,6 +65,9 @@ public class ConfigService {
      * @return the saved configuration as DTO
      */
     public ConfigurationDTO saveConfiguration(final ConfigurationDTO configurationDTO) {
+        if (configurationDTO == null) {
+            throw new IllegalArgumentException(String.format("configurationDTO is null"));
+        }
         final Configuration savedConfiguration = configurationRepository.save(
             configurationMapper.configurationDTOToConfiguration(configurationDTO)
         );
@@ -74,6 +83,9 @@ public class ConfigService {
      * @throws ResponseStatusException when configuration with the id does not exist
      */
     public ConfigurationDTO updateConfiguration(final UUID id, final ConfigurationDTO configurationDTO) {
+        if (id == null || configurationDTO == null) {
+            throw new IllegalArgumentException(String.format("id or configurationDTO is null"));
+        }
         final Configuration configuration = getConfiguration(id);
         configuration.setQuestions(questionMapper.questionDTOsToQuestions(configurationDTO.getQuestions()));
         final Configuration updatedConfiguration = configurationRepository.save(configuration);
@@ -88,6 +100,9 @@ public class ConfigService {
      * @throws ResponseStatusException when configuration with the id does not exist
      */
     public ConfigurationDTO deleteConfiguration(final UUID id) {
+        if (id == null) {
+            throw new IllegalArgumentException(String.format("id is null"));
+        }
         final Configuration configuration = getConfiguration(id);
         configurationRepository.delete(configuration);
         return configurationMapper.configurationToConfigurationDTO(configuration);
@@ -102,6 +117,9 @@ public class ConfigService {
      * @throws ResponseStatusException when configuration with the id does not exist
      */
     public QuestionDTO addQuestionToConfiguration(final UUID id, final QuestionDTO questionDTO) {
+        if (id == null || questionDTO == null) {
+            throw new IllegalArgumentException(String.format("id or questionDTO is null"));
+        }
         final Configuration configuration = getConfiguration(id);
         final Question question = questionRepository.save(questionMapper.questionDTOToQuestion(questionDTO));
         configuration.addQuestion(question);
@@ -118,6 +136,9 @@ public class ConfigService {
      * @throws ResponseStatusException when configuration with the id or question with id does not exist
      */
     public QuestionDTO removeQuestionFromConfiguration(final UUID id, final UUID questionId) {
+        if (id == null || questionId == null) {
+            throw new IllegalArgumentException(String.format("id or questionId is null"));
+        }
         final Configuration configuration = getConfiguration(id);
         final Question question = getQuestionInConfiguration(questionId, configuration)
             .orElseThrow(() ->
@@ -146,6 +167,9 @@ public class ConfigService {
         final UUID questionId,
         final QuestionDTO questionDTO
     ) {
+        if (id == null || questionId == null || questionDTO == null) {
+            throw new IllegalArgumentException(String.format("id or questionId or questionDTO is null"));
+        }
         final Configuration configuration = getConfiguration(id);
         if (getQuestionInConfiguration(questionId, configuration).isEmpty()) {
             throw new ResponseStatusException(
@@ -160,12 +184,17 @@ public class ConfigService {
     }
 
     /**
+     * Returns the question if the configuration contains the questionId
+     *
      * @param questionId    id of searched question
      * @param configuration configuration in which the question is part of
      * @return an optional of the question
      * @throws ResponseStatusException when question with the id in the given configuration does not exist
      */
     private Optional<Question> getQuestionInConfiguration(final UUID questionId, final Configuration configuration) {
+        if (questionId == null || configuration == null) {
+            throw new IllegalArgumentException(String.format("questionId or configuration is null"));
+        }
         return configuration
             .getQuestions()
             .parallelStream()

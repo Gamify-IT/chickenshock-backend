@@ -5,6 +5,9 @@ import de.unistuttgart.chickenshockbackend.data.QuestionDTO;
 import java.util.Set;
 import org.mapstruct.Mapper;
 
+/**
+ * This mapper maps the QuestionDTO objects (used from external clients) and Question objects (used from internal code)
+ */
 @Mapper(componentModel = "spring")
 public interface QuestionMapper {
     QuestionDTO questionToQuestionDTO(final Question question);

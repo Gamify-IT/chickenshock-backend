@@ -16,6 +16,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+/**
+ * This service handles the logic for the GameResultController.class
+ */
 @Service
 @Slf4j
 @Transactional
@@ -36,16 +39,10 @@ public class GameResultService {
      * @param gameResultDTO extern gameResultDTO
      */
     public void saveGameResult(final GameResultDTO gameResultDTO, final String userId) {
-        final int resultScore = calculateResultScore(
-            gameResultDTO.getCorrectKillsCount(),
-            gameResultDTO.getQuestionCount()
-        );
-        final OverworldResultDTO resultDTO = new OverworldResultDTO(
-            "CHICKENSHOCK",
-            gameResultDTO.getConfigurationAsUUID(),
-            resultScore,
-            userId
-        );
+        if (gameResultDTO == null || userId == null) {
+            throw new IllegalArgumentException(String.format("gameResultDTO or userId is null"));
+        }
+        final OverworldResultDTO resultDTO = createOverworldResult(gameResultDTO, userId);
         try {
             resultClient.submit(resultDTO);
             final List<RoundResult> correctQuestions = roundResultMapper.roundResultDTOsToRoundResults(
@@ -81,7 +78,44 @@ public class GameResultService {
         }
     }
 
+    /**
+     * Create an OverworldResultDTO
+     *
+     * @param gameResultDTO contains all game related data
+     * @param userId        id of the player
+     * @return OverworldResultDTO
+     */
+    private OverworldResultDTO createOverworldResult(final GameResultDTO gameResultDTO, final String userId) {
+        final int resultScore = calculateResultScore(
+            gameResultDTO.getCorrectKillsCount(),
+            gameResultDTO.getQuestionCount()
+        );
+        final OverworldResultDTO resultDTO = new OverworldResultDTO(
+            "CHICKENSHOCK",
+            gameResultDTO.getConfigurationAsUUID(),
+            resultScore,
+            userId
+        );
+        return resultDTO;
+    }
+
+    /**
+     * calculates the score a player made
+     *
+     * @param correctAnswers    correct answer count
+     * @param numberOfQuestions available question count
+     * @return score as int in %
+     */
     private int calculateResultScore(final int correctAnswers, final int numberOfQuestions) {
+        if (correctAnswers < 0 || numberOfQuestions < correctAnswers) {
+            throw new IllegalArgumentException(
+                String.format(
+                    "correctAnswers (%s) or numberOfQuestions (%s) is not possible",
+                    correctAnswers,
+                    numberOfQuestions
+                )
+            );
+        }
         return (int) ((100.0 * correctAnswers) / numberOfQuestions);
     }
 }
