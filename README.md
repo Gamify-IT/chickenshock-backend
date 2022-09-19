@@ -12,6 +12,7 @@ This repo serves to persist the chickenshock data in a db and to communicate wit
     * [Testing Database](#testing-database)
 * [Rest mappings](#rest-mappings)
     * [Swagger-Ui (if started)](#swagger-ui--if-started-)
+* [Class Diagrams](#class-diagrams)
 
 <!-- TOC -->
 
