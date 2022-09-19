@@ -16,17 +16,17 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class RoundResult {
 
-  @Id
-  @GeneratedValue(generator = "uuid")
-  UUID id;
+    @Id
+    @GeneratedValue(generator = "uuid")
+    UUID id;
 
-  @ManyToOne
-  Question question;
+    @ManyToOne
+    Question question;
 
-  String answer;
+    String answer;
 
-  public RoundResult(final Question question, final String answer) {
-    this.question = question;
-    this.answer = answer;
-  }
+    public RoundResult(final Question question, final String answer) {
+        this.question = question;
+        this.answer = answer;
+    }
 }

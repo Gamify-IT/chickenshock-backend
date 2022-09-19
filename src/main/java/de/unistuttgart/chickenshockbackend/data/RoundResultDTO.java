@@ -15,20 +15,20 @@ import org.springframework.lang.Nullable;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class RoundResultDTO {
 
-  @Nullable
-  UUID id;
+    @Nullable
+    UUID id;
 
-  UUID questionUUId;
-  String answer;
+    UUID questionUUId;
+    String answer;
 
-  public RoundResultDTO(final UUID questionUUId, final String answer) {
-    this.questionUUId = questionUUId;
-    this.answer = answer;
-  }
+    public RoundResultDTO(final UUID questionUUId, final String answer) {
+        this.questionUUId = questionUUId;
+        this.answer = answer;
+    }
 
-  public boolean equalsContent(final RoundResultDTO other) {
-    if (this == other) return true;
-    if (other == null) return false;
-    return (Objects.equals(questionUUId, other.questionUUId) && Objects.equals(answer, other.answer));
-  }
+    public boolean equalsContent(final RoundResultDTO other) {
+        if (this == other) return true;
+        if (other == null) return false;
+        return (Objects.equals(questionUUId, other.questionUUId) && Objects.equals(answer, other.answer));
+    }
 }
