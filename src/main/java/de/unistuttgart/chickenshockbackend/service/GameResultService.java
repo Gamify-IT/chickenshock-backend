@@ -8,13 +8,14 @@ import de.unistuttgart.chickenshockbackend.data.RoundResult;
 import de.unistuttgart.chickenshockbackend.data.mapper.RoundResultMapper;
 import de.unistuttgart.chickenshockbackend.repositories.GameResultRepository;
 import feign.FeignException;
-import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
 
 /**
  * This service handles the logic for the GameResultController.class
@@ -37,6 +38,7 @@ public class GameResultService {
      * Casts a GameResultDTO to GameResult and saves it in the Database
      *
      * @param gameResultDTO extern gameResultDTO
+     * @throws IllegalArgumentException if at least one of the arguments is null
      */
     public void saveGameResult(final GameResultDTO gameResultDTO, final String userId) {
         if (gameResultDTO == null || userId == null) {
@@ -69,11 +71,11 @@ public class GameResultService {
         } catch (final FeignException.BadGateway badGateway) {
             final String warning =
                 "The Overworld backend is currently not available. The result was NOT saved. Please try again later";
-            log.warn(warning + badGateway);
+            log.error(warning + badGateway);
             throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, warning);
         } catch (final FeignException.NotFound notFound) {
             final String warning = "The result could not be saved. Unknown User";
-            log.warn(warning + notFound);
+            log.error(warning + notFound);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, warning);
         }
     }
@@ -105,6 +107,7 @@ public class GameResultService {
      * @param correctAnswers    correct answer count
      * @param numberOfQuestions available question count
      * @return score as int in %
+     * @throws IllegalArgumentException if correctAnswers < 0 || numberOfQuestions < correctAnswers
      */
     private int calculateResultScore(final int correctAnswers, final int numberOfQuestions) {
         if (correctAnswers < 0 || numberOfQuestions < correctAnswers) {

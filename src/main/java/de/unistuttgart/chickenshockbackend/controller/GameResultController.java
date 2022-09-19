@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/results")
-@Import({ JWTValidatorService.class })
+@Import({JWTValidatorService.class})
 @Slf4j
 public class GameResultController {
 
@@ -32,7 +32,7 @@ public class GameResultController {
     ) {
         jwtValidatorService.validateTokenOrThrow(accessToken);
         final String userId = jwtValidatorService.extractUserId(accessToken);
-        log.info("save game result for userId {}: {}", userId, gameResultDTO);
+        log.debug("save game result for userId {}: {}", userId, gameResultDTO);
         gameResultService.saveGameResult(gameResultDTO, userId);
         return gameResultDTO;
     }

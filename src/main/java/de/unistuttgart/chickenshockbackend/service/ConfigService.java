@@ -8,14 +8,15 @@ import de.unistuttgart.chickenshockbackend.data.mapper.ConfigurationMapper;
 import de.unistuttgart.chickenshockbackend.data.mapper.QuestionMapper;
 import de.unistuttgart.chickenshockbackend.repositories.ConfigurationRepository;
 import de.unistuttgart.chickenshockbackend.repositories.QuestionRepository;
-import java.util.Optional;
-import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.Optional;
+import java.util.UUID;
 
 /**
  * This service handles the logic for the ConfigController.class
@@ -42,7 +43,8 @@ public class ConfigService {
      *
      * @param id the id of the configuration searching for
      * @return the found configuration
-     * @throws ResponseStatusException when configuration by configurationName could not be found
+     * @throws ResponseStatusException  when configuration by configurationName could not be found
+     * @throws IllegalArgumentException if at least one of the arguments is null
      */
     public Configuration getConfiguration(final UUID id) {
         if (id == null) {
@@ -63,6 +65,7 @@ public class ConfigService {
      *
      * @param configurationDTO configuration that should be saved
      * @return the saved configuration as DTO
+     * @throws IllegalArgumentException if at least one of the arguments is null
      */
     public ConfigurationDTO saveConfiguration(final ConfigurationDTO configurationDTO) {
         if (configurationDTO == null) {
@@ -80,7 +83,8 @@ public class ConfigService {
      * @param id               the id of the configuration that should be updated
      * @param configurationDTO configuration that should be updated
      * @return the updated configuration as DTO
-     * @throws ResponseStatusException when configuration with the id does not exist
+     * @throws ResponseStatusException  when configuration with the id does not exist
+     * @throws IllegalArgumentException if at least one of the arguments is null
      */
     public ConfigurationDTO updateConfiguration(final UUID id, final ConfigurationDTO configurationDTO) {
         if (id == null || configurationDTO == null) {
@@ -97,7 +101,8 @@ public class ConfigService {
      *
      * @param id the id of the configuration that should be updated
      * @return the deleted configuration as DTO
-     * @throws ResponseStatusException when configuration with the id does not exist
+     * @throws ResponseStatusException  when configuration with the id does not exist
+     * @throws IllegalArgumentException if at least one of the arguments is null
      */
     public ConfigurationDTO deleteConfiguration(final UUID id) {
         if (id == null) {
@@ -114,7 +119,8 @@ public class ConfigService {
      * @param id          the id of the configuration where a question should be added
      * @param questionDTO the question that should be added
      * @return the added question as DTO
-     * @throws ResponseStatusException when configuration with the id does not exist
+     * @throws ResponseStatusException  when configuration with the id does not exist
+     * @throws IllegalArgumentException if at least one of the arguments is null
      */
     public QuestionDTO addQuestionToConfiguration(final UUID id, final QuestionDTO questionDTO) {
         if (id == null || questionDTO == null) {
@@ -133,7 +139,8 @@ public class ConfigService {
      * @param id         the id of the configuration where a question should be removed
      * @param questionId the id of the question that should be deleted
      * @return the deleted question as DTO
-     * @throws ResponseStatusException when configuration with the id or question with id does not exist
+     * @throws ResponseStatusException  when configuration with the id or question with id does not exist
+     * @throws IllegalArgumentException if at least one of the arguments is null
      */
     public QuestionDTO removeQuestionFromConfiguration(final UUID id, final UUID questionId) {
         if (id == null || questionId == null) {
@@ -160,7 +167,8 @@ public class ConfigService {
      * @param questionId  the id of the question that should be updated
      * @param questionDTO the content of the question that should be updated
      * @return the updated question as DTO
-     * @throws ResponseStatusException when configuration with the id or question with id does not exist
+     * @throws ResponseStatusException  when configuration with the id or question with id does not exist
+     * @throws IllegalArgumentException if at least one of the arguments is null
      */
     public QuestionDTO updateQuestionFromConfiguration(
         final UUID id,
@@ -189,7 +197,8 @@ public class ConfigService {
      * @param questionId    id of searched question
      * @param configuration configuration in which the question is part of
      * @return an optional of the question
-     * @throws ResponseStatusException when question with the id in the given configuration does not exist
+     * @throws ResponseStatusException  when question with the id in the given configuration does not exist
+     * @throws IllegalArgumentException if at least one of the arguments is null
      */
     private Optional<Question> getQuestionInConfiguration(final UUID questionId, final Configuration configuration) {
         if (questionId == null || configuration == null) {
