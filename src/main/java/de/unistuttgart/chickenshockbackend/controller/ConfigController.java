@@ -6,19 +6,20 @@ import de.unistuttgart.chickenshockbackend.data.mapper.ConfigurationMapper;
 import de.unistuttgart.chickenshockbackend.data.mapper.QuestionMapper;
 import de.unistuttgart.chickenshockbackend.repositories.ConfigurationRepository;
 import de.unistuttgart.chickenshockbackend.service.ConfigService;
-import de.unistuttgart.gamifyit.authentificationvalidator.JWTValidatorService;
-import java.net.MalformedURLException;
+
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
+
+import de.unistuttgart.gamifyit.authentificationvalidator.JWTValidatorService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/configurations")
+@Import({JWTValidatorService.class})
 @Slf4j
 public class ConfigController {
 
@@ -31,25 +32,15 @@ public class ConfigController {
   @Autowired
   private QuestionMapper questionMapper;
 
-  @Value("${keycloak.issuer}")
-  private String keycloakIssuer;
-
-  @Value("${keycloak.url}")
-  private String keycloakUrl;
-
+  @Autowired
   private JWTValidatorService jwtValidatorService;
 
   @Autowired
   private ConfigurationMapper configurationMapper;
 
-  @Autowired
-  private void setJWTValidatorService() throws MalformedURLException {
-    jwtValidatorService = new JWTValidatorService(keycloakIssuer, keycloakUrl);
-  }
-
   @GetMapping("")
   public List<ConfigurationDTO> getConfigurations(@CookieValue("access_token") final String accessToken) {
-    jwtValidatorService.validate(accessToken);
+    jwtValidatorService.validateTokenOrThrow(accessToken);
     log.debug("get all configurations");
     return configurationMapper.configurationsToConfigurationDTOs(configurationRepository.findAll());
   }
@@ -59,7 +50,7 @@ public class ConfigController {
     @CookieValue("access_token") final String accessToken,
     @PathVariable final UUID id
   ) {
-    jwtValidatorService.validate(accessToken);
+    jwtValidatorService.validateTokenOrThrow(accessToken);
     log.debug("get configuration {}", id);
     return configurationMapper.configurationToConfigurationDTO(configService.getConfiguration(id));
   }
@@ -70,7 +61,8 @@ public class ConfigController {
     @CookieValue("access_token") final String accessToken,
     @RequestBody final ConfigurationDTO configurationDTO
   ) {
-    jwtValidatorService.checkLecturer(accessToken);
+    jwtValidatorService.validateTokenOrThrow(accessToken);
+    jwtValidatorService.hasRolesOrThrow(accessToken, List.of("lecturer"));
     log.debug("create configuration {}", configurationDTO);
     return configService.saveConfiguration(configurationDTO);
   }
@@ -81,7 +73,8 @@ public class ConfigController {
     @PathVariable final UUID id,
     @RequestBody final ConfigurationDTO configurationDTO
   ) {
-    jwtValidatorService.checkLecturer(accessToken);
+    jwtValidatorService.validateTokenOrThrow(accessToken);
+    jwtValidatorService.hasRolesOrThrow(accessToken, List.of("lecturer"));
     log.debug("update configuration {} with {}", id, configurationDTO);
     return configService.updateConfiguration(id, configurationDTO);
   }
@@ -91,7 +84,8 @@ public class ConfigController {
     @CookieValue("access_token") final String accessToken,
     @PathVariable final UUID id
   ) {
-    jwtValidatorService.checkLecturer(accessToken);
+    jwtValidatorService.validateTokenOrThrow(accessToken);
+    jwtValidatorService.hasRolesOrThrow(accessToken, List.of("lecturer"));
     log.debug("delete configuration {}", id);
     return configService.deleteConfiguration(id);
   }
@@ -103,7 +97,8 @@ public class ConfigController {
     @PathVariable final UUID id,
     @RequestBody final QuestionDTO questionDTO
   ) {
-    jwtValidatorService.checkLecturer(accessToken);
+    jwtValidatorService.validateTokenOrThrow(accessToken);
+    jwtValidatorService.hasRolesOrThrow(accessToken, List.of("lecturer"));
     log.debug("add question {} to configuration {}", questionDTO, id);
     return configService.addQuestionToConfiguration(id, questionDTO);
   }
@@ -114,7 +109,8 @@ public class ConfigController {
     @PathVariable final UUID id,
     @PathVariable final UUID questionId
   ) {
-    jwtValidatorService.checkLecturer(accessToken);
+    jwtValidatorService.validateTokenOrThrow(accessToken);
+    jwtValidatorService.hasRolesOrThrow(accessToken, List.of("lecturer"));
     log.debug("remove question {} from configuration {}", questionId, id);
     return configService.removeQuestionFromConfiguration(id, questionId);
   }
@@ -126,7 +122,8 @@ public class ConfigController {
     @PathVariable final UUID questionId,
     @RequestBody final QuestionDTO questionDTO
   ) {
-    jwtValidatorService.checkLecturer(accessToken);
+    jwtValidatorService.validateTokenOrThrow(accessToken);
+    jwtValidatorService.hasRolesOrThrow(accessToken, List.of("lecturer"));
     log.debug("update question {} with {} for configuration {}", questionId, questionDTO, id);
     return configService.updateQuestionFromConfiguration(id, questionId, questionDTO);
   }
