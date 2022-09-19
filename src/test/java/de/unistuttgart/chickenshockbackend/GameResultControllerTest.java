@@ -1,14 +1,11 @@
 package de.unistuttgart.chickenshockbackend;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.interfaces.Claim;
-import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import de.unistuttgart.chickenshockbackend.data.*;
@@ -21,7 +18,6 @@ import java.util.*;
 import de.unistuttgart.gamifyit.authentificationvalidator.JWTValidatorService;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -104,8 +100,9 @@ class GameResultControllerTest {
       .forEach(question -> initialQuestion2 = question);
 
     objectMapper = new ObjectMapper();
-    DecodedJWT jwtTest = JWT.decode(JWT.create().withSubject("testUser").sign(Algorithm.none()));
-    when(jwtValidatorService.validate("testToken")).thenReturn(jwtTest);
+
+    doNothing().when(jwtValidatorService).validateTokenOrThrow("testToken");
+    when(jwtValidatorService.extractUserId("testToken")).thenReturn("testUser");
   }
 
   @AfterEach

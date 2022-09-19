@@ -1,7 +1,7 @@
 package de.unistuttgart.chickenshockbackend;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.doNothing;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -84,7 +84,7 @@ class ConfigControllerTest {
 
     objectMapper = new ObjectMapper();
 
-    when(jwtValidatorService.validate("testToken")).thenReturn(null);
+    doNothing().when(jwtValidatorService).validateTokenOrThrow("testToken");
   }
 
 

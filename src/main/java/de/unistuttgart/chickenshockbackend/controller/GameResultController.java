@@ -27,7 +27,8 @@ public class GameResultController {
     @CookieValue("access_token") final String accessToken,
     @RequestBody final GameResultDTO gameResultDTO
   ) {
-    final String userId = jwtValidatorService.validate(accessToken).getSubject();
+    jwtValidatorService.validateTokenOrThrow(accessToken);
+    final String userId = jwtValidatorService.extractUserId(accessToken);
     log.info("save game result for userId {}: {}", userId, gameResultDTO);
     gameResultService.saveGameResult(gameResultDTO, userId);
     return gameResultDTO;
