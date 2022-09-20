@@ -1,20 +1,34 @@
 # Chickenshock-Backend
 
-This repo serves to persist the chickenshock data in a db and to communicate with different Microservices.
+This repository contains the backend for the [Chickenshock minigame](https://gamifyit-docs.readthedocs.io/en/latest/user-manuals/minigames/chickenshock.html).
+
+It persists the game data (configurations, game results, etc.), in a database and communicates with other backend services.
 
 <!-- TOC -->
-
-* [Getting started](#getting-started)
-    * [Run](#run)
-        * [Docker-compose](#docker-compose)
-        * [Project build](#project-build)
-        * [With Docker](#with-docker)
-    * [Testing Database](#testing-database)
-* [Rest mappings](#rest-mappings)
+* [Chickenshock-Backend](#chickenshock-backend)
+  * [REST API](#rest-api)
     * [Swagger-Ui (if started)](#swagger-ui--if-started-)
-* [Class Diagrams](#class-diagrams)
-
+  * [Getting started](#getting-started)
+    * [Run](#run)
+      * [Docker-compose](#docker-compose)
+      * [Project build](#project-build)
+      * [With Docker](#with-docker)
+    * [Testing Database](#testing-database)
+  * [Class Diagrams](#class-diagrams)
 <!-- TOC -->
+
+## REST API
+
+Rest mappings are defined
+in [`chickenshock-service/src/main/java/com/chickenshockservice/chickenshockservice/controller/ChickenshockController.java`](chickenshock-service/src/main/java/com/chickenshockservice/chickenshockservice/controller/ChickenshockController.java)
+
+### Swagger-Ui
+
+When the service is started (see [Getting started](#getting-started)), you can access the API documentation:
+
+open <http://localhost/minigames/chickenshock/api/v1/swagger-ui/index.html#/> and
+fill `http://localhost/minigames/chickenshock/api/v1/v3/api-docs` into the input field in the navbar.
+![img.png](assets/swagger.png)
 
 ## Getting started
 
@@ -96,17 +110,6 @@ To stop and remove it simply type
 ```sh
 docker stop chickenshock-database
 ```
-
-## Rest mappings
-
-Rest mappings are defined
-in [`chickenshock-service/src/main/java/com/chickenshockservice/chickenshockservice/controller/ChickenshockController.java`](chickenshock-service/src/main/java/com/chickenshockservice/chickenshockservice/controller/ChickenshockController.java)
-
-### Swagger-Ui (if started)
-
-Access swagger-ui for visuals under: ```http://localhost/minigames/chickenshock/api/v1/swagger-ui/index.html#/``` and
-fill ```http://localhost/minigames/chickenshock/api/v1/v3/api-docs``` into the input field in the navbar.
-![img.png](assets/swagger.png)
 
 ## Class Diagrams
 
