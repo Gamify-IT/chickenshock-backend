@@ -10,23 +10,26 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+/**
+ * The RoundResult.class contains the round result related information
+ */
 @Entity
 @Data
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class RoundResult {
 
-  @Id
-  @GeneratedValue(generator = "uuid")
-  UUID id;
+    @Id
+    @GeneratedValue(generator = "uuid")
+    UUID id;
 
-  @ManyToOne
-  Question question;
+    @ManyToOne
+    Question question;
 
-  String answer;
+    String answer;
 
-  public RoundResult(final Question question, final String answer) {
-    this.question = question;
-    this.answer = answer;
-  }
+    public RoundResult(final Question question, final String answer) {
+        this.question = question;
+        this.answer = answer;
+    }
 }
