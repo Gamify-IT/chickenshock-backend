@@ -8,14 +8,16 @@ import de.unistuttgart.chickenshockbackend.data.mapper.ConfigurationMapper;
 import de.unistuttgart.chickenshockbackend.data.mapper.QuestionMapper;
 import de.unistuttgart.chickenshockbackend.repositories.ConfigurationRepository;
 import de.unistuttgart.chickenshockbackend.repositories.QuestionRepository;
-import java.util.Optional;
-import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
+
+import javax.validation.Valid;
+import java.util.Optional;
+import java.util.UUID;
 
 /**
  * This service handles the logic for the ConfigController.class
@@ -47,7 +49,7 @@ public class ConfigService {
      */
     public Configuration getConfiguration(final UUID id) {
         if (id == null) {
-            throw new IllegalArgumentException(String.format("id is null"));
+            throw new IllegalArgumentException("id is null");
         }
         return configurationRepository
             .findById(id)
@@ -66,9 +68,9 @@ public class ConfigService {
      * @return the saved configuration as DTO
      * @throws IllegalArgumentException if at least one of the arguments is null
      */
-    public ConfigurationDTO saveConfiguration(final ConfigurationDTO configurationDTO) {
+    public ConfigurationDTO saveConfiguration(final @Valid ConfigurationDTO configurationDTO) {
         if (configurationDTO == null) {
-            throw new IllegalArgumentException(String.format("configurationDTO is null"));
+            throw new IllegalArgumentException("configurationDTO is null");
         }
         final Configuration savedConfiguration = configurationRepository.save(
             configurationMapper.configurationDTOToConfiguration(configurationDTO)
@@ -85,9 +87,9 @@ public class ConfigService {
      * @throws ResponseStatusException  when configuration with the id does not exist
      * @throws IllegalArgumentException if at least one of the arguments is null
      */
-    public ConfigurationDTO updateConfiguration(final UUID id, final ConfigurationDTO configurationDTO) {
+    public ConfigurationDTO updateConfiguration(final UUID id, final @Valid ConfigurationDTO configurationDTO) {
         if (id == null || configurationDTO == null) {
-            throw new IllegalArgumentException(String.format("id or configurationDTO is null"));
+            throw new IllegalArgumentException("id or configurationDTO is null");
         }
         final Configuration configuration = getConfiguration(id);
         configuration.setQuestions(questionMapper.questionDTOsToQuestions(configurationDTO.getQuestions()));
@@ -105,7 +107,7 @@ public class ConfigService {
      */
     public ConfigurationDTO deleteConfiguration(final UUID id) {
         if (id == null) {
-            throw new IllegalArgumentException(String.format("id is null"));
+            throw new IllegalArgumentException("id is null");
         }
         final Configuration configuration = getConfiguration(id);
         configurationRepository.delete(configuration);
@@ -121,9 +123,9 @@ public class ConfigService {
      * @throws ResponseStatusException  when configuration with the id does not exist
      * @throws IllegalArgumentException if at least one of the arguments is null
      */
-    public QuestionDTO addQuestionToConfiguration(final UUID id, final QuestionDTO questionDTO) {
+    public QuestionDTO addQuestionToConfiguration(final UUID id, final @Valid QuestionDTO questionDTO) {
         if (id == null || questionDTO == null) {
-            throw new IllegalArgumentException(String.format("id or questionDTO is null"));
+            throw new IllegalArgumentException("id or questionDTO is null");
         }
         final Configuration configuration = getConfiguration(id);
         final Question question = questionRepository.save(questionMapper.questionDTOToQuestion(questionDTO));
@@ -143,7 +145,7 @@ public class ConfigService {
      */
     public QuestionDTO removeQuestionFromConfiguration(final UUID id, final UUID questionId) {
         if (id == null || questionId == null) {
-            throw new IllegalArgumentException(String.format("id or questionId is null"));
+            throw new IllegalArgumentException("id or questionId is null");
         }
         final Configuration configuration = getConfiguration(id);
         final Question question = getQuestionInConfiguration(questionId, configuration)
@@ -172,10 +174,10 @@ public class ConfigService {
     public QuestionDTO updateQuestionFromConfiguration(
         final UUID id,
         final UUID questionId,
-        final QuestionDTO questionDTO
+        final @Valid QuestionDTO questionDTO
     ) {
         if (id == null || questionId == null || questionDTO == null) {
-            throw new IllegalArgumentException(String.format("id or questionId or questionDTO is null"));
+            throw new IllegalArgumentException("id or questionId or questionDTO is null");
         }
         final Configuration configuration = getConfiguration(id);
         if (getQuestionInConfiguration(questionId, configuration).isEmpty()) {
@@ -199,9 +201,12 @@ public class ConfigService {
      * @throws ResponseStatusException  when question with the id in the given configuration does not exist
      * @throws IllegalArgumentException if at least one of the arguments is null
      */
-    private Optional<Question> getQuestionInConfiguration(final UUID questionId, final Configuration configuration) {
+    private Optional<Question> getQuestionInConfiguration(
+        final UUID questionId,
+        final @Valid Configuration configuration
+    ) {
         if (questionId == null || configuration == null) {
-            throw new IllegalArgumentException(String.format("questionId or configuration is null"));
+            throw new IllegalArgumentException("questionId or configuration is null");
         }
         return configuration
             .getQuestions()
