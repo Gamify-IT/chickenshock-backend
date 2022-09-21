@@ -13,9 +13,7 @@ public final class ApiError {
     private final HttpStatus status;
     private final List<String> errors;
 
-    public ApiError() {
-        super();
-    }
+    public ApiError() {}
 
     public ApiError(final HttpStatus status, final List<String> errors) {
         super();
