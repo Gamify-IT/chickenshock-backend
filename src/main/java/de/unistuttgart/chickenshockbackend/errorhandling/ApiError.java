@@ -10,8 +10,8 @@ import org.springframework.http.HttpStatus;
 @Setter
 public final class ApiError {
 
-    private HttpStatus status;
-    private List<String> errors;
+    private final HttpStatus status;
+    private final List<String> errors;
 
     public ApiError() {
         super();
