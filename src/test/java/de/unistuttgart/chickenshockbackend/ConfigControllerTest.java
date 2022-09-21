@@ -1,10 +1,5 @@
 package de.unistuttgart.chickenshockbackend;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.doNothing;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.unistuttgart.chickenshockbackend.data.Configuration;
 import de.unistuttgart.chickenshockbackend.data.ConfigurationDTO;
@@ -15,11 +10,6 @@ import de.unistuttgart.chickenshockbackend.data.mapper.QuestionMapper;
 import de.unistuttgart.chickenshockbackend.repositories.ConfigurationRepository;
 import de.unistuttgart.chickenshockbackend.repositories.QuestionRepository;
 import de.unistuttgart.gamifyit.authentificationvalidator.JWTValidatorService;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
-import javax.servlet.http.Cookie;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,6 +23,17 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+
+import javax.servlet.http.Cookie;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.doNothing;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc
 @SpringBootTest
@@ -145,7 +146,7 @@ class ConfigControllerTest {
                 newCreatedConfigurationDTOResponse
                     .getQuestions()
                     .stream()
-                    .anyMatch(filteredQuestion -> question.equalsContent(filteredQuestion))
+                    .anyMatch(question::equalsContent)
             );
         }
         assertSame(2, configurationRepository.findAll().size());
@@ -180,7 +181,7 @@ class ConfigControllerTest {
                 updatedConfigurationDTOResponse
                     .getQuestions()
                     .stream()
-                    .anyMatch(filteredQuestion -> question.equalsContent(filteredQuestion))
+                    .anyMatch(question::equalsContent)
             );
         }
         assertEquals(initialConfigDTO.getId(), updatedConfigurationDTOResponse.getId());
@@ -237,6 +238,7 @@ class ConfigControllerTest {
     @Test
     void removeQuestionFromExistingConfiguration() throws Exception {
         final QuestionDTO removedQuestionDTO = initialConfigDTO.getQuestions().stream().findFirst().get();
+        assert removedQuestionDTO.getId() != null;
         assertTrue(questionRepository.existsById(removedQuestionDTO.getId()));
 
         final MvcResult result = mvc
