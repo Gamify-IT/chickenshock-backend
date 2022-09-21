@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 
 @Getter
 @Setter
-public class ApiError {
+public final class ApiError {
 
     private HttpStatus status;
     private List<String> errors;
