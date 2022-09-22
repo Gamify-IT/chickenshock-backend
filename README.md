@@ -1,35 +1,45 @@
 # Chickenshock-Backend
 
-This repository contains the backend for the [Chickenshock minigame](https://gamifyit-docs.readthedocs.io/en/latest/user-manuals/minigames/chickenshock.html).
+This repository contains the backend for
+the [Chickenshock minigame](https://gamifyit-docs.readthedocs.io/en/latest/user-manuals/minigames/chickenshock.html).
 
-It persists the game data (configurations, game results, etc.), in a database and communicates with other backend services.
+It persists the game data (configurations, game results, etc.), in a database and communicates with other backend
+services.
 
 ## Table of contents
 
 <!-- TOC -->
+
 * [Links](#links)
 * [REST API](#rest-api)
-  * [Swagger-Ui](#swagger-ui)
+    * [Swagger-Ui](#swagger-ui)
 * [Getting started](#getting-started)
-  * [Run](#run)
-    * [Docker-compose](#docker-compose)
-    * [Project build](#project-build)
-    * [With Docker](#with-docker)
-  * [Testing Database](#testing-database)
+    * [Run](#run)
+        * [Docker-compose](#docker-compose)
+        * [Project build](#project-build)
+        * [With Docker](#with-docker)
+    * [Testing Database](#testing-database)
 * [Class Diagrams](#class-diagrams)
+* [Constants](#constants)
+
 <!-- TOC -->
 
 ## Links
 
-- User documentation for the minigame can be found [here](https://gamifyit-docs.readthedocs.io/en/latest/user-manuals/minigames/chickenshock.html).
+- User documentation for the minigame can be
+  found [here](https://gamifyit-docs.readthedocs.io/en/latest/user-manuals/minigames/chickenshock.html).
 - For the frontend, see the [Gamify-IT/chickenshock repository](https://github.com/Gamify-IT/chickenshock).
-- The installation manual and setup instructions can be found [here](https://gamifyit-docs.readthedocs.io/en/latest/install-manuals/index.html).
+- The installation manual and setup instructions can be
+  found [here](https://gamifyit-docs.readthedocs.io/en/latest/install-manuals/index.html).
 
 ## REST API
 
-Rest mappings are defined in 
-- Game result controller: [`src/main/java/de/unistuttgart/chickenshockbackend/controller/GameResultController.java`](src/main/java/de/unistuttgart/chickenshockbackend/controller/GameResultController.java)
-- Config controller: [`src/main/java/de/unistuttgart/chickenshockbackend/controller/ConfigController.java`](src/main/java/de/unistuttgart/chickenshockbackend/controller/ConfigController.java)
+Rest mappings are defined in
+
+- Game result
+  controller: [`src/main/java/de/unistuttgart/chickenshockbackend/controller/GameResultController.java`](src/main/java/de/unistuttgart/chickenshockbackend/controller/GameResultController.java)
+- Config
+  controller: [`src/main/java/de/unistuttgart/chickenshockbackend/controller/ConfigController.java`](src/main/java/de/unistuttgart/chickenshockbackend/controller/ConfigController.java)
 
 ### Swagger-Ui
 
@@ -125,3 +135,14 @@ docker stop chickenshock-database
 ![ConfigController](assets/chickenshockConfigController.png)
 
 ![GameResultController](assets/chickenshockGameResultController.png)
+
+## Constants
+
+To prevent incorrect or cheated data, all important values are checked for logic.
+The field borders are configured in `src/main/java/de/unistuttgart/chickenshockbackend/Constants.java`.
+
+1. `MIN_POINTS`: minimal number of points a player can achieve
+2. `MAX_POINTS`: maximal number of points a player can achieve
+3. `MIN_QUESTION_COUNT` minimal number of questions a player can answer correctly
+4. `MAX_QUESTION_COUNT` maximal number of questions a player can answer correctly
+5. `MIN_TIME` and `MIN/MAX_SCORE` should not be changed
