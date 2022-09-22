@@ -3,7 +3,6 @@ package de.unistuttgart.chickenshockbackend.data;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
-import javax.persistence.ElementCollection;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
@@ -35,7 +34,6 @@ public class QuestionDTO {
     @NotBlank(message = "right answer text cannot be blank")
     String rightAnswer;
 
-    @ElementCollection
     Set<String> wrongAnswers;
 
     public QuestionDTO(final String text, final String rightAnswer, final Set<String> wrongAnswers) {

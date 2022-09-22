@@ -31,8 +31,8 @@ public class ConfigurationDTO {
     @Valid
     Set<QuestionDTO> questions;
 
-    @Min(value = Constants.MIN_TIME, message = "time has to be bigger than " + Constants.MIN_TIME)
-    @Max(value = Constants.MAX_TIME, message = "time has to be smaller than " + Constants.MAX_TIME)
+    @Min(value = Constants.MIN_TIME, message = "time has to be ≥ " + Constants.MIN_TIME + "s")
+    @Max(value = Constants.MAX_TIME, message = "time has to be ≤ " + Constants.MAX_TIME + "s")
     int time;
 
     public ConfigurationDTO(final Set<QuestionDTO> questions, final int time) {

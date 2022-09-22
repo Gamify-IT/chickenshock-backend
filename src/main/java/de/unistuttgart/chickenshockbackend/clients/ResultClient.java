@@ -12,7 +12,7 @@ public interface ResultClient {
     /**
      * Submits the resultDTO to the Overworld-Backend
      *
-     * @param resultDTO result
+     * @param resultDTO the player submitted result, trimmed down to the data needed for the overworld
      */
     @PostMapping("/submit-game-pass")
     void submit(OverworldResultDTO resultDTO);

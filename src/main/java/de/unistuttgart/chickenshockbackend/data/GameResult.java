@@ -29,34 +29,58 @@ public class GameResult {
     @GeneratedValue(generator = "uuid")
     private UUID id;
 
-    @Min(value = Constants.MIN_QUESTION_COUNT, message = "cannot have less than: " + Constants.MIN_QUESTION_COUNT)
-    @Max(value = Constants.MAX_QUESTION_COUNT, message = "cannot have more than: " + Constants.MIN_QUESTION_COUNT)
+    @Min(
+        value = Constants.MIN_QUESTION_COUNT,
+        message = "cannot have less than " + Constants.MIN_QUESTION_COUNT + " questions"
+    )
+    @Max(
+        value = Constants.MAX_QUESTION_COUNT,
+        message = "cannot have more than " + Constants.MIN_QUESTION_COUNT + " questions"
+    )
     private int questionCount;
 
-    @Min(value = Constants.MIN_TIME, message = "time has to be bigger than " + Constants.MIN_TIME)
-    @Max(value = Constants.MAX_TIME, message = "time has to be smaller than " + Constants.MAX_TIME)
+    @Min(value = Constants.MIN_TIME, message = "time has to be ≥ " + Constants.MIN_TIME + "s")
+    @Max(value = Constants.MAX_TIME, message = "time has to be ≤ " + Constants.MAX_TIME + "s")
     private float timeLimit;
 
-    @Min(value = Constants.MIN_TIME, message = "cannot finish faster than (s): " + Constants.MIN_TIME)
-    @Max(value = Constants.MAX_TIME, message = "cannot take longer than (s): " + Constants.MAX_TIME)
+    @Min(value = Constants.MIN_TIME, message = "cannot finish faster than " + Constants.MIN_TIME + "s")
+    @Max(value = Constants.MAX_TIME, message = "cannot take longer than " + Constants.MAX_TIME + "s")
     private float finishedInSeconds;
 
-    @Min(value = Constants.MIN_QUESTION_COUNT, message = "cannot kill less than: " + Constants.MIN_QUESTION_COUNT)
-    @Max(value = Constants.MAX_QUESTION_COUNT, message = "cannot kill more than: " + Constants.MIN_QUESTION_COUNT)
+    @Min(
+        value = Constants.MIN_QUESTION_COUNT,
+        message = "cannot kill less than " + Constants.MIN_QUESTION_COUNT + " questions"
+    )
+    @Max(
+        value = Constants.MAX_QUESTION_COUNT,
+        message = "cannot kill more than " + Constants.MIN_QUESTION_COUNT + " questions"
+    )
     private int correctKillsCount;
 
-    @Min(value = Constants.MIN_QUESTION_COUNT, message = "cannot kill less than: " + Constants.MIN_QUESTION_COUNT)
-    @Max(value = Constants.MAX_QUESTION_COUNT, message = "cannot kill more than: " + Constants.MIN_QUESTION_COUNT)
+    @Min(
+        value = Constants.MIN_QUESTION_COUNT,
+        message = "cannot kill less than " + Constants.MIN_QUESTION_COUNT + " questions"
+    )
+    @Max(
+        value = Constants.MAX_QUESTION_COUNT,
+        message = "cannot kill more than " + Constants.MIN_QUESTION_COUNT + " questions"
+    )
     private int wrongKillsCount;
 
-    @Min(value = Constants.MIN_QUESTION_COUNT, message = "cannot kill less than: " + Constants.MIN_QUESTION_COUNT)
-    @Max(value = Constants.MAX_QUESTION_COUNT, message = "cannot kill more than: " + Constants.MIN_QUESTION_COUNT)
+    @Min(
+        value = Constants.MIN_QUESTION_COUNT,
+        message = "cannot kill less than " + Constants.MIN_QUESTION_COUNT + " chickens"
+    )
+    @Max(
+        value = Constants.MAX_QUESTION_COUNT,
+        message = "cannot kill more than " + Constants.MIN_QUESTION_COUNT + " chickens"
+    )
     private int killsCount;
 
     private int shotCount;
 
-    @Min(value = Constants.MIN_POINTS, message = "cannot have less points than: " + Constants.MIN_POINTS)
-    @Max(value = Constants.MAX_POINTS, message = "cannot have more points than: " + Constants.MAX_POINTS)
+    @Min(value = Constants.MIN_POINTS, message = "cannot have less than: " + Constants.MIN_POINTS + " points")
+    @Max(value = Constants.MAX_POINTS, message = "cannot have more than: " + Constants.MAX_POINTS + " points")
     private int points;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
