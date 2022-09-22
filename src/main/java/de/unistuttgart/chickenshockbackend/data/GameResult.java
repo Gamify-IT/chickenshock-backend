@@ -26,10 +26,16 @@ import java.util.UUID;
 @Validated
 public class GameResult {
 
+    /**
+     * A unique identifier for the game result.
+     */
     @Id
     @GeneratedValue(generator = "uuid")
     private UUID id;
 
+    /**
+     * The total number of questions that were available.
+     */
     @Min(
         value = Constants.MIN_QUESTION_COUNT,
         message = "cannot have less than " + Constants.MIN_QUESTION_COUNT + " questions"
@@ -40,12 +46,21 @@ public class GameResult {
     )
     private int questionCount;
 
+    /**
+     * The timelimit of the game.
+     */
     @Min(value = Constants.MIN_TIME, message = "time has to be ≥ " + Constants.MIN_TIME + "s")
     private float timeLimit;
 
+    /**
+     * The time that the user needed to answer all questions.
+     */
     @Min(value = Constants.MIN_TIME, message = "cannot finish faster than " + Constants.MIN_TIME + "s")
     private float finishedInSeconds;
 
+    /**
+     * The number of questions that were answered correctly.
+     */
     @Min(
         value = Constants.MIN_QUESTION_COUNT,
         message = "cannot kill less than " + Constants.MIN_QUESTION_COUNT + " questions"
@@ -56,6 +71,9 @@ public class GameResult {
     )
     private int correctKillsCount;
 
+    /**
+     * The number of questions that were answered incorrectly.
+     */
     @Min(
         value = Constants.MIN_QUESTION_COUNT,
         message = "cannot kill less than " + Constants.MIN_QUESTION_COUNT + " questions"
@@ -66,6 +84,9 @@ public class GameResult {
     )
     private int wrongKillsCount;
 
+    /**
+     * The total number of chickens killed.
+     */
     @Min(
         value = Constants.MIN_QUESTION_COUNT,
         message = "cannot kill less than " + Constants.MIN_QUESTION_COUNT + " chickens"
@@ -76,26 +97,47 @@ public class GameResult {
     )
     private int killsCount;
 
+    /**
+     * Number of shots fired.
+     */
     private int shotCount;
 
+    /**
+     * Points earned.
+     */
     @Min(value = Constants.MIN_POINTS, message = "cannot have less than: " + Constants.MIN_POINTS + " points")
     @Max(value = Constants.MAX_POINTS, message = "cannot have more than: " + Constants.MAX_POINTS + " points")
     private int points;
 
+    /**
+     * For the correctly answered questions: the text of the question and the selected answer text.
+     */
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @Valid
     private List<RoundResult> correctAnsweredQuestions;
 
+    /**
+     * For the incorrectly answered questions: the text of the question and the selected answer text.
+     */
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @Valid
     private List<RoundResult> wrongAnsweredQuestions;
 
+    /**
+     * UUID of the configuration that was used for this game.
+     */
     @NotNull(message = "configurationAsUUID cannot be null")
     private UUID configurationAsUUID;
 
+    /**
+     * ID of the player that played this game.
+     */
     @NotNull(message = "playerId cannot be null")
     private String playerId;
 
+    /**
+     * The date and time when the game was finished.
+     */
     @NotNull(message = "playedTime cannot be null")
     private LocalDateTime playedTime;
 

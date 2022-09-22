@@ -23,17 +23,29 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 public class QuestionDTO {
 
+    /**
+     * A unique identifier for the question.
+     */
     @Nullable
     UUID id;
 
+    /**
+     * The question text.
+     */
     @NotNull(message = "question text cannot be null")
     @NotBlank(message = "question text cannot be blank")
     String text;
 
+    /**
+     * The correct answer.
+     */
     @NotNull(message = "right answer text cannot be null")
     @NotBlank(message = "right answer text cannot be blank")
     String rightAnswer;
 
+    /**
+     * A set of wrong answers.
+     */
     Set<String> wrongAnswers;
 
     public QuestionDTO(final String text, final String rightAnswer, final Set<String> wrongAnswers) {

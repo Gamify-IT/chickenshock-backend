@@ -26,9 +26,15 @@ import java.util.UUID;
 @Validated
 public class GameResultDTO {
 
+    /**
+     * A unique identifier for the game result.
+     */
     @Nullable
     private UUID id;
 
+    /**
+     * The total number of questions that were available.
+     */
     @Min(
         value = Constants.MIN_QUESTION_COUNT,
         message = "cannot have less than " + Constants.MIN_QUESTION_COUNT + " questions"
@@ -39,12 +45,21 @@ public class GameResultDTO {
     )
     private int questionCount;
 
+    /**
+     * The timelimit of the game.
+     */
     @Min(value = Constants.MIN_TIME, message = "time has to be ≥ " + Constants.MIN_TIME + "s")
     private float timeLimit;
 
+    /**
+     * The time that the user needed to answer all questions.
+     */
     @Min(value = Constants.MIN_TIME, message = "cannot finish faster than " + Constants.MIN_TIME + "s")
     private float finishedInSeconds;
 
+    /**
+     * The number of correctly answered questions.
+     */
     @Min(
         value = Constants.MIN_QUESTION_COUNT,
         message = "cannot kill less than " + Constants.MIN_QUESTION_COUNT + " chicken"
@@ -55,6 +70,9 @@ public class GameResultDTO {
     )
     private int correctKillsCount;
 
+    /**
+     * The number of incorrectly answered questions.
+     */
     @Min(
         value = Constants.MIN_QUESTION_COUNT,
         message = "cannot kill less than " + Constants.MIN_QUESTION_COUNT + " chickens"
@@ -65,6 +83,9 @@ public class GameResultDTO {
     )
     private int wrongKillsCount;
 
+    /**
+     * The total number of chickens killed.
+     */
     @Min(
         value = Constants.MIN_QUESTION_COUNT,
         message = "cannot kill less than " + Constants.MIN_QUESTION_COUNT + " chickens"
@@ -75,18 +96,30 @@ public class GameResultDTO {
     )
     private int killsCount;
 
+    /**
+     * The total number of chickens that were not killed.
+     */
     private int shotCount;
 
     @Min(value = Constants.MIN_POINTS, message = "cannot have less than " + Constants.MIN_POINTS + " points")
     @Max(value = Constants.MAX_POINTS, message = "cannot have more than " + Constants.MAX_POINTS + " points")
     private int points;
 
+    /**
+     * For the correctly answered questions: the text of the question and the selected answer text.
+     */
     @Valid
     private List<RoundResultDTO> correctAnsweredQuestions;
 
+    /**
+     * For the incorrectly answered questions: the text of the question and the selected answer text.
+     */
     @Valid
     private List<RoundResultDTO> wrongAnsweredQuestions;
 
+    /**
+     * UUID of the configuration that was used for this game.
+     */
     @NotNull(message = "configurationAsUUID cannot be null")
     private UUID configurationAsUUID;
 

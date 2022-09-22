@@ -13,7 +13,8 @@ import org.springframework.lang.Nullable;
 import org.springframework.validation.annotation.Validated;
 
 /**
- * The RoundResultDTO.class contains the round result related information
+ * The RoundResultDTO.class contains the round result related information.
+ * A round represents a single question and the answer given by the user.
  */
 @Data
 @NoArgsConstructor
@@ -22,12 +23,21 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 public class RoundResultDTO {
 
+    /**
+     * A unique identifier for the round result.
+     */
     @Nullable
     UUID id;
 
+    /**
+     * The question text.
+     */
     @NotNull(message = "questionUUId cannot be null")
     UUID questionUUId;
 
+    /**
+     * The text of the answer chosen by the user.
+     */
     @NotNull(message = "answer cannot be null")
     @NotBlank(message = "answer cannot be blank")
     String answer;
