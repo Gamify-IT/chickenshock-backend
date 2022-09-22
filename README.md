@@ -132,9 +132,18 @@ docker stop chickenshock-database
 
 ## Class Diagrams
 
-![ConfigController](assets/chickenshockConfigController.png)
+### ConfigController
+![class diagram of ConfigController](assets/chickenshockConfigController.png)
+This class diagram shows an overview of the ConfigController class.
 
-![GameResultController](assets/chickenshockGameResultController.png)
+### GameResultController
+![class diagram GameResultController](assets/chickenshockGameResultController.png)
+This class diagram shows an overview of the GameResultController class.
+The data structure of `GameResult` and its contents are shown at the left and bottom of the diagram.
+
+### Overview complete application
+![overview class diagram of complete application](assets/chickenshockClassOverview.png)
+This simplified class diagram shows how the most important services, mappers and repositories in the project are interlinked.
 
 ## Constants
 
