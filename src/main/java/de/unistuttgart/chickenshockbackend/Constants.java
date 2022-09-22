@@ -18,6 +18,8 @@ public final class Constants {
     public static final int MAX_QUESTION_COUNT = 600;
 
     //----Overworld result attributes----
+
+    //score saved in %
     public static final long MIN_SCORE = 0;
     public static final long MAX_SCORE = 100;
 
