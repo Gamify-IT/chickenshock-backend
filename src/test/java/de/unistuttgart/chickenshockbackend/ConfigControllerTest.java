@@ -141,12 +141,7 @@ class ConfigControllerTest {
             newCreatedConfigurationDTOResponse.getQuestions().size()
         );
         for (final QuestionDTO question : newCreatedConfigurationDTO.getQuestions()) {
-            assertTrue(
-                newCreatedConfigurationDTOResponse
-                    .getQuestions()
-                    .stream()
-                    .anyMatch(filteredQuestion -> question.equalsContent(filteredQuestion))
-            );
+            assertTrue(newCreatedConfigurationDTOResponse.getQuestions().stream().anyMatch(question::equalsContent));
         }
         assertSame(2, configurationRepository.findAll().size());
     }
@@ -176,12 +171,7 @@ class ConfigControllerTest {
         // because question object are not equals, we have to compare the content without id
         assertSame(initialConfigDTO.getQuestions().size(), updatedConfigurationDTOResponse.getQuestions().size());
         for (final QuestionDTO question : initialConfigDTO.getQuestions()) {
-            assertTrue(
-                updatedConfigurationDTOResponse
-                    .getQuestions()
-                    .stream()
-                    .anyMatch(filteredQuestion -> question.equalsContent(filteredQuestion))
-            );
+            assertTrue(updatedConfigurationDTOResponse.getQuestions().stream().anyMatch(question::equalsContent));
         }
         assertEquals(initialConfigDTO.getId(), updatedConfigurationDTOResponse.getId());
         assertSame(1, configurationRepository.findAll().size());
@@ -237,6 +227,7 @@ class ConfigControllerTest {
     @Test
     void removeQuestionFromExistingConfiguration() throws Exception {
         final QuestionDTO removedQuestionDTO = initialConfigDTO.getQuestions().stream().findFirst().get();
+        assert removedQuestionDTO.getId() != null;
         assertTrue(questionRepository.existsById(removedQuestionDTO.getId()));
 
         final MvcResult result = mvc

@@ -9,6 +9,7 @@ import de.unistuttgart.chickenshockbackend.data.mapper.RoundResultMapper;
 import de.unistuttgart.chickenshockbackend.repositories.GameResultRepository;
 import feign.FeignException;
 import java.util.List;
+import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,9 +40,9 @@ public class GameResultService {
      * @param gameResultDTO extern gameResultDTO
      * @throws IllegalArgumentException if at least one of the arguments is null
      */
-    public void saveGameResult(final GameResultDTO gameResultDTO, final String userId) {
+    public void saveGameResult(final @Valid GameResultDTO gameResultDTO, final String userId) {
         if (gameResultDTO == null || userId == null) {
-            throw new IllegalArgumentException(String.format("gameResultDTO or userId is null"));
+            throw new IllegalArgumentException("gameResultDTO or userId is null");
         }
         final OverworldResultDTO resultDTO = createOverworldResult(gameResultDTO, userId);
         try {
@@ -52,7 +53,7 @@ public class GameResultService {
             final List<RoundResult> wrongQuestions = roundResultMapper.roundResultDTOsToRoundResults(
                 gameResultDTO.getWrongAnsweredQuestions()
             );
-            final GameResult result = new GameResult(
+            final GameResult result = new @Valid GameResult(
                 gameResultDTO.getQuestionCount(),
                 gameResultDTO.getTimeLimit(),
                 gameResultDTO.getFinishedInSeconds(),
@@ -86,18 +87,17 @@ public class GameResultService {
      * @param userId        id of the player
      * @return OverworldResultDTO
      */
-    private OverworldResultDTO createOverworldResult(final GameResultDTO gameResultDTO, final String userId) {
+    private OverworldResultDTO createOverworldResult(final @Valid GameResultDTO gameResultDTO, final String userId) {
         final int resultScore = calculateResultScore(
             gameResultDTO.getCorrectKillsCount(),
             gameResultDTO.getQuestionCount()
         );
-        final OverworldResultDTO resultDTO = new OverworldResultDTO(
+        return new @Valid OverworldResultDTO(
             "CHICKENSHOCK",
             gameResultDTO.getConfigurationAsUUID(),
             resultScore,
             userId
         );
-        return resultDTO;
     }
 
     /**

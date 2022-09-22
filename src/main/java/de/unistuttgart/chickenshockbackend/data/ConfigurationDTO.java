@@ -1,14 +1,19 @@
 package de.unistuttgart.chickenshockbackend.data;
 
-import java.util.Objects;
-import java.util.Set;
-import java.util.UUID;
+import de.unistuttgart.chickenshockbackend.Constants;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.lang.Nullable;
+import org.springframework.validation.annotation.Validated;
+
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import java.util.Objects;
+import java.util.Set;
+import java.util.UUID;
 
 /**
  * The ConfigurationDTO.class contains all data that has to be stored to configure a chickenshock game
@@ -17,13 +22,16 @@ import org.springframework.lang.Nullable;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Validated
 public class ConfigurationDTO {
 
     @Nullable
     UUID id;
 
+    @Valid
     Set<QuestionDTO> questions;
 
+    @Min(value = Constants.MIN_TIME, message = "time has to be ≥ " + Constants.MIN_TIME + "s")
     int time;
 
     public ConfigurationDTO(final Set<QuestionDTO> questions, final int time) {
