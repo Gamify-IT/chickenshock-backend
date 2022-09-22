@@ -7,10 +7,10 @@ import org.springframework.http.HttpStatus;
 
 @Getter
 @Setter
-public class ApiError {
+public final class ApiError {
 
-    private HttpStatus status;
-    private List<String> errors;
+    private final HttpStatus status;
+    private final List<String> errors;
 
     public ApiError(final HttpStatus status, final List<String> errors) {
         this.status = status;
