@@ -1,17 +1,18 @@
 package de.unistuttgart.chickenshockbackend.data;
 
 import de.unistuttgart.chickenshockbackend.Constants;
-import java.util.UUID;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.validation.annotation.Validated;
+
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.util.UUID;
 
 /**
  * The OverworldResultDTO.class contains all the info that is sent to the Overworld-backend as the result of a game.
@@ -39,8 +40,8 @@ public class OverworldResultDTO {
     /**
      * The score that the player achieved in the game.
      */
-    @Min(Constants.MIN_SCORE)
-    @Max(Constants.MAX_SCORE)
+    @Min(value = Constants.MIN_SCORE, message = "Score cannot be less than " + Constants.MIN_SCORE)
+    @Max(value = Constants.MAX_SCORE, message = "Score cannot be higher than " + Constants.MAX_SCORE)
     long score;
 
     /**
