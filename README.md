@@ -9,19 +9,20 @@ services.
 ## Table of contents
 
 <!-- TOC -->
-
 * [Links](#links)
 * [REST API](#rest-api)
-    * [Swagger-Ui](#swagger-ui)
+  * [Swagger-Ui](#swagger-ui)
 * [Getting started](#getting-started)
-    * [Run](#run)
-        * [Docker-compose](#docker-compose)
-        * [Project build](#project-build)
-        * [With Docker](#with-docker)
-    * [Testing Database](#testing-database)
+  * [Run](#run)
+    * [Docker-compose](#docker-compose)
+    * [Project build](#project-build)
+    * [With Docker](#with-docker)
+  * [Testing Database](#testing-database)
 * [Class Diagrams](#class-diagrams)
+  * [ConfigController](#configcontroller)
+  * [GameResultController](#gameresultcontroller)
+  * [Overview complete application](#overview-complete-application)
 * [Constants](#constants)
-
 <!-- TOC -->
 
 ## Links
