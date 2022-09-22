@@ -1,17 +1,17 @@
 package de.unistuttgart.chickenshockbackend.data;
 
 import de.unistuttgart.chickenshockbackend.Constants;
-import java.util.Set;
-import java.util.UUID;
-import javax.persistence.*;
-import javax.validation.Valid;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.validation.annotation.Validated;
+
+import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import java.util.Set;
+import java.util.UUID;
 
 /**
  * The Configuration.class contains all data that has to be stored to configure a chickenshock game
@@ -32,7 +32,6 @@ public class Configuration {
     Set<Question> questions;
 
     @Min(value = Constants.MIN_TIME, message = "time has to be ≥ " + Constants.MIN_TIME + "s")
-    @Max(value = Constants.MAX_TIME, message = "time has to be ≤ " + Constants.MAX_TIME + "s")
     int time;
 
     public Configuration(final Set<Question> questions, final int time) {

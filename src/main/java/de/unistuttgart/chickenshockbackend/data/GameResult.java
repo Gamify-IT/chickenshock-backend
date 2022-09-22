@@ -1,19 +1,20 @@
 package de.unistuttgart.chickenshockbackend.data;
 
 import de.unistuttgart.chickenshockbackend.Constants;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.UUID;
-import javax.persistence.*;
-import javax.validation.Valid;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.validation.annotation.Validated;
+
+import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * The GameResult.class contains all data that is saved after one chickenshock game
@@ -40,11 +41,9 @@ public class GameResult {
     private int questionCount;
 
     @Min(value = Constants.MIN_TIME, message = "time has to be ≥ " + Constants.MIN_TIME + "s")
-    @Max(value = Constants.MAX_TIME, message = "time has to be ≤ " + Constants.MAX_TIME + "s")
     private float timeLimit;
 
     @Min(value = Constants.MIN_TIME, message = "cannot finish faster than " + Constants.MIN_TIME + "s")
-    @Max(value = Constants.MAX_TIME, message = "cannot take longer than " + Constants.MAX_TIME + "s")
     private float finishedInSeconds;
 
     @Min(

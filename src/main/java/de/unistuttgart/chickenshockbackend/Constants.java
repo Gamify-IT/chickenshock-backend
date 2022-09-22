@@ -10,7 +10,6 @@ public final class Constants {
 
     //game time in seconds
     public static final int MIN_TIME = 0;
-    public static final int MAX_TIME = 600;
 
     //----Game result attributes----
     public static final int MIN_POINTS = -600;
@@ -22,5 +21,6 @@ public final class Constants {
     public static final long MIN_SCORE = 0;
     public static final long MAX_SCORE = 100;
 
-    private Constants() {}
+    private Constants() {
+    }
 }
