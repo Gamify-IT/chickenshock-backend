@@ -24,18 +24,30 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 public class Question {
 
+    /**
+     * A unique identifier for the question.
+     */
     @Id
     @GeneratedValue(generator = "uuid")
     UUID id;
 
+    /**
+     * The question text.
+     */
     @NotNull(message = "question text cannot be null")
     @NotBlank(message = "question text cannot be blank")
     String text;
 
+    /**
+     * The correct answer.
+     */
     @NotNull(message = "right answer cannot be null")
     @NotBlank(message = "right answer cannot be blank")
     String rightAnswer;
 
+    /**
+     * A set of wrong answers.
+     */
     @ElementCollection
     Set<String> wrongAnswers;
 

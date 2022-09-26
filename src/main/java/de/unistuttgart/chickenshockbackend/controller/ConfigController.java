@@ -9,6 +9,8 @@ import de.unistuttgart.gamifyit.authentificationvalidator.JWTValidatorService;
 import java.util.List;
 import java.util.UUID;
 import javax.validation.Valid;
+
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
@@ -38,6 +40,7 @@ public class ConfigController {
     @Autowired
     private ConfigurationMapper configurationMapper;
 
+    @Operation(summary = "Get all configurations")
     @GetMapping("")
     public List<ConfigurationDTO> getConfigurations(@CookieValue("access_token") final String accessToken) {
         jwtValidatorService.validateTokenOrThrow(accessToken);
@@ -45,6 +48,7 @@ public class ConfigController {
         return configurationMapper.configurationsToConfigurationDTOs(configurationRepository.findAll());
     }
 
+    @Operation(summary = "Get a specific configuration by its id")
     @GetMapping("/{id}")
     public ConfigurationDTO getConfiguration(
         @CookieValue("access_token") final String accessToken,
@@ -55,6 +59,7 @@ public class ConfigController {
         return configurationMapper.configurationToConfigurationDTO(configService.getConfiguration(id));
     }
 
+    @Operation(summary = "Create a new configuration")
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
     public ConfigurationDTO createConfiguration(
@@ -67,6 +72,7 @@ public class ConfigController {
         return configService.saveConfiguration(configurationDTO);
     }
 
+    @Operation(summary = "Update a configuration")
     @PutMapping("/{id}")
     public ConfigurationDTO updateConfiguration(
         @CookieValue("access_token") final String accessToken,
@@ -79,6 +85,7 @@ public class ConfigController {
         return configService.updateConfiguration(id, configurationDTO);
     }
 
+    @Operation(summary = "Delete a configuration")
     @DeleteMapping("/{id}")
     public ConfigurationDTO deleteConfiguration(
         @CookieValue("access_token") final String accessToken,
@@ -90,6 +97,7 @@ public class ConfigController {
         return configService.deleteConfiguration(id);
     }
 
+    @Operation(summary = "Add multiple questions to a configuration")
     @PostMapping("/{id}/questions")
     @ResponseStatus(HttpStatus.CREATED)
     public QuestionDTO addQuestionToConfiguration(
@@ -103,6 +111,7 @@ public class ConfigController {
         return configService.addQuestionToConfiguration(id, questionDTO);
     }
 
+    @Operation(summary = "Delete a question from a configuration")
     @DeleteMapping("/{id}/questions/{questionId}")
     public QuestionDTO removeQuestionFromConfiguration(
         @CookieValue("access_token") final String accessToken,
@@ -115,6 +124,7 @@ public class ConfigController {
         return configService.removeQuestionFromConfiguration(id, questionId);
     }
 
+    @Operation(summary = "Update a question in a configuration")
     @PutMapping("/{id}/questions/{questionId}")
     public QuestionDTO updateQuestionFromConfiguration(
         @CookieValue("access_token") final String accessToken,

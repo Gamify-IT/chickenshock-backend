@@ -4,6 +4,8 @@ import de.unistuttgart.chickenshockbackend.data.GameResultDTO;
 import de.unistuttgart.chickenshockbackend.service.GameResultService;
 import de.unistuttgart.gamifyit.authentificationvalidator.JWTValidatorService;
 import javax.validation.Valid;
+
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
@@ -27,6 +29,7 @@ public class GameResultController {
     @Autowired
     private JWTValidatorService jwtValidatorService;
 
+    @Operation(summary = "Save a game result")
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
     public GameResultDTO saveGameResult(

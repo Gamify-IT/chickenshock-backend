@@ -23,14 +23,23 @@ import java.util.UUID;
 @Validated
 public class Configuration {
 
+    /**
+     * A unique identifier for the configuration.
+     */
     @Id
     @GeneratedValue(generator = "uuid")
     UUID id;
 
+    /**
+     * The questions that are part of the configuration.
+     */
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Valid
     Set<Question> questions;
 
+    /**
+     * The time that is available for the game.
+     */
     @Min(value = Constants.MIN_TIME, message = "time has to be ≥ " + Constants.MIN_TIME + "s")
     int time;
 
@@ -39,10 +48,18 @@ public class Configuration {
         this.time = time;
     }
 
+    /**
+     * Add a question to the configuration.
+     * @param question the question to add
+     */
     public void addQuestion(final Question question) {
         this.questions.add(question);
     }
 
+    /**
+     * Remove a question from the configuration.
+     * @param question the question to remove
+     */
     public void removeQuestion(final Question question) {
         this.questions.remove(question);
     }

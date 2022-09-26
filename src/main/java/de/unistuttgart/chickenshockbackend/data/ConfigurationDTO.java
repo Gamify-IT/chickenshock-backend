@@ -25,12 +25,21 @@ import java.util.UUID;
 @Validated
 public class ConfigurationDTO {
 
+    /**
+     * A unique identifier for the configuration.
+     */
     @Nullable
     UUID id;
 
+    /**
+     * The questions that are part of the configuration.
+     */
     @Valid
     Set<QuestionDTO> questions;
 
+    /**
+     * The time that is available for the game.
+     */
     @Min(value = Constants.MIN_TIME, message = "time has to be ≥ " + Constants.MIN_TIME + "s")
     int time;
 
