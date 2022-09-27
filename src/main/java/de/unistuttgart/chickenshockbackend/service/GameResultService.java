@@ -44,7 +44,7 @@ public class GameResultService {
      */
     public void saveGameResult(final @Valid GameResultDTO gameResultDTO, final String userId, final String accessToken) {
         if (gameResultDTO == null || userId == null || accessToken == null) {
-            throw new IllegalArgumentException("gameResultDTO or userId is null");
+            throw new IllegalArgumentException("gameResultDTO or userId or accessToken is null");
         }
         final OverworldResultDTO resultDTO = createOverworldResult(gameResultDTO, userId);
         try {
