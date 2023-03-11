@@ -6,11 +6,10 @@ import de.unistuttgart.chickenshockbackend.data.mapper.ConfigurationMapper;
 import de.unistuttgart.chickenshockbackend.repositories.ConfigurationRepository;
 import de.unistuttgart.chickenshockbackend.service.ConfigService;
 import de.unistuttgart.gamifyit.authentificationvalidator.JWTValidatorService;
+import io.swagger.v3.oas.annotations.Operation;
 import java.util.List;
 import java.util.UUID;
 import javax.validation.Valid;
-
-import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;

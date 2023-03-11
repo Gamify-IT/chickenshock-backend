@@ -8,7 +8,6 @@ import de.unistuttgart.chickenshockbackend.data.mapper.ConfigurationMapper;
 import de.unistuttgart.chickenshockbackend.data.mapper.QuestionMapper;
 import de.unistuttgart.chickenshockbackend.repositories.ConfigurationRepository;
 import de.unistuttgart.chickenshockbackend.repositories.QuestionRepository;
-
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -201,14 +200,17 @@ public class ConfigService {
      * @return the new id of the cloned configuration
      */
     public UUID cloneConfiguration(final UUID id) {
-        Configuration config = configurationRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Configuration with id %s not found", id)));
-        final Configuration cloneConfig = new Configuration(new HashSet<>(), config.getTime());
-        config.getQuestions().forEach(question -> {
-            Set<String> wrongAnswers = new HashSet<>(question.getWrongAnswers());
-            cloneConfig.addQuestion(new Question(question.getText(), question.getRightAnswer(), wrongAnswers));
-        });
-        Configuration idConfig = configurationRepository.save(cloneConfig);
-        return idConfig.getId();
+        Configuration config = configurationRepository
+            .findById(id)
+            .orElseThrow(() ->
+                new ResponseStatusException(
+                    HttpStatus.NOT_FOUND,
+                    String.format("Configuration with id %s not found", id)
+                )
+            );
+        Configuration cloneConfig = (Configuration) config.clone();
+        cloneConfig = configurationRepository.save(cloneConfig);
+        return cloneConfig.getId();
     }
 
     /**

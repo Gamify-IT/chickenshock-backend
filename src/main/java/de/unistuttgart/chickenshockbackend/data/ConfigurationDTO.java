@@ -1,6 +1,11 @@
 package de.unistuttgart.chickenshockbackend.data;
 
 import de.unistuttgart.chickenshockbackend.Constants;
+import java.util.Objects;
+import java.util.Set;
+import java.util.UUID;
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,12 +13,6 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.lang.Nullable;
 import org.springframework.validation.annotation.Validated;
-
-import javax.validation.Valid;
-import javax.validation.constraints.Min;
-import java.util.Objects;
-import java.util.Set;
-import java.util.UUID;
 
 /**
  * The ConfigurationDTO.class contains all data that has to be stored to configure a chickenshock game
