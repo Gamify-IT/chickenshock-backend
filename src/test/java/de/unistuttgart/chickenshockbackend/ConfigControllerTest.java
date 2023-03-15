@@ -323,19 +323,27 @@ class ConfigControllerTest {
             .andExpect(status().isCreated())
             .andReturn();
         final String content = result.getResponse().getContentAsString();
-        final UUID clonedId = objectMapper.readValue(content, UUID.class);
-        assertNotEquals(initialConfig.getId(), clonedId);
+        final UUID cloneId = objectMapper.readValue(content, UUID.class);
+        assertNotEquals(initialConfig.getId(), cloneId);
 
-        final Configuration cloneConfig = configurationRepository.findById(clonedId).get();
-        cloneConfig
+        assertTrue(configurationRepository.findById(cloneId).isPresent());
+
+        final Configuration cloneConfig = configurationRepository.findById(cloneId).get();
+        initialConfig
             .getQuestions()
-            .forEach(question ->
-                initialConfig
+            .forEach(question -> {
+                // test if questions are deep-copied
+                cloneConfig
                     .getQuestions()
-                    .forEach(initialQuestion -> {
-                        assertNotEquals(question.getId(), initialQuestion.getId());
-                    })
-            );
+                    .forEach(cloneQuestion -> assertNotEquals(question.getId(), cloneQuestion.getId()));
+                // test if questions are still present
+                assertTrue(
+                    cloneConfig
+                        .getQuestions()
+                        .stream()
+                        .anyMatch(cloneQuestion -> question.getText().equals(cloneQuestion.getText()))
+                );
+            });
         assertNotEquals(cloneConfig, initialConfig);
     }
 }
