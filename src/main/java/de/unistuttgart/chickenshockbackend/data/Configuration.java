@@ -1,17 +1,17 @@
 package de.unistuttgart.chickenshockbackend.data;
 
 import de.unistuttgart.chickenshockbackend.Constants;
+import java.util.Set;
+import java.util.UUID;
+import java.util.stream.Collectors;
+import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.validation.annotation.Validated;
-
-import javax.persistence.*;
-import javax.validation.Valid;
-import javax.validation.constraints.Min;
-import java.util.Set;
-import java.util.UUID;
 
 /**
  * The Configuration.class contains all data that has to be stored to configure a chickenshock game
@@ -62,5 +62,10 @@ public class Configuration {
      */
     public void removeQuestion(final Question question) {
         this.questions.remove(question);
+    }
+
+    @Override
+    public Configuration clone() {
+        return new Configuration(this.questions.stream().map(Question::clone).collect(Collectors.toSet()), this.time);
     }
 }

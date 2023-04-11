@@ -6,11 +6,10 @@ import de.unistuttgart.chickenshockbackend.data.mapper.ConfigurationMapper;
 import de.unistuttgart.chickenshockbackend.repositories.ConfigurationRepository;
 import de.unistuttgart.chickenshockbackend.service.ConfigService;
 import de.unistuttgart.gamifyit.authentificationvalidator.JWTValidatorService;
+import io.swagger.v3.oas.annotations.Operation;
 import java.util.List;
 import java.util.UUID;
 import javax.validation.Valid;
-
-import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
@@ -136,5 +135,13 @@ public class ConfigController {
         jwtValidatorService.hasRolesOrThrow(accessToken, List.of("lecturer"));
         log.debug("update question {} with {} for configuration {}", questionId, questionDTO, id);
         return configService.updateQuestionFromConfiguration(id, questionId, questionDTO);
+    }
+
+    @PostMapping("/{id}/clone")
+    @ResponseStatus(HttpStatus.CREATED)
+    public UUID cloneConfiguration(@CookieValue("access_token") final String accessToken, @PathVariable final UUID id) {
+        jwtValidatorService.validateTokenOrThrow(accessToken);
+        jwtValidatorService.hasRolesOrThrow(accessToken, List.of("lecturer"));
+        return configService.cloneConfiguration(id);
     }
 }

@@ -1,20 +1,19 @@
 package de.unistuttgart.chickenshockbackend.data;
 
 import de.unistuttgart.chickenshockbackend.Constants;
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.experimental.FieldDefaults;
-import org.springframework.validation.annotation.Validated;
-
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.UUID;
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.UUID;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import org.springframework.validation.annotation.Validated;
 
 /**
  * The GameResult.class contains all data that is saved after one chickenshock game
