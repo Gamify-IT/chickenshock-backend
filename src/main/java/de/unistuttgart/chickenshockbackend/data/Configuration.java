@@ -65,7 +65,7 @@ public class Configuration {
     }
 
     @Override
-    public Configuration clone() {
+    public Configuration clone() { //NOSONAR
         return new Configuration(this.questions.stream().map(Question::clone).collect(Collectors.toSet()), this.time);
     }
 }
