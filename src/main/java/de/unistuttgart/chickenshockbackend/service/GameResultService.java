@@ -34,6 +34,9 @@ public class GameResultService {
     @Autowired
     RoundResultMapper roundResultMapper;
 
+    private static int hundredScoreCount = 0;
+
+
     /**
      * Casts a GameResultDTO to GameResult and saves it in the Database
      *
@@ -98,11 +101,15 @@ public class GameResultService {
             gameResultDTO.getCorrectKillsCount(),
             gameResultDTO.getQuestionCount()
         );
+
+        final int rewards = calculateRewards(resultScore);
         return new @Valid OverworldResultDTO(
             "CHICKENSHOCK",
             gameResultDTO.getConfigurationAsUUID(),
             resultScore,
-            userId
+            userId, rewards
+
+
         );
     }
 
@@ -126,4 +133,24 @@ public class GameResultService {
         }
         return (int) ((100.0 * correctAnswers) / numberOfQuestions);
     }
+
+    /**
+     * This method calculates the rewards for one chickenshock round based on the gained scores in the
+     * current round
+     * @param resultScore
+     * @return gained rewards
+     */
+    private int calculateRewards(final int resultScore) {
+        if (resultScore < 0) {
+            throw new IllegalArgumentException("Result score cannot be less than zero");
+        }
+        if (resultScore == 100 && hundredScoreCount < 3) {
+            hundredScoreCount++;
+            return 10;
+        } else if (resultScore == 100 && hundredScoreCount >= 3) {
+            return 5;
+        }
+        return resultScore/10;
+    }
+
 }
