@@ -85,9 +85,8 @@ services:
 
   chickenshock-backend:
     container_name: chickenshock-backend
-    image: ghcr.io/gamify-it/chickenshock-backend:main
+    build: .
     restart: always
-    pull_policy: always
     expose:
       - "80"
     depends_on:
