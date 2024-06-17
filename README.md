@@ -66,6 +66,7 @@ Make sure you have the following installed:
 ### Run
 ### Project build
 To build the project, run:
+
 ```sh
 mvn install
 ```
