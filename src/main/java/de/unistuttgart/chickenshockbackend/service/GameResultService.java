@@ -53,6 +53,12 @@ public class GameResultService {
         if (gameResultDTO == null || userId == null || accessToken == null) {
             throw new IllegalArgumentException("gameResultDTO or userId or accessToken is null");
         }
+
+
+        int score = calculateResultScore( gameResultDTO.getCorrectKillsCount(),
+                gameResultDTO.getQuestionCount());
+        int rewards = calculateRewards(score);
+
         final OverworldResultDTO resultDTO = createOverworldResult(gameResultDTO, userId);
         try {
             resultClient.submit(accessToken, resultDTO);
@@ -74,7 +80,9 @@ public class GameResultService {
                 correctQuestions,
                 wrongQuestions,
                 gameResultDTO.getConfigurationAsUUID(),
-                userId
+                userId,
+                    score,
+                    rewards
             );
             gameResultRepository.save(result);
         } catch (final FeignException.BadGateway badGateway) {
