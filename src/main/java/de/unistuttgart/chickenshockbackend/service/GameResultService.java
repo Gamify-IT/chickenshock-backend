@@ -55,9 +55,13 @@ public class GameResultService {
         }
 
 
-        int score = calculateResultScore( gameResultDTO.getCorrectKillsCount(),
+        int score = calculateResultScore(gameResultDTO.getCorrectKillsCount(),
                 gameResultDTO.getQuestionCount());
+
         int rewards = calculateRewards(score);
+
+        gameResultDTO.setRewards(rewards);
+        gameResultDTO.setScore(score);
 
         final OverworldResultDTO resultDTO = createOverworldResult(gameResultDTO, userId);
         try {

@@ -41,7 +41,7 @@ public class OverworldResultDTO {
      */
     @Min(value = Constants.MIN_SCORE, message = "Score cannot be less than " + Constants.MIN_SCORE)
     @Max(value = Constants.MAX_SCORE, message = "Score cannot be higher than " + Constants.MAX_SCORE)
-    long score;
+    int score;
 
     /**
      * The unique identifier for the user.
