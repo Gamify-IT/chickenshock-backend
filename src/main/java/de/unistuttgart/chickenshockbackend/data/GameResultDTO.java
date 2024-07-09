@@ -159,7 +159,6 @@ public class GameResultDTO {
     public boolean equalsContent(final GameResultDTO other) {
         if (this == other) return true;
         if (other == null) return false;
-
         if (id != other.id) return false;
         if (questionCount != other.questionCount) return false;
         if (Float.compare(other.timeLimit, timeLimit) != 0) return false;
