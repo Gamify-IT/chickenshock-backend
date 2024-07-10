@@ -59,6 +59,9 @@ public class GameResultService {
             final List<RoundResult> wrongQuestions = roundResultMapper.roundResultDTOsToRoundResults(
                 gameResultDTO.getWrongAnsweredQuestions()
             );
+
+            final int score = calculateResultScore(gameResultDTO.getCorrectKillsCount(),gameResultDTO.getQuestionCount());
+            final int rewards = 5;
             final GameResult result = new @Valid GameResult(
                 gameResultDTO.getQuestionCount(),
                 gameResultDTO.getTimeLimit(),
@@ -71,8 +74,13 @@ public class GameResultService {
                 correctQuestions,
                 wrongQuestions,
                 gameResultDTO.getConfigurationAsUUID(),
-                userId
+                userId,
+                    score,
+                    rewards
             );
+            gameResultDTO.setScore(score);
+            gameResultDTO.setRewards(rewards);
+
             gameResultRepository.save(result);
         } catch (final FeignException.BadGateway badGateway) {
             final String warning =
@@ -103,6 +111,7 @@ public class GameResultService {
             gameResultDTO.getConfigurationAsUUID(),
             resultScore,
             userId
+
         );
     }
 

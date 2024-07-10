@@ -139,6 +139,8 @@ public class GameResult {
      */
     @NotNull(message = "playedTime cannot be null")
     private LocalDateTime playedTime;
+    private int score;
+    private int rewards;
 
     public GameResult(
         final int questionCount,
@@ -152,7 +154,9 @@ public class GameResult {
         final List<RoundResult> correctAnsweredQuestions,
         final List<RoundResult> wrongAnsweredQuestions,
         final UUID configurationAsUUID,
-        final String playerId
+        final String playerId,
+        final int score,
+        final int rewards
     ) {
         this.questionCount = questionCount;
         this.timeLimit = timeLimit;
@@ -167,5 +171,7 @@ public class GameResult {
         this.configurationAsUUID = configurationAsUUID;
         this.playerId = playerId;
         this.playedTime = LocalDateTime.now();
+        this.score = score;
+        this.rewards = rewards;
     }
 }

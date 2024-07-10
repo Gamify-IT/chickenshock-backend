@@ -122,6 +122,9 @@ public class GameResultDTO {
     @NotNull(message = "configurationAsUUID cannot be null")
     private UUID configurationAsUUID;
 
+    private int score;
+    private int rewards;
+
     public GameResultDTO(
         final int questionCount,
         final float timeLimit,
@@ -133,7 +136,9 @@ public class GameResultDTO {
         final int points,
         final List<RoundResultDTO> correctAnsweredQuestions,
         final List<RoundResultDTO> wrongAnsweredQuestions,
-        final UUID configurationAsUUID
+        final UUID configurationAsUUID,
+        final int score,
+        final int rewards
     ) {
         this.questionCount = questionCount;
         this.timeLimit = timeLimit;
