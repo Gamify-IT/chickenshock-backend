@@ -34,6 +34,9 @@ public class GameResultService {
     @Autowired
     RoundResultMapper roundResultMapper;
 
+    private static int hundredScoreCount = 0;
+
+
     /**
      * Casts a GameResultDTO to GameResult and saves it in the Database
      *
@@ -61,7 +64,7 @@ public class GameResultService {
             );
 
             final int score = calculateResultScore(gameResultDTO.getCorrectKillsCount(),gameResultDTO.getQuestionCount());
-            final int rewards = 5;
+            final int rewards = calculateRewards(score);
             final GameResult result = new @Valid GameResult(
                 gameResultDTO.getQuestionCount(),
                 gameResultDTO.getTimeLimit(),
@@ -134,5 +137,18 @@ public class GameResultService {
             );
         }
         return (int) ((100.0 * correctAnswers) / numberOfQuestions);
+    }
+
+    private int calculateRewards(final int resultScore) {
+        if (resultScore < 0) {
+            throw new IllegalArgumentException("Result score cannot be less than zero");
+        }
+        if (resultScore == 100 && hundredScoreCount < 3) {
+            hundredScoreCount++;
+            return 10;
+        } else if (resultScore == 100 && hundredScoreCount >= 3) {
+            return 5;
+        }
+        return resultScore/10;
     }
 }
