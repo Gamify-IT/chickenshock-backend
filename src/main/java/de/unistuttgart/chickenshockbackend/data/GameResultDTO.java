@@ -151,6 +151,8 @@ public class GameResultDTO {
         this.correctAnsweredQuestions = correctAnsweredQuestions;
         this.wrongAnsweredQuestions = wrongAnsweredQuestions;
         this.configurationAsUUID = configurationAsUUID;
+        this.score = score;
+        this.rewards = rewards;
     }
 
     public boolean equalsContent(final GameResultDTO other) {
