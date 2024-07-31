@@ -135,8 +135,8 @@ class GameResultControllerTest {
             correctList,
             wrongList,
             UUID.randomUUID(),
-                10,
-                1
+                50,
+                5
         );
 
         final String bodyValue = objectMapper.writeValueAsString(gameResultDTO);
