@@ -109,11 +109,13 @@ public class GameResultService {
             gameResultDTO.getCorrectKillsCount(),
             gameResultDTO.getQuestionCount()
         );
+        final int rewards = calculateRewards(resultScore);
         return new @Valid OverworldResultDTO(
             "CHICKENSHOCK",
             gameResultDTO.getConfigurationAsUUID(),
             resultScore,
-            userId
+            userId,
+                rewards
 
         );
     }
