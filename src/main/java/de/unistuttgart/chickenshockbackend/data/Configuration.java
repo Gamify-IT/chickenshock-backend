@@ -43,6 +43,11 @@ public class Configuration {
     @Min(value = Constants.MIN_TIME, message = "time has to be ≥ " + Constants.MIN_TIME + "s")
     int time;
 
+    /**
+     * The volume level that is setted by the player.
+     */
+    Integer volumeLevel;
+
     public Configuration(final Set<Question> questions, final int time) {
         this.questions = questions;
         this.time = time;
