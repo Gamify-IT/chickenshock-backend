@@ -50,5 +50,9 @@ public class OverworldResultDTO {
     @NotBlank(message = "user cannot be blank")
     String userId;
 
+
+    /**
+     * The rewards that the player achieved in the game.
+     */
     int rewards;
 }

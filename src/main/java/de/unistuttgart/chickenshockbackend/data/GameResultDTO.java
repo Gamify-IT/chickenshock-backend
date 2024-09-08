@@ -122,7 +122,14 @@ public class GameResultDTO {
     @NotNull(message = "configurationAsUUID cannot be null")
     private UUID configurationAsUUID;
 
+    /**
+     * The gained score in one round of chickenshock
+     */
     private int score;
+
+    /**
+     * The gained rewards in one round of chickenshock
+     */
     private int rewards;
 
     public GameResultDTO(

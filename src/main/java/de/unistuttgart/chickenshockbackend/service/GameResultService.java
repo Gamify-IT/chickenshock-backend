@@ -65,6 +65,7 @@ public class GameResultService {
 
             final int score = calculateResultScore(gameResultDTO.getCorrectKillsCount(),gameResultDTO.getQuestionCount());
             final int rewards = calculateRewards(score);
+            
             final GameResult result = new @Valid GameResult(
                 gameResultDTO.getQuestionCount(),
                 gameResultDTO.getTimeLimit(),
@@ -141,6 +142,18 @@ public class GameResultService {
         return (int) ((100.0 * correctAnswers) / numberOfQuestions);
     }
 
+
+    /**
+     * This method calculates the rewards for one chickenshock round based on the gained scores in the
+     * current round
+     *
+     * first three rounds: 10 rewards, after that for each 100% : 5 rewards
+     * if score != 100% then the score is divided by 10
+     *
+     * @param resultScore the score gained in the game
+     * @return rewards as int
+     * @throws IllegalArgumentException if resultScore < 0
+     */
     private int calculateRewards(final int resultScore) {
         if (resultScore < 0) {
             throw new IllegalArgumentException("Result score cannot be less than zero");
