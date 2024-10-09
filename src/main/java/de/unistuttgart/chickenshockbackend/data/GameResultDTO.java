@@ -123,6 +123,9 @@ public class GameResultDTO {
     private UUID configurationAsUUID;
 
     private int score;
+    
+    @Min(value = Constants.MIN_REWARDS, message = "Rewards cannot be less than " + Constants.MIN_REWARDS)
+    @Max(value = Constants.MAX_REWARDS, message = "Rewards cannot be higher than " + Constants.MAX_REWARDS)
     private int rewards;
 
     public GameResultDTO(
