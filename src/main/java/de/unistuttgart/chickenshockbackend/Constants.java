@@ -23,5 +23,8 @@ public final class Constants {
     public static final long MIN_SCORE = 0;
     public static final long MAX_SCORE = 100;
 
+    public static final long MIN_REWARDS = 0;
+    public static final long MAX_REWARDS = 10;
+
     private Constants() {}
 }
