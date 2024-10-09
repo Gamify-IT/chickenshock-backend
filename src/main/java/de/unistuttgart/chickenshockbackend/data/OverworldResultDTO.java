@@ -53,7 +53,7 @@ public class OverworldResultDTO {
     /**
      * The reward-coins that the player achieved in the current round.
      */
-    @Min(value = Constants.MIN_REWARDS, message = "Rewards cannot be less than " + Constants.MIN_SCORE)
-    @Max(value = Constants.MAX_REWARDS, message = "Rewards cannot be higher than " + Constants.MAX_SCORE)
+    @Min(value = Constants.MIN_REWARDS, message = "Rewards cannot be less than " + Constants.MIN_REWARDS)
+    @Max(value = Constants.MAX_REWARDS, message = "Rewards cannot be higher than " + Constants.MAX_REWARDS)
     int rewards;
 }
