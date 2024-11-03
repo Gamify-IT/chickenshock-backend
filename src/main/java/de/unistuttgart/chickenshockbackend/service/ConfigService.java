@@ -7,8 +7,10 @@ import de.unistuttgart.chickenshockbackend.data.mapper.QuestionMapper;
 import de.unistuttgart.chickenshockbackend.repositories.ConfigurationRepository;
 import de.unistuttgart.chickenshockbackend.repositories.QuestionRepository;
 import de.unistuttgart.gamifyit.authentificationvalidator.JWTValidatorService;
+
 import java.util.*;
 import javax.validation.Valid;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -75,7 +77,7 @@ public class ConfigService {
     /**
      * Search a configuration by given id and get volume level from overworld-backend
      *
-     * @param id the id of the configuration searching for
+     * @param id          the id of the configuration searching for
      * @param accessToken the users access token
      * @return the found configuration
      * @throws ResponseStatusException  when configuration by configurationName could not be found
@@ -88,8 +90,13 @@ public class ConfigService {
         final String userId = jwtValidatorService.extractUserId(accessToken);
 
         KeybindingDTO keyBindingVolumeLevel = overworldClient.getKeybindingStatistic(userId, "VOLUME_LEVEL", accessToken);
-        Integer volumeLevel = Integer.parseInt(keyBindingVolumeLevel.getKey());
+        Integer volumeLevel;
 
+        try {
+            volumeLevel = Integer.parseInt(keyBindingVolumeLevel.getKey());
+        } catch (NumberFormatException e) {
+            volumeLevel = 1;
+        }
 
         Configuration config = configurationRepository
                 .findById(id)
