@@ -9,6 +9,8 @@ import de.unistuttgart.chickenshockbackend.repositories.QuestionRepository;
 import de.unistuttgart.gamifyit.authentificationvalidator.JWTValidatorService;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import javax.validation.Valid;
 
 import lombok.extern.slf4j.Slf4j;
@@ -98,23 +100,51 @@ public class ConfigService {
             volumeLevel = 1;
         }
 
-        Configuration config = configurationRepository
-                .findById(id)
-                .orElseThrow(() ->
-                        new ResponseStatusException(
-                                HttpStatus.NOT_FOUND,
-                                String.format("There is no configuration with id %s.", id)
-                        )
-                );
-        config.setVolumeLevel(volumeLevel);
-        return configurationRepository
-                .findById(id)
-                .orElseThrow(() ->
-                        new ResponseStatusException(
-                                HttpStatus.NOT_FOUND,
-                                String.format("There is no configuration with id %s.", id)
-                        )
-                );
+        if (id.equals(UUID.fromString("00000000-0000-0000-0000-000000000000"))) {
+            return getTutorialConfiguration();
+        }
+        else {
+            Configuration config = configurationRepository
+                    .findById(id)
+                    .orElseThrow(() ->
+                            new ResponseStatusException(
+                                    HttpStatus.NOT_FOUND,
+                                    String.format("There is no configuration with id %s.", id)
+                            )
+                    );
+            config.setVolumeLevel(volumeLevel);
+            return configurationRepository
+                    .findById(id)
+                    .orElseThrow(() ->
+                            new ResponseStatusException(
+                                    HttpStatus.NOT_FOUND,
+                                    String.format("There is no configuration with id %s.", id)
+                            )
+                    );
+        }
+
+    }
+
+    /**
+     * Creates the game configuration for the tutorial
+     *
+     * @return tutorial configuration
+     */
+    private Configuration getTutorialConfiguration() {
+        Question one = new Question("How many bits are in one byte?", "8", Set.of("2", "4", "6"));
+        one.setId(UUID.fromString("00000000-0000-0000-0000-000000000001"));
+        Question two = new Question("What is the binary representation of the number 18?", "10010", Set.of("10001", "1000"));
+        two.setId(UUID.fromString("00000000-0000-0000-0000-000000000002"));
+        Question three = new Question("Which number is not a prime number?", "27", Set.of("7", "17"));
+        three.setId(UUID.fromString("00000000-0000-0000-0000-000000000003"));
+        Question four = new Question("What is the greatest common divisor of 27 and 42?", "3", Set.of("1", "7"));
+        four.setId(UUID.fromString("00000000-0000-0000-0000-000000000004"));
+        Question five =  new Question("What data type should be used for a person's name?", "string", Set.of("int", "bool"));
+        five.setId(UUID.fromString("00000000-0000-0000-0000-000000000005"));
+
+        Set<Question> tutorialQuestions = Set.of(one, two, three, four, five);
+
+        return new Configuration(tutorialQuestions, 50);
     }
 
     /**
