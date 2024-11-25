@@ -1,5 +1,6 @@
 package de.unistuttgart.chickenshockbackend.service;
 
+import de.unistuttgart.chickenshockbackend.Constants;
 import de.unistuttgart.chickenshockbackend.clients.OverworldClient;
 import de.unistuttgart.chickenshockbackend.data.*;
 import de.unistuttgart.chickenshockbackend.data.mapper.ConfigurationMapper;
@@ -100,7 +101,7 @@ public class ConfigService {
             volumeLevel = 1;
         }
 
-        if (id.equals(UUID.fromString("00000000-0000-0000-0000-000000000000"))) {
+        if (id.equals(UUID.fromString(Constants.tutorialUuid))) {
             return getTutorialConfiguration();
         }
         else {
@@ -143,8 +144,10 @@ public class ConfigService {
         five.setId(UUID.fromString("00000000-0000-0000-0000-000000000005"));
 
         Set<Question> tutorialQuestions = Set.of(one, two, three, four, five);
+        Configuration tutorialConfig = new Configuration(tutorialQuestions, 50);
+        tutorialConfig.setVolumeLevel(1);
 
-        return new Configuration(tutorialQuestions, 50);
+        return tutorialConfig;
     }
 
     /**
