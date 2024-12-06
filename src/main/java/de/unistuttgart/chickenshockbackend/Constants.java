@@ -26,5 +26,7 @@ public final class Constants {
     public static final long MIN_REWARDS = 0;
     public static final long MAX_REWARDS = 10;
 
+    public static final String tutorialUuid = "00000000-0000-0000-0000-000000000000";
+
     private Constants() {}
 }
