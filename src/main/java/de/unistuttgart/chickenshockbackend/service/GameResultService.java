@@ -1,5 +1,6 @@
 package de.unistuttgart.chickenshockbackend.service;
 
+import de.unistuttgart.chickenshockbackend.Constants;
 import de.unistuttgart.chickenshockbackend.clients.ResultClient;
 import de.unistuttgart.chickenshockbackend.data.GameResult;
 import de.unistuttgart.chickenshockbackend.data.GameResultDTO;
@@ -9,6 +10,7 @@ import de.unistuttgart.chickenshockbackend.data.mapper.RoundResultMapper;
 import de.unistuttgart.chickenshockbackend.repositories.GameResultRepository;
 import feign.FeignException;
 import java.util.List;
+import java.util.UUID;
 import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +57,12 @@ public class GameResultService {
         }
         final OverworldResultDTO resultDTO = createOverworldResult(gameResultDTO, userId);
         try {
-            resultClient.submit(accessToken, resultDTO);
+            if (gameResultDTO.getId() != null) {
+                if (!gameResultDTO.getId().equals(UUID.fromString(Constants.tutorialUuid))) {
+                    resultClient.submit(accessToken, resultDTO);
+                }
+            }
+
             final List<RoundResult> correctQuestions = roundResultMapper.roundResultDTOsToRoundResults(
                 gameResultDTO.getCorrectAnsweredQuestions()
             );
@@ -78,8 +85,8 @@ public class GameResultService {
                 wrongQuestions,
                 gameResultDTO.getConfigurationAsUUID(),
                 userId,
-                    score,
-                    rewards
+                score,
+                rewards
             );
             gameResultDTO.setScore(score);
             gameResultDTO.setRewards(rewards);
