@@ -57,11 +57,7 @@ public class GameResultService {
         }
         final OverworldResultDTO resultDTO = createOverworldResult(gameResultDTO, userId);
         try {
-            if (gameResultDTO.getId() != null) {
-                if (!gameResultDTO.getId().equals(UUID.fromString(Constants.tutorialUuid))) {
-                    resultClient.submit(accessToken, resultDTO);
-                }
-            }
+            resultClient.submit(accessToken, resultDTO);
 
             final List<RoundResult> correctQuestions = roundResultMapper.roundResultDTOsToRoundResults(
                 gameResultDTO.getCorrectAnsweredQuestions()
